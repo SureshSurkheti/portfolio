@@ -11,13 +11,17 @@
 </head>
 <body>
     <header class="header">
-        <a href="#" class="logo">Portfolio.</a>
+        <a href="#home" class="logo">Portfolio.</a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <i class='bx bx-menu'></i>
+    </button>
         <nav class="navbar">
             <a href="#home" style="--i:1">Home</a>
             <a href="#about" style="--i:2">About</a>
+            <a href="#services" style="--i:5">Services</a>
             <a href="#skills" style="--i:3">Skills</a>
             <a href="#portfolio" style="--i:4">Portfolio</a>
-            <a href="#contact" style="--i:5">contact</a>
+            <a href="#contact" style="--i:6">Contact</a>
         </nav>
     </header>
     <section class="home" id="home">
@@ -30,13 +34,13 @@
                     I'm a web Developer with extensive experience for over 3 years.
                     <br>I have worked on various projects from small websites to large corporate websites.
                 </p>
-                <div class="home-sci">
-                    <a href="#" style="--i:6"><i class='bx bxl-facebook'></i></a>
-                    <a href="#" style="--i:7"><i class='bx bxl-instagram'></i></a>
-                    <a href="#" style="--i:8"><i class='bx bxl-tiktok'></i></a>
-                    <a href="#" style="--i:9"><i class='bx bxl-linkedin'></i></i></a>
-                    <a href="#" style="--i:10"><i class='bx bxl-github'></i></a>
-                </div>
+        <div class="home-sci">
+                    <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" style="--i:6"><i class='bx bxl-facebook'></i></a>
+                    <a href="https://www.instagram.com/sureshsurkheti30?igsh=MWtqbTI4enkybmc1cA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" style="--i:7"><i class='bx bxl-instagram'></i></a>
+                    <a href="https://www.tiktok.com/@suresh.surkheti10?_r=1&_t=ZS-93isJyWKqdl" target="_blank" rel="noopener noreferrer" style="--i:8"><i class='bx bxl-tiktok'></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" style="--i:9"><i class='bx bxl-linkedin'></i></a>
+                    <a href="https://github.com/SureshSurkheti" target="_blank" rel="noopener noreferrer" style="--i:10"><i class='bx bxl-github'></i></a>
+        </div>
                 <a href="#" class="btn-box">More About Me</a>
             </div>
             <img src="images/prabidhilab.jpg" alt="Suresh Surkheti" class="profile-img">
@@ -66,10 +70,9 @@
             </div>
 
     </section>
-    <section>
-        <div class="services" id="services">
-            <div class="container">
-                <h1 class="sub-title">My <span>Services</span></h1>
+    <section id="services" class="section-padding">
+        <div class="main-text">
+                <h2 class="sub-title">My <span>Services</span></h2>
                 <div class="services-list">
                     <div>
                         <i class='bx bx-code' style="color: #00eeff"></i>
@@ -120,13 +123,14 @@
                         <a href="#" class="read">learn more</a>
                     </div>
                 </div>
-            </div>
+                </div>
         </div>
     </section>
-    <h1 class="sub-title">My <span>Skills</span></h1>
-    <section>
-        <div class="skills-container"> 
-          <div class="container1" id="skills">
+    <section class="skills section-padding" id="skills">
+    <h2 class="sub-title">My <span>Skills</span></h2>
+    <div class="skills-container"> 
+    <!-- LEFT: Technical Skills -->
+     <div class="container1">
             <h1 class="heading1">Technical skills</h1>
             <div class="technical-bars">
               <div class="bar">
@@ -176,7 +180,8 @@
               </div>
             </div>
           </div>
-          <div class="container1">
+         
+     <div class="container1">
             <h1 class="heading1">Professional skills</h1>
             <div class="radial-bars">
               <div class="radial-bar">
@@ -212,13 +217,12 @@
                 <div class="text">Team Work</div>
               </div>
             </div>
-          </div> 
-        </div>
-    </section>
-<section>
-  <div class="portfolio" id="portfolio">
-    <div class="main-text" id="project">
-      <h2>Latest <span>Project</span></h2>
+     </div>
+  </div>
+  </div>
+</section>
+<section id="portfolio" class="portfolio section-padding">
+      <h2 class="sub-title">Latest <span>Project</span></h2>
       <div class="portfolio-content">
         <div class="row">
           <img src="images/5757453.jpg">
@@ -280,39 +284,48 @@
             <a href="#"><i class='bx bx-link-external' style="color: aliceblue;"></i>View Project</a>
           </div>
         </div>
+  </div>
+</section>
+<section id="contact" class="contact section-padding">
+    <h2 class="sub-title">Contact <span>Me</span></h2>
+    <div class="contact-container">
+        <div class="contact-text">
+            <h4>Let's work together</h4>
+            <p>
+                I'm available for freelance work. If you have a project that you want to get started 
+                or think you need my help with something, then get in touch.
+            </p>
+            <ul class="contact-list">
+                <li><i class='bx bxs-send'></i> surkhetisuresh123@gmail.com</li>
+                <li><i class='bx bxs-phone'></i> 090-4200-5405</li>
+            </ul>    
+            <div class="contact-icons">
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i class='bx bxl-facebook'></i></a>
+          <a href="https://www.instagram.com/sureshsurkheti30?igsh=MWtqbTI4enkybmc1cA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer"><i class='bx bxl-instagram'></i></a>
+          <a href="https://www.tiktok.com/@suresh.surkheti10?_r=1&_t=ZS-93isJyWKqdl" target="_blank" rel="noopener noreferrer"><i class='bx bxl-tiktok'></i></a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"><i class='bx bxl-linkedin'></i></a>
+          <a href="https://github.com/SureshSurkheti" target="_blank" rel="noopener noreferrer"><i class='bx bxl-github'></i></a>
+            </div>
+        </div>
+
+      <div class="contact-form">
+          <div id="form-status" style="display:none; color: #0ef; margin-bottom: 15px; text-align: center; font-weight: 600;">
+              Form is successfully sent! Thank you.
+          </div>
+
+          <form id="my-form" action="https://formspree.io/f/xwvnkykd" method="POST">
+              <input type="text" name="name" placeholder="Enter Your Name" required>
+              <input type="email" name="email" placeholder="Enter Your Email" required>
+              <input type="text" name="subject" placeholder="Enter Your Subject">
+              <textarea name="message" cols="40" rows="10" placeholder="Enter Your Message" required></textarea>
+              <button type="submit" class="send">Submit</button>
+          </form>
       </div>
     </div>
-  </div>
 </section>
-<section class="contact" id="contact">
-  <div class="contact-text">
-    <h2>Contact <span>Me</span></h2>
-    <h4>Let's work together</h4>
-    <p>
-      I'm available for freelance work. If you have a project that you want to get started or think you need my help with something, then get in touch.
-    </p>
-    <ul class="contact-list">
-      <li><i class='bx bxs-send'></i> contact@gmail.com</li>
-      <li><i class='bx bxs-phone'></i> 123-456-7890</li>
-    </ul>    
-    <div class="contact-icons">
-      <a href=""><i class='bx bxl-facebook'></i></a>
-      <a href=""><i class='bx bxl-instagram'></i></a>
-      <a href=""><i class='bx bxl-tiktok'></i></a>
-      <a href=""><i class='bx bxl-linkedin'></i></i></a>
-      <a href=""><i class='bx bxl-github'></i></a>
-    </div>
-  </div>
-  <div class="contact-form">
-    <form action="">
-      <input type="text" placeholder="Enter Your Name" required>
-      <input type="email" placeholder="Enter Your Email" required>
-      <input type="text" placeholder="Enter Your Subject">
-      <textarea name="" id="" cols="40" rows="10" placeholder="Enter Your Message" required></textarea>
-      <input type="submit" value="submit" class="send">
-    </form>
-  </div>
-</section>
+<footer class="footer">
+  <p>© 2026 Suresh Surkheti. All Rights Reserved.</p>
+</footer>
   <script src="main.js"></script>
 </body>
 </html>
