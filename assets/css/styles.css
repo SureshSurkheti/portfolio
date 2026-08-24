@@ -680,6 +680,10 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .project__link:hover { transform: translateY(-2px); filter: brightness(1.1); }
 .project__link--alt:hover { background: var(--surface); filter: none; }
 
+.work__more { display: flex; justify-content: center; margin-top: 1.6rem; }
+.work__more .btn { width: 100%; max-width: 320px; }
+.work__more[hidden] { display: none; }
+
 /* ─────────────── TIMELINE ─────────────── */
 .timeline { position: relative; max-width: 940px; margin: 0 auto; }
 .timeline::before {
@@ -865,8 +869,54 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 @media (max-width: 560px) {
   :root { --header-h: 66px; }
   .home { padding-top: calc(var(--header-h) + 2rem); padding-bottom: 5rem; }
-  .home__cta { flex-direction: column; width: 100%; }
-  .home__cta .btn { width: 100%; }
+
+  /* Primary action gets the full width; the two secondaries share a row.
+     Three stacked full-width buttons ate ~230px of the first screen. */
+  .home__cta { flex-direction: row; flex-wrap: wrap; width: 100%; gap: .6rem; }
+  .home__cta .btn--primary { flex: 1 0 100%; }
+  .home__cta .btn--outline { flex: 1 1 0; min-width: 0; padding-inline: 1rem; }
+  .home__cta .btn--outline span { white-space: nowrap; }
+
+  /* Service cards: put the icon beside the heading instead of on its own line. */
+  .card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "icon title" "body body" "tags tags";
+    align-items: center;
+    column-gap: .9rem;
+    padding: 1.5rem 1.35rem;
+  }
+  .card__icon {
+    grid-area: icon; width: 48px; height: 48px;
+    font-size: 1.4rem; border-radius: 14px; margin-bottom: 0;
+  }
+  .card h3 { grid-area: title; font-size: 1.15rem; }
+  .card p { grid-area: body; margin-top: .85rem; }
+  .card__tags { grid-area: tags; margin-top: 0; padding-top: .9rem; }
+
+  /* Filters as one swipeable row — five pills wrapped to two ragged lines. */
+  .filters {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    margin-inline: calc(var(--pad-x) * -1);
+    padding-inline: var(--pad-x);
+    padding-bottom: .4rem;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .filter { flex: 0 0 auto; scroll-snap-align: start; }
+
+  /* A 4:5 portrait is very tall on a phone. */
+  .about__frame img { aspect-ratio: 4/3; }
+
+  .project__body { padding: 1.15rem 1.15rem 1.25rem; gap: .5rem; }
+
+  /* Six full-width cards is ~4 screens of scrolling. Show three, offer the rest. */
+  .project.capped { display: none; }
+  .skills__panel { padding: 1.4rem 1.25rem; }
   .home__sci a { width: 42px; height: 42px; font-size: 1.15rem; }
   .avatar__chip { width: 42px; height: 42px; font-size: 1.25rem; border-radius: 13px; }
   .logo__text { display: none; }

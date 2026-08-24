@@ -185,8 +185,29 @@
     }, 0.3);
   });
 
-  /* ─────────── PROJECT FILTER ─────────── */
+  /* ─────────── PROJECT FILTER + MOBILE CAP ─────────── */
   const grid = $('#workGrid');
+  const moreWrap = $('.work__more');
+  const showAllBtn = $('#showAllProjects');
+  const narrow = window.matchMedia('(max-width: 560px)');
+  const CAP = 3;
+  let expanded = false;
+
+  /* On a phone six full-width cards run to roughly four screens. Show the first
+     few and let the visitor ask for the rest. Recomputed after every filter so
+     the cap always counts what is actually visible, not the original order. */
+  function applyCap() {
+    if (!grid) return;
+    const visible = $$('.project', grid).filter(c => !c.classList.contains('hide'));
+    const capping = narrow.matches && !expanded;
+    visible.forEach((card, i) => card.classList.toggle('capped', capping && i >= CAP));
+    if (moreWrap) moreWrap.hidden = !(capping && visible.length > CAP);
+    if (showAllBtn) {
+      const hiddenCount = visible.length - CAP;
+      $('span', showAllBtn).textContent = `Show ${hiddenCount} more project${hiddenCount === 1 ? '' : 's'}`;
+    }
+  }
+
   $$('.filter').forEach(btn => {
     btn.addEventListener('click', () => {
       $$('.filter').forEach(b => b.classList.remove('active'));
@@ -200,10 +221,21 @@
         setTimeout(() => {
           card.classList.toggle('hide', !show);
           requestAnimationFrame(() => card.classList.remove('filtering'));
+          applyCap();
         }, reduced ? 0 : 220);
       });
     });
   });
+
+  showAllBtn?.addEventListener('click', () => {
+    expanded = true;
+    applyCap();
+    // reveal the cards that were just un-capped
+    $$('.project.reveal', grid).forEach(c => c.classList.add('in'));
+  });
+
+  narrow.addEventListener('change', () => { expanded = false; applyCap(); });
+  applyCap();
 
   /* ─────────── SPOTLIGHT CARDS ─────────── */
   if (finePointer) {
