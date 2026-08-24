@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Suresh Surkheti — Full Stack Developer</title>
+<!--
+  ============================================================
+  RESUME SOURCE — edit this file, then regenerate the PDF with:
+
+     npm run resume        (see README.md)
+
+  or directly:
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+       --headless=new --disable-gpu --no-pdf-header-footer \
+       --print-to-pdf=resume.pdf resume.html
+
+  Everything marked TODO is placeholder text — replace it before sending
+  this to anyone.
+  ============================================================
+-->
+<style>
+  @page { size: A4; margin: 14mm 14mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #1a1f2e; font-size: 10.2pt; line-height: 1.5;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  a { color: #0e7490; text-decoration: none; }
+
+  header { border-bottom: 2.5px solid #0e7490; padding-bottom: 10px; margin-bottom: 14px; }
+  h1 { font-size: 22pt; letter-spacing: -.5px; line-height: 1.1; }
+  .role { font-size: 11pt; color: #0e7490; font-weight: 600; margin-top: 2px; }
+  .contact { margin-top: 8px; font-size: 9pt; color: #45506b; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+
+  h2 {
+    font-size: 8.5pt; letter-spacing: 1.6px; text-transform: uppercase;
+    color: #0e7490; margin: 15px 0 7px; padding-bottom: 3px;
+    border-bottom: 1px solid #d8dde8;
+  }
+  .summary { color: #333c52; }
+
+  .job { margin-bottom: 11px; }
+  .job__top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .job__title { font-size: 10.8pt; font-weight: 700; }
+  .job__date { font-size: 8.6pt; color: #67718a; white-space: nowrap; }
+  .job__org { font-size: 9.4pt; color: #a21caf; font-weight: 600; margin-bottom: 3px; }
+  ul.bullets { margin-left: 15px; }
+  ul.bullets li { margin-bottom: 2.5px; color: #333c52; }
+
+  .stack { display: grid; grid-template-columns: 88px 1fr; gap: 4px 10px; font-size: 9.6pt; }
+  .stack dt { font-weight: 700; color: #45506b; }
+  .stack dd { color: #333c52; }
+
+  .proj { margin-bottom: 8px; }
+  .proj__name { font-weight: 700; font-size: 10.2pt; }
+  .proj__meta { font-size: 8.8pt; color: #67718a; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Suresh Surkheti</h1>
+  <div class="role">Full Stack Developer</div>
+  <div class="contact">
+    <span>surkhetisuresh123@gmail.com</span>
+    <span>090-4200-5405</span>
+    <span>Japan · Remote worldwide</span>
+    <span>github.com/SureshSurkheti</span>
+    <span>linkedin.com/in/suresh-surkheti</span>
+  </div>
+</header>
+
+<h2>Summary</h2>
+<p class="summary">
+  Full stack developer with 3+ years building web products end to end — from responsive,
+  accessible interfaces to the Laravel and MySQL backends behind them. Experience spans small
+  business sites through to large corporate platforms, with a focus on performance, clean
+  architecture and code the next developer can maintain.
+</p>
+
+<h2>Experience</h2>
+
+<div class="job">
+  <div class="job__top">
+    <span class="job__title">Full Stack Developer</span>
+    <span class="job__date">2024 — Present</span>
+  </div>
+  <div class="job__org">Freelance / Contract</div>
+  <ul class="bullets">
+    <li>Design and ship end-to-end web products for clients across Nepal and Japan.</li>
+    <li>Build with Laravel, Vue.js and MySQL; handle deployment, DNS and ongoing maintenance.</li>
+    <li>Work directly with clients to scope requirements and deliver against fixed timelines.</li>
+  </ul>
+</div>
+
+<div class="job">
+  <div class="job__top">
+    <span class="job__title">Web Developer</span>
+    <span class="job__date">2023 — 2024</span>
+  </div>
+  <div class="job__org">Prabidhi Lab</div>
+  <ul class="bullets">
+    <li>Built and maintained corporate websites and internal tools used daily by staff.</li>
+    <li>Led front-end rewrites that improved page load and reduced template duplication.</li>
+    <li>Mentored two junior developers on Git workflow and code review.</li>
+  </ul>
+</div>
+
+<div class="job">
+  <div class="job__top">
+    <span class="job__title">Junior Developer</span>
+    <!-- TODO: name the agency -->
+    <span class="job__date">2022 — 2023</span>
+  </div>
+  <div class="job__org">Agency work</div>
+  <ul class="bullets">
+    <li>Started with WordPress theme development and PHP maintenance.</li>
+    <li>Grew into full front-end ownership of client projects.</li>
+  </ul>
+</div>
+
+<h2>Technical Skills</h2>
+<dl class="stack">
+  <dt>Frontend</dt><dd>HTML5, CSS3/SCSS, JavaScript (ES6+), Vue.js, Tailwind CSS</dd>
+  <dt>Backend</dt><dd>PHP, Laravel, CodeIgniter, CakePHP, Python, REST APIs</dd>
+  <dt>Data &amp; CMS</dt><dd>MySQL, WordPress, Joomla, Magento</dd>
+  <dt>Tooling</dt><dd>Git, Figma, Linux / CLI, Lighthouse</dd>
+</dl>
+
+<h2>Selected Projects</h2>
+<!-- TODO: replace with your real projects and live URLs -->
+<div class="proj">
+  <div class="proj__name">E-commerce Platform</div>
+  <div class="proj__meta">Laravel · MySQL · Stripe — multi-vendor storefront with payments,
+    inventory and an admin panel. Handles 200+ orders a month across 12 vendors.</div>
+</div>
+<div class="proj">
+  <div class="proj__name">Analytics Dashboard</div>
+  <div class="proj__meta">Vue.js · Laravel · Chart.js — real-time reporting with role-based
+    access and CSV export. Cut weekly reporting time from four hours to minutes.</div>
+</div>
+<div class="proj">
+  <div class="proj__name">Corporate Website</div>
+  <div class="proj__meta">WordPress · PHP · ACF — custom theme with a block-based editor,
+    letting the marketing team publish without developer help.</div>
+</div>
+
+<h2>Education</h2>
+<div class="job">
+  <div class="job__top">
+    <span class="job__title">Bachelor's in Computer Science &amp; IT</span>
+    <span class="job__date">TODO: years</span>
+  </div>
+  <!-- TODO: replace with your institution -->
+  <div class="job__org">Your university name</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "suresh-surkheti-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio site for Suresh Surkheti — Full Stack Developer.",
+  "private": true,
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "resume": "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless=new --disable-gpu --no-pdf-header-footer --print-to-pdf=resume.pdf resume.html && echo 'resume.pdf regenerated'"
+  },
+  "author": "Suresh Surkheti",
+  "license": "MIT"
+}
