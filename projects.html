@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Every project by Suresh Surkheti — client work for Japanese municipalities and enterprises, plus personal and open-source builds.">
+  <meta name="author" content="Suresh Surkheti">
+  <meta name="theme-color" content="#eceff6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#05060a" media="(prefers-color-scheme: dark)">
+  <title>All Projects — Suresh Surkheti</title>
+
+  <!-- Tab icon: inline SVG, no extra request -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='.55' stop-color='%23818cf8'/%3E%3Cstop offset='1' stop-color='%23e879f9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Segoe UI,Helvetica,Arial,sans-serif' font-size='38' font-weight='700' fill='%2304050a' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+
+  <!-- Link previews (LinkedIn, WhatsApp, X, Slack). These must be absolute URLs;
+       crawlers will not resolve a relative og:image. -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sureshsurkheti.com/projects">
+  <meta property="og:title" content="All Projects — Suresh Surkheti">
+  <meta property="og:description" content="Software Engineer in Oita, Japan. Full-stack web platforms in Vue, TypeScript and Python, deployed on AWS.">
+  <meta property="og:image" content="https://sureshsurkheti.com/assets/img/suresh-social.jpg">
+  <meta property="og:site_name" content="Suresh Surkheti">
+  <meta property="og:image:width" content="960">
+  <meta property="og:image:height" content="504">
+  <meta property="og:image:alt" content="Suresh Surkheti — Software Engineer in Oita, Japan">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="All Projects — Suresh Surkheti">
+  <meta name="twitter:description" content="Software Engineer in Oita, Japan. Full-stack web platforms in Vue, TypeScript and Python, deployed on AWS.">
+  <meta name="twitter:image" content="https://sureshsurkheti.com/assets/img/suresh-social.jpg">
+  <meta name="twitter:image:alt" content="Suresh Surkheti — Software Engineer in Oita, Japan">
+
+  <link rel="canonical" href="https://sureshsurkheti.com/projects">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <noscript>
+    <style>
+      /* Never hide content behind JS: show everything if scripts are off. */
+      .preloader { display: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .particles { display: none; }
+    </style>
+  </noscript>
+</head>
+<body class="page-projects">
+
+<a href="#all-projects" class="skip-link">Skip to content</a>
+
+<!-- ══════════ AMBIENT BACKGROUND ══════════ -->
+<div class="bg-fx" aria-hidden="true">
+  <div class="blob blob--1"></div>
+  <div class="blob blob--2"></div>
+  <div class="blob blob--3"></div>
+  <div class="grid-lines"></div>
+  <div class="noise"></div>
+</div>
+
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<div class="scroll-progress" aria-hidden="true"><i id="scrollBar"></i></div>
+
+<header class="header" id="header">
+  <a href="/" class="logo" aria-label="Home">
+    <span class="logo__mark">S</span>
+    <span class="logo__text">Suresh<em>.</em></span>
+  </a>
+
+  <nav class="navbar" id="navbar" aria-label="Main navigation">
+    <a href="/" style="--i:1"><span>Home</span></a>
+    <a href="/#about" style="--i:2"><span>About</span></a>
+    <a href="/#services" style="--i:3"><span>Services</span></a>
+    <a href="/#skills" style="--i:4"><span>Skills</span></a>
+    <a href="/#work" style="--i:5"><span>Work</span></a>
+    <a href="/#personal" style="--i:6"><span>Personal</span></a>
+    <a href="/#journey" style="--i:7"><span>Journey</span></a>
+    <a href="/#contact" style="--i:8"><span>Contact</span></a>
+  </nav>
+
+  <div class="header__actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle colour theme">
+      <i class="bx bx-moon"></i><i class="bx bx-sun"></i>
+    </button>
+    <a href="/#contact" class="btn btn--sm btn--ghost header__cta">Hire Me</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbar">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+<section class="work section" id="all-projects">
+  <div class="section__head reveal">
+    <a href="/#work" class="back-link"><i class="bx bx-left-arrow-alt"></i>Back to portfolio</a>
+    <span class="eyebrow">Everything</span>
+    <h1 class="section__title">All <span class="gradient-text">projects</span></h1>
+    <p class="section__sub">Client work delivered from Oita, Japan, and the things I build on my own time. Names are withheld where the system is internal or under agreement.</p>
+  </div>
+
+<div class="filters reveal" id="filters" role="tablist" aria-label="Project filters">
+    <button class="filter active" data-filter="all">All</button>
+    <button class="filter" data-filter="gov">Public Sector</button>
+    <button class="filter" data-filter="enterprise">Enterprise</button>
+    <button class="filter" data-filter="mobile">Mobile</button>
+    <button class="filter" data-filter="app">Web App</button>
+  </div>
+
+  <div class="work__grid" id="workGrid">
+<article class="project reveal" data-cat="gov">
+      <div class="project__media">
+        <img src="assets/img/project-gis.svg" alt="Civil Land Regulation and GIS Portal — Regional Japanese prefecture"
+             width="1200" height="750" loading="lazy" decoding="async">
+        <span class="project__cat">Public Sector</span>
+      </div>
+      <div class="project__body">
+        <h2>Civil Land Regulation &amp; GIS Portal</h2>
+        <div class="project__meta">
+          <span class="project__client"><i class="bx bx-buildings"></i>Regional Japanese prefecture</span>
+          <span class="project__role"><i class="bx bx-user-voice"></i>Full-Stack Engineer</span>
+        </div>
+        <p>GIS and public safety portal monitoring land-use and embankment safety regulations, with isolated network layers meeting public-sector data standards.</p>
+        <div class="project__tech"><i>FastAPI</i><i>Vue.js</i><i>Nuxt.js</i><i>Vuetify</i><i>Terraform</i><i>Docker</i></div>
+        <div class="project__aws"><span>AWS</span><i>VPC</i><i>EC2</i><i>S3</i><i>RDS</i><i>CloudWatch</i><i>IAM</i></div>
+        <p class="project__note"><i class="bx bx-globe"></i>Publicly launched municipal platform</p>
+      </div>
+    </article>
+<article class="project reveal" data-cat="enterprise">
+      <div class="project__media">
+        <img src="assets/img/project-asset.svg" alt="Enterprise Asset Management Platform — Major domestic conglomerate"
+             width="1200" height="750" loading="lazy" decoding="async">
+        <span class="project__cat">Enterprise</span>
+      </div>
+      <div class="project__body">
+        <h2>Enterprise Asset Management Platform</h2>
+        <div class="project__meta">
+          <span class="project__client"><i class="bx bx-buildings"></i>Major domestic conglomerate</span>
+          <span class="project__role"><i class="bx bx-user-voice"></i>Frontend Developer</span>
+        </div>
+        <p>High-availability equipment tracking and asset lifecycle system, consolidating scattered inventory workflows into one dashboard and cutting physical asset loss.</p>
+        <div class="project__tech"><i>JavaScript</i><i>Vue.js</i><i>Pinia</i><i>Tailwind</i></div>
+        <p class="project__note"><i class="bx bx-lock-alt"></i>Internal enterprise system — not publicly linkable</p>
+      </div>
+    </article>
+<article class="project reveal" data-cat="enterprise">
+      <div class="project__media">
+        <img src="assets/img/project-mapping.svg" alt="Mapping and Geolocation Engine — Tier-1 Japanese mapping corporation"
+             width="1200" height="750" loading="lazy" decoding="async">
+        <span class="project__cat">Enterprise</span>
+      </div>
+      <div class="project__body">
+        <h2>Mapping &amp; Geolocation Engine</h2>
+        <div class="project__meta">
+          <span class="project__client"><i class="bx bx-buildings"></i>Tier-1 Japanese mapping corporation</span>
+          <span class="project__role"><i class="bx bx-user-voice"></i>Full-Stack Engineer</span>
+        </div>
+        <p>Core management engine for a leading digital mapping provider, moving spatial data pipelines onto containerised microservices for rapid processing.</p>
+        <div class="project__tech"><i>Vue.js</i><i>TypeScript</i><i>FastAPI</i><i>Tailwind</i><i>Terraform</i><i>Docker</i></div>
+        <div class="project__aws"><span>AWS</span><i>Cognito</i><i>S3</i><i>DynamoDB</i></div>
+        <p class="project__note"><i class="bx bx-lock-alt"></i>Internal enterprise system — not publicly linkable</p>
+      </div>
+    </article>
+<article class="project reveal" data-cat="gov">
+      <div class="project__media">
+        <img src="assets/img/project-community.svg" alt="Community and Volunteer Platform — Prefectural social initiatives office"
+             width="1200" height="750" loading="lazy" decoding="async">
+        <span class="project__cat">Public Sector</span>
+      </div>
+      <div class="project__body">
+        <h2>Community &amp; Volunteer Platform</h2>
+        <div class="project__meta">
+          <span class="project__client"><i class="bx bx-buildings"></i>Prefectural social initiatives office</span>
+          <span class="project__role"><i class="bx bx-user-voice"></i>Full-Stack Engineer</span>
+        </div>
+        <p>Community-building portal connecting local organisations with volunteers, with SEO-focused public pages and streamlined coordination workflows.</p>
+        <div class="project__tech"><i>Vue.js</i><i>FastAPI</i><i>Terraform</i><i>Docker</i><i>SEO</i></div>
+        <div class="project__aws"><span>AWS</span><i>Cognito</i><i>IAM</i><i>S3</i><i>DynamoDB</i></div>
+        <p class="project__note"><i class="bx bx-globe"></i>Publicly launched municipal platform</p>
+      </div>
+    </article>
+<article class="project reveal" data-cat="mobile gov">
+      <div class="project__media">
+        <img src="assets/img/project-smartcity.svg" alt="Smart City Citizen App — Municipal Japanese government body"
+             width="1200" height="750" loading="lazy" decoding="async">
+        <span class="project__cat">Mobile · Public Sector</span>
+      </div>
+      <div class="project__body">
+        <h2>Smart City Citizen App</h2>
+        <div class="project__meta">
+          <span class="project__client"><i class="bx bx-buildings"></i>Municipal Japanese government body</span>
+          <span class="project__role"><i class="bx bx-user-voice"></i>iOS Developer</span>
+        </div>
+        <p>Official iOS client for a city-wide smart-city app, with local caching that keeps civic calendars and event listings readable offline and loading fast during high-traffic announcements.</p>
+        <div class="project__tech"><i>Objective-C</i><i>Xcode</i><i>iOS SDK</i></div>
+        <p class="project__note"><i class="bx bx-globe"></i>Publicly launched municipal platform</p>
+      </div>
+    </article>
+<article class="project reveal" data-cat="app">
+      <div class="project__media">
+        <img src="assets/img/project-intercom.svg" alt="NTC Intercom App"
+             width="1200" height="750" loading="lazy" decoding="async">
+        <span class="project__cat">Web App</span>
+      </div>
+      <div class="project__body">
+        <h2>NTC Intercom App</h2>
+        <div class="project__meta">
+          <span class="project__client"><i class="bx bx-buildings"></i>NTC</span>
+          <span class="project__role"><i class="bx bx-user-voice"></i>Frontend Developer</span>
+        </div>
+        <!-- TODO (Suresh): replace the line below with what this app actually does —
+             who the client is, what problem it solved, the rest of the stack. -->
+        <p>Intercom web application built in Svelte, with the reactive UI layer handled in
+           plain JavaScript.</p>
+        <div class="project__tech"><i>Svelte</i><i>JavaScript</i></div>
+      </div>
+    </article>
+<article class="project reveal" data-cat="gov">
+      <div class="project__media">
+        <img src="assets/img/project-voucher.svg" alt="Municipal Voucher Issuance System — Consortium of 4+ municipalities"
+             width="1200" height="750" loading="lazy" decoding="async">
+        <span class="project__cat">Public Sector</span>
+      </div>
+      <div class="project__body">
+        <h2>Municipal Voucher Issuance System</h2>
+        <div class="project__meta">
+          <span class="project__client"><i class="bx bx-buildings"></i>Consortium of 4+ municipalities</span>
+          <span class="project__role"><i class="bx bx-user-voice"></i>Full-Stack Engineer</span>
+        </div>
+        <p>Multi-tenant digital gift voucher (商品券) platform spanning several regional municipalities, securing high-volume ledger transactions with managed cryptographic keys.</p>
+        <div class="project__tech"><i>TypeScript</i><i>Vue.js</i><i>Nuxt.js</i><i>Pinia</i><i>Tailwind</i></div>
+        <div class="project__aws"><span>AWS</span><i>VPC</i><i>RDS</i><i>ELB</i><i>CloudWatch</i><i>KMS</i><i>ACM</i></div>
+        <p class="project__note"><i class="bx bx-globe"></i>Publicly launched municipal platform</p>
+      </div>
+    </article>
+<article class="project reveal" data-cat="enterprise app">
+      <div class="project__media">
+        <img src="assets/img/project-inventory.svg" alt="Office Equipment Tracking Tool — Administrative office network"
+             width="1200" height="750" loading="lazy" decoding="async">
+        <span class="project__cat">Enterprise</span>
+      </div>
+      <div class="project__body">
+        <h2>Office Equipment Tracking Tool</h2>
+        <div class="project__meta">
+          <span class="project__client"><i class="bx bx-buildings"></i>Administrative office network</span>
+          <span class="project__role"><i class="bx bx-user-voice"></i>Full-Stack Developer</span>
+        </div>
+        <p>Internal logistics tool logging office supplies and IT equipment across several workspaces, so every item's current location and holder stay traceable.</p>
+        <div class="project__tech"><i>TypeScript</i><i>JavaScript</i><i>Vue.js</i><i>Terraform</i><i>Docker</i></div>
+        <div class="project__aws"><span>AWS</span><i>DynamoDB</i></div>
+        <p class="project__note"><i class="bx bx-lock-alt"></i>Internal enterprise system — not publicly linkable</p>
+      </div>
+    </article>
+  </div>
+
+<div class="early reveal">
+    <h3 class="early__title">Earlier work <span>· Prabidhi Labs, Nepal · 2022–2024</span></h3>
+    <ul class="early__list">
+      <li><strong>watchmate-django-REST-API</strong><span>Django REST Framework</span></li>
+      <li><strong>REST-API-STORAGE</strong><span>Python · Django</span></li>
+      <li><strong>RNLEARN</strong><span>React Native</span></li>
+      <li><strong>Help App</strong><span>React Native</span></li>
+      <li><strong>Live Location</strong><span>JavaScript</span></li>
+      <li><strong>Invoice</strong><span>HTML · CSS</span></li>
+      <li><strong>Blog</strong><span>HTML · CSS</span></li>
+    </ul>
+    <a href="https://github.com/SureshSurkheti" target="_blank" rel="noopener noreferrer" class="early__link">
+      <i class="bx bxl-github"></i> See these on GitHub
+    </a>
+  </div>
+</section>
+
+<section class="personal section section--band">
+  <div class="section__head reveal">
+    <span class="eyebrow">Personal</span>
+    <h2 class="section__title">Built on my <span class="gradient-text">own time</span></h2>
+    <p class="section__sub">Side projects and the builds I learned on. Source is public.</p>
+  </div>
+
+<div class="personal__grid">
+    <article class="card spotlight reveal" style="--d:0ms">
+      <span class="card__icon"><i class="bx bx-group"></i></span>
+      <h3>Nepal&ndash;Oita Community</h3>
+      <p>A live community site for Nepalis living in Oita and Beppu — events, notices and local guidance, with the data layer written as PostgreSQL procedures rather than pushed into the app.</p>
+      <span class="card__tags"><i>Next.js</i><i>TypeScript</i><i>PL/pgSQL</i><i>Shell</i></span>
+      <span class="card__links">
+        <a href="https://nepaloitacommunity.com" target="_blank" rel="noopener noreferrer"><i class="bx bx-link-external"></i>Live site</a>
+        <a href="https://github.com/SureshSurkheti/nepal-oita-community" target="_blank" rel="noopener noreferrer" class="is-muted"><i class="bx bxl-github"></i>Source</a>
+      </span>
+    </article>
+
+    <article class="card spotlight reveal" style="--d:80ms">
+      <span class="card__icon"><i class="bx bx-pen"></i></span>
+      <h3>Personal Blog</h3>
+      <p>My own blog on Django, where I write up what I'm learning. Build and deploy steps are wrapped in a Makefile so publishing a post is a single command.</p>
+      <span class="card__tags"><i>Python</i><i>Django</i><i>Makefile</i></span>
+      <span class="card__links">
+        <a href="https://sureshsurkheti.com" target="_blank" rel="noopener noreferrer"><i class="bx bx-link-external"></i>Live site</a>
+        <a href="https://github.com/SureshSurkheti/my-blog" target="_blank" rel="noopener noreferrer" class="is-muted"><i class="bx bxl-github"></i>Source</a>
+      </span>
+    </article>
+
+    <article class="card spotlight reveal" style="--d:160ms">
+      <span class="card__icon"><i class="bx bx-code-block"></i></span>
+      <h3>This Portfolio</h3>
+      <p>The site you're reading. No framework and no build step — hand-written HTML, CSS and vanilla JavaScript, with every animation done in the browser rather than pulled from a library.</p>
+      <span class="card__tags"><i>HTML</i><i>CSS</i><i>JavaScript</i></span>
+      <span class="card__links">
+        <a href="https://github.com/SureshSurkheti/portfolio" target="_blank" rel="noopener noreferrer" class="is-muted"><i class="bx bxl-github"></i>Source</a>
+      </span>
+    </article>
+  </div>
+
+<div class="early reveal">
+    <h3 class="early__title">Learning builds <span>&middot; while picking up Vue, Nuxt, TypeScript and Python</span></h3>
+    <ul class="early__list">
+      <li><strong>nuxtcurrencyapp</strong><span>Nuxt.js &middot; Vue</span></li>
+      <li><strong>cinemate</strong><span>Vue</span></li>
+      <li><strong>Shopiverse</strong><span>Vue</span></li>
+      <li><strong>randoms</strong><span>JavaScript</span></li>
+      <li><strong>ollama-local-mcp</strong><span>Python &middot; local MCP server for Ollama</span></li>
+    </ul>
+    <a href="https://github.com/SureshSurkheti" target="_blank" rel="noopener noreferrer" class="early__link">
+      <i class="bx bxl-github"></i> See these on GitHub
+    </a>
+  </div>
+
+  <div class="page-back">
+    <a href="/#work" class="btn btn--outline"><i class="bx bx-left-arrow-alt"></i><span>Back to portfolio</span></a>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <a href="/" class="logo logo--footer">
+      <span class="logo__mark">S</span><span class="logo__text">Suresh<em>.</em></span>
+    </a>
+    <nav class="footer__nav">
+      <a href="/#about">About</a>
+      <a href="/#services">Services</a>
+      <a href="/#work">Work</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <p class="footer__copy">© <span id="year">2026</span> Suresh Surkheti. Built with care.</p>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="bx bx-chevron-up"></i></button>
+
+<script src="assets/js/main.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://sureshsurkheti.com/projects#webpage",
+      "url": "https://sureshsurkheti.com/projects",
+      "name": "All Projects — Suresh Surkheti",
+      "description": "Every project by Suresh Surkheti — client work for Japanese municipalities and enterprises, plus personal and open-source builds.",
+      "isPartOf": {
+        "@id": "https://sureshsurkheti.com/#website"
+      },
+      "about": {
+        "@id": "https://sureshsurkheti.com/#person"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sureshsurkheti.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "All Projects",
+          "item": "https://sureshsurkheti.com/projects"
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Client projects",
+      "numberOfItems": 8,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Civil Land Regulation & GIS Portal"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Enterprise Asset Management Platform"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Mapping & Geolocation Engine"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Community & Volunteer Platform"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Smart City Citizen App"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "NTC Intercom App"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Municipal Voucher Issuance System"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "Office Equipment Tracking Tool"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

@@ -57,7 +57,10 @@
     const el = $('#typed');
     if (!el) return;
 
-    const roles = ['Full Stack Developer', 'Web Designer', 'Vue.js Developer', 'Laravel Developer', 'Freelancer'];
+    /* Four, not five, and each one says something. A rotation of bare technology
+       names ("TypeScript Developer") reads as a keyword list; pairing them tells
+       a visitor which half of the stack the line is describing. */
+    const roles = ['Software Engineer', 'Full Stack Developer', 'Vue & TypeScript Developer', 'Python & FastAPI Developer'];
     if (reduced) { el.textContent = roles[0]; return; }
 
     const TYPE = 70, ERASE = 34, HOLD = 1700, GAP = 420;
@@ -190,21 +193,27 @@
   const moreWrap = $('.work__more');
   const showAllBtn = $('#showAllProjects');
   const narrow = window.matchMedia('(max-width: 560px)');
-  const CAP = 3;
-  let expanded = false;
+  /* One screenful before the ask: two rows of three on desktop, three stacked
+     cards on a phone where each one is full width. */
+  const CAP_WIDE = 6, CAP_NARROW = 3;
+  /* Only cap where there is a way through to the rest. projects.html reuses this
+     grid to show everything, and has no such control — it must not hide cards. */
+  const capEnabled = !!showAllBtn;
 
-  /* On a phone six full-width cards run to roughly four screens. Show the first
-     few and let the visitor ask for the rest. Recomputed after every filter so
-     the cap always counts what is actually visible, not the original order. */
+  /* Recomputed after every filter so the cap always counts what is actually
+     visible, not the original order. */
   function applyCap() {
     if (!grid) return;
+    const cap = narrow.matches ? CAP_NARROW : CAP_WIDE;
     const visible = $$('.project', grid).filter(c => !c.classList.contains('hide'));
-    const capping = narrow.matches && !expanded;
-    visible.forEach((card, i) => card.classList.toggle('capped', capping && i >= CAP));
-    if (moreWrap) moreWrap.hidden = !(capping && visible.length > CAP);
+    const capping = capEnabled;
+    visible.forEach((card, i) => card.classList.toggle('capped', capping && i >= cap));
+    if (moreWrap) moreWrap.hidden = !(capping && visible.length > cap);
     if (showAllBtn) {
-      const hiddenCount = visible.length - CAP;
-      $('span', showAllBtn).textContent = `Show ${hiddenCount} more project${hiddenCount === 1 ? '' : 's'}`;
+      // the destination lists every project, so the count is the total — not the
+      // filtered subset, which would promise fewer than the page delivers
+      const total = $$('.project', grid).length;
+      $('span', showAllBtn).textContent = `See all ${total} projects`;
     }
   }
 
@@ -227,14 +236,7 @@
     });
   });
 
-  showAllBtn?.addEventListener('click', () => {
-    expanded = true;
-    applyCap();
-    // reveal the cards that were just un-capped
-    $$('.project.reveal', grid).forEach(c => c.classList.add('in'));
-  });
-
-  narrow.addEventListener('change', () => { expanded = false; applyCap(); });
+  narrow.addEventListener('change', applyCap);
   applyCap();
 
   /* ─────────── SPOTLIGHT CARDS ─────────── */
@@ -414,7 +416,12 @@
     });
   }
 
-  /* ─────────── CONTACT FORM ─────────── */
+  /* ─────────── CONTACT FORM ───────────
+     Vercel has no built-in form handling, so delivery goes through Formspree.
+     Paste your endpoint over YOUR_FORM_ID in index.html and messages start
+     arriving; until then the Send button falls back to opening the visitor's
+     own mail app, so nothing is ever silently dropped. */
+  const MAIL_TO = 'surkhetisuresh123@gmail.com';
   const form = $('#contactForm');
   const status = $('#formStatus');
   const submitBtn = $('#submitBtn');
@@ -447,9 +454,24 @@
     status.textContent = 'Sending…';
 
     try {
+      const fd = new FormData(form);
+
+      /* Nothing configured: hand the message to the visitor's own mail client
+         rather than POSTing it somewhere it would be silently lost. */
+      if (form.action.includes('YOUR_FORM_ID')) {
+        const subject = (fd.get('subject') || '').toString().trim() || 'Message from your portfolio';
+        const body = `Name: ${fd.get('name')}\nEmail: ${fd.get('email')}\n\n${fd.get('message')}`;
+        window.location.href = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        status.className = 'form__status ok';
+        status.textContent = 'Opening your email app with the message ready to send.';
+        submitBtn.classList.remove('loading');
+        if (icon && originalIcon) icon.className = originalIcon;
+        return;
+      }
+
       const res = await fetch(form.action, {
-        method: form.method,
-        body: new FormData(form),
+        method: 'POST',
+        body: fd,
         headers: { Accept: 'application/json' }
       });
       if (res.ok) {
@@ -462,7 +484,7 @@
       }
     } catch {
       status.className = 'form__status err';
-      status.textContent = 'Something went wrong. Please email surkhetisuresh123@gmail.com instead.';
+      status.textContent = `Something went wrong. Please email ${MAIL_TO} instead.`;
     } finally {
       submitBtn.classList.remove('loading');
       if (icon && originalIcon) icon.className = originalIcon;

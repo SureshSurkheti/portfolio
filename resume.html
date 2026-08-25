@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Suresh Surkheti — Full Stack Developer</title>
+<title>Résumé — Suresh Surkheti, Software Engineer</title>
+<meta name="description" content="Résumé of Suresh Surkheti — software engineer in Oita, Japan. Vue, Nuxt, TypeScript, Python and FastAPI across municipal and enterprise platforms.">
+<link rel="canonical" href="https://sureshsurkheti.com/resume">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://sureshsurkheti.com/resume">
+<meta property="og:site_name" content="Suresh Surkheti">
+<meta property="og:title" content="Résumé — Suresh Surkheti, Software Engineer">
+<meta property="og:description" content="Software engineer in Oita, Japan. Vue, Nuxt, TypeScript, Python and FastAPI across municipal and enterprise platforms.">
+<meta property="og:image" content="https://sureshsurkheti.com/assets/img/suresh-social.jpg">
 <!--
   ============================================================
   RESUME SOURCE — edit this file, then regenerate the PDF with:
@@ -23,36 +31,45 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #1a1f2e; font-size: 10.2pt; line-height: 1.5;
+    color: #1a1f2e; font-size: 10.2pt; line-height: 1.42;
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
   a { color: #0e7490; text-decoration: none; }
 
-  header { border-bottom: 2.5px solid #0e7490; padding-bottom: 10px; margin-bottom: 14px; }
+  header {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    border-bottom: 2.5px solid #0e7490; padding-bottom: 8px; margin-bottom: 11px;
+  }
+  .header__text { flex: 1; min-width: 0; }
+  /* 3:4 head-and-shoulders, the conventional CV proportion in Japan */
+  .photo {
+    flex-shrink: 0; width: 72px; height: 96px; object-fit: cover; object-position: 50% 12%;
+    border-radius: 4px; border: 1px solid #d8dde8;
+  }
   h1 { font-size: 22pt; letter-spacing: -.5px; line-height: 1.1; }
   .role { font-size: 11pt; color: #0e7490; font-weight: 600; margin-top: 2px; }
   .contact { margin-top: 8px; font-size: 9pt; color: #45506b; display: flex; flex-wrap: wrap; gap: 4px 14px; }
 
   h2 {
     font-size: 8.5pt; letter-spacing: 1.6px; text-transform: uppercase;
-    color: #0e7490; margin: 15px 0 7px; padding-bottom: 3px;
+    color: #0e7490; margin: 11px 0 5px; padding-bottom: 3px;
     border-bottom: 1px solid #d8dde8;
   }
   .summary { color: #333c52; }
 
-  .job { margin-bottom: 11px; }
+  .job { margin-bottom: 8px; }
   .job__top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
   .job__title { font-size: 10.8pt; font-weight: 700; }
   .job__date { font-size: 8.6pt; color: #67718a; white-space: nowrap; }
   .job__org { font-size: 9.4pt; color: #a21caf; font-weight: 600; margin-bottom: 3px; }
   ul.bullets { margin-left: 15px; }
-  ul.bullets li { margin-bottom: 2.5px; color: #333c52; }
+  ul.bullets li { margin-bottom: 1.5px; color: #333c52; }
 
   .stack { display: grid; grid-template-columns: 88px 1fr; gap: 4px 10px; font-size: 9.6pt; }
   .stack dt { font-weight: 700; color: #45506b; }
   .stack dd { color: #333c52; }
 
-  .proj { margin-bottom: 8px; }
+  .proj { margin-bottom: 6px; }
   .proj__name { font-weight: 700; font-size: 10.2pt; }
   .proj__meta { font-size: 8.8pt; color: #67718a; }
 </style>
@@ -60,101 +77,133 @@
 <body>
 
 <header>
+  <div class="header__text">
   <h1>Suresh Surkheti</h1>
-  <div class="role">Full Stack Developer</div>
+  <div class="role">Software Engineer</div>
   <div class="contact">
     <span>surkhetisuresh123@gmail.com</span>
     <span>090-4200-5405</span>
-    <span>Japan · Remote worldwide</span>
+    <span>Oita, Japan</span>
     <span>github.com/SureshSurkheti</span>
-    <span>linkedin.com/in/suresh-surkheti</span>
+    <span>linkedin.com/in/sureshsurkheti</span>
   </div>
+  </div>
+  <img class="photo" src="assets/img/suresh-cv.jpg" alt="Suresh Surkheti">
 </header>
 
 <h2>Summary</h2>
 <p class="summary">
-  Full stack developer with 3+ years building web products end to end — from responsive,
-  accessible interfaces to the Laravel and MySQL backends behind them. Experience spans small
-  business sites through to large corporate platforms, with a focus on performance, clean
-  architecture and code the next developer can maintain.
+  Software engineer with 4 years across Nepal and Japan. Currently a contract engineer at OEC Co., Ltd.
+  in Oita, Japan, delivering web platforms for Japanese municipalities and enterprise clients —
+  Vue, Nuxt and TypeScript on the front end, Python and FastAPI behind it, deployed on AWS with
+  Terraform and Docker.
 </p>
 
 <h2>Experience</h2>
 
 <div class="job">
-  <div class="job__top">
-    <span class="job__title">Full Stack Developer</span>
-    <span class="job__date">2024 — Present</span>
-  </div>
-  <div class="job__org">Freelance / Contract</div>
+  <h3>Software Engineer <span>&middot; Contract</span></h3>
+  <p class="meta">OEC Co., Ltd. &middot; Oita, Japan &middot; April 2024 &ndash; Present</p>
   <ul class="bullets">
-    <li>Design and ship end-to-end web products for clients across Nepal and Japan.</li>
-    <li>Build with Laravel, Vue.js and MySQL; handle deployment, DNS and ongoing maintenance.</li>
-    <li>Work directly with clients to scope requirements and deliver against fixed timelines.</li>
+    <li>Delivered 12+ projects for Japanese municipalities and enterprise clients, spanning GIS portals,
+        asset management, citizen apps and multi-district voucher systems.</li>
+    <li>Developed front ends in Vue.js, Nuxt.js and TypeScript with Tailwind, Vuetify and Pinia;
+        backends in Python and FastAPI.</li>
+    <li>Deployed and maintained these services on AWS &mdash; VPC, ECS/Fargate, Lambda, RDS, DynamoDB,
+        S3, CloudFront and API Gateway &mdash; provisioned with Terraform and Docker.</li>
+    <li>Worked to public-sector data and security requirements using IAM boundaries, KMS, Cognito
+        and Secrets Manager.</li>
+    <li>Wrote end-to-end coverage with Playwright and unit tests with Pytest.</li>
   </ul>
 </div>
 
 <div class="job">
-  <div class="job__top">
-    <span class="job__title">Web Developer</span>
-    <span class="job__date">2023 — 2024</span>
-  </div>
-  <div class="job__org">Prabidhi Lab</div>
+  <h3>Intern &rarr; Junior Python Developer</h3>
+  <p class="meta">Prabidhi Labs &middot; Nepal &middot; August 2022 &ndash; January 2024</p>
   <ul class="bullets">
-    <li>Built and maintained corporate websites and internal tools used daily by staff.</li>
-    <li>Led front-end rewrites that improved page load and reduced template duplication.</li>
-    <li>Mentored two junior developers on Git workflow and code review.</li>
-  </ul>
-</div>
-
-<div class="job">
-  <div class="job__top">
-    <span class="job__title">Junior Developer</span>
-    <!-- TODO: name the agency -->
-    <span class="job__date">2022 — 2023</span>
-  </div>
-  <div class="job__org">Agency work</div>
-  <ul class="bullets">
-    <li>Started with WordPress theme development and PHP maintenance.</li>
-    <li>Grew into full front-end ownership of client projects.</li>
+    <li>Contributed to client projects as a junior Python developer.</li>
+    <li>Built REST APIs with Django and Django REST Framework.</li>
+    <li>Developed mobile applications in React Native and web front ends in HTML, CSS and Bootstrap.</li>
+    <li>Worked with Figma for design handoff and Git for version control.</li>
   </ul>
 </div>
 
 <h2>Technical Skills</h2>
-<dl class="stack">
-  <dt>Frontend</dt><dd>HTML5, CSS3/SCSS, JavaScript (ES6+), Vue.js, Tailwind CSS</dd>
-  <dt>Backend</dt><dd>PHP, Laravel, CodeIgniter, CakePHP, Python, REST APIs</dd>
-  <dt>Data &amp; CMS</dt><dd>MySQL, WordPress, Joomla, Magento</dd>
-  <dt>Tooling</dt><dd>Git, Figma, Linux / CLI, Lighthouse</dd>
-</dl>
-
-<h2>Selected Projects</h2>
-<!-- TODO: replace with your real projects and live URLs -->
-<div class="proj">
-  <div class="proj__name">E-commerce Platform</div>
-  <div class="proj__meta">Laravel · MySQL · Stripe — multi-vendor storefront with payments,
-    inventory and an admin panel. Handles 200+ orders a month across 12 vendors.</div>
-</div>
-<div class="proj">
-  <div class="proj__name">Analytics Dashboard</div>
-  <div class="proj__meta">Vue.js · Laravel · Chart.js — real-time reporting with role-based
-    access and CSV export. Cut weekly reporting time from four hours to minutes.</div>
-</div>
-<div class="proj">
-  <div class="proj__name">Corporate Website</div>
-  <div class="proj__meta">WordPress · PHP · ACF — custom theme with a block-based editor,
-    letting the marketing team publish without developer help.</div>
+<div class="stack">
+  <p><strong>Frontend:</strong> JavaScript, TypeScript, Vue.js, Nuxt.js, Next.js, Svelte, Tailwind CSS, Vuetify, Pinia</p>
+  <p><strong>Backend:</strong> Python, FastAPI, Django, REST APIs</p>
+  <p><strong>Cloud &amp; Infrastructure:</strong> AWS (VPC, Route&nbsp;53, CloudFront, WAF, EC2, ACM, ECS, Fargate,
+     S3, Lambda, RDS, DynamoDB, IAM, KMS, Secrets Manager, Cognito, CloudWatch, API Gateway),
+     Terraform, Docker</p>
+  <p><strong>Databases:</strong> MySQL, PostgreSQL, DynamoDB</p>
+  <p><strong>Testing:</strong> Playwright, Pytest</p>
+  <p><strong>Mobile:</strong> Objective-C, Xcode, React Native</p>
 </div>
 
 <h2>Education</h2>
 <div class="job">
-  <div class="job__top">
-    <span class="job__title">Bachelor's in Computer Science &amp; IT</span>
-    <span class="job__date">TODO: years</span>
-  </div>
-  <!-- TODO: replace with your institution -->
-  <div class="job__org">Your university name</div>
+  <h3>BE in Information Technology (BEIT)</h3>
+  <p class="meta">Everest Engineering College, Sanepa, Lalitpur &middot; Pokhara University &middot; 2017 &ndash; 2022</p>
 </div>
 
+<h2>Selected Projects</h2>
+<div class="proj">
+  <h3>Civil Land Regulation &amp; GIS Portal <span>&middot; Regional Japanese prefecture &middot; Full-Stack Engineer</span></h3>
+  <p>GIS and public safety portal monitoring land-use and embankment safety regulations,
+     with isolated network layers meeting public-sector data standards.
+     <em>FastAPI, Vue.js, Nuxt.js, Vuetify, Terraform, Docker &middot; VPC, EC2, S3, RDS, CloudWatch, IAM</em></p>
+</div>
+<div class="proj">
+  <h3>Enterprise Asset Management Platform <span>&middot; Major domestic conglomerate &middot; Frontend Developer</span></h3>
+  <p>High-availability equipment tracking and asset lifecycle system consolidating scattered inventory
+     workflows into a single dashboard.
+     <em>JavaScript, Vue.js, Pinia, Tailwind</em></p>
+</div>
+<div class="proj">
+  <h3>Mapping &amp; Geolocation Engine <span>&middot; Tier-1 Japanese mapping corporation &middot; Full-Stack Engineer</span></h3>
+  <p>Core management engine moving spatial data pipelines onto containerised microservices.
+     <em>Vue.js, TypeScript, FastAPI, Tailwind, Terraform, Docker &middot; Cognito, S3, DynamoDB</em></p>
+</div>
+<div class="proj">
+  <h3>Municipal Voucher Issuance System <span>&middot; Consortium of 4+ municipalities &middot; Full-Stack Engineer</span></h3>
+  <p>Multi-tenant digital gift voucher platform securing high-volume ledger transactions with managed
+     cryptographic keys.
+     <em>TypeScript, Vue.js, Nuxt.js, Pinia, Tailwind &middot; VPC, RDS, ELB, CloudWatch, KMS, ACM</em></p>
+</div>
+<div class="proj">
+  <h3>Smart City Citizen App <span>&middot; Municipal Japanese government body &middot; iOS Developer</span></h3>
+  <p>Official iOS client for a city-wide smart-city app, with local caching keeping civic calendars and
+     event listings readable offline.
+     <em>Objective-C, Xcode, iOS SDK</em></p>
+</div>
+<div class="proj">
+  <h3>Community &amp; Volunteer Platform <span>&middot; Prefectural social initiatives office &middot; Full-Stack Engineer</span></h3>
+  <p>Volunteer recruitment and community coordination portal for a regional prefecture, with SEO-focused
+     public pages and access-scoped private records.
+     <em>Vue.js, FastAPI, Terraform, Docker &middot; Cognito, IAM, S3, DynamoDB</em></p>
+</div>
+<div class="proj">
+  <h3>Office Equipment Tracking Tool <span>&middot; Administrative office network &middot; Full-Stack Developer</span></h3>
+  <p>Internal logistics tool logging office supplies and IT equipment across several workspaces.
+     <em>TypeScript, JavaScript, Vue.js, Terraform, Docker &middot; DynamoDB</em></p>
+</div>
+<div class="proj">
+  <h3>NTC Intercom App <span>&middot; NTC &middot; Frontend Developer</span></h3>
+  <p>Intercom web application built in Svelte.
+     <em>Svelte, JavaScript</em></p>
+</div>
+
+<h2>Personal Projects</h2>
+<div class="proj">
+  <h3>Nepal&ndash;Oita Community <span>&middot; nepaloitacommunity.com</span></h3>
+  <p>Live community site for Nepalis in Oita and Beppu &mdash; events, notices and local guidance.
+     <em>Next.js, TypeScript, PL/pgSQL, Shell</em></p>
+</div>
+<div class="proj">
+  <h3>Other personal work <span>&middot; github.com/SureshSurkheti</span></h3>
+  <p>Django blog with a Makefile publish flow, a no-framework portfolio in plain HTML/CSS/JS, and
+     learning builds in Vue and Nuxt &mdash; plus ollama-local-mcp, a local MCP server for Ollama.
+     <em>Python, Django, Vue, Nuxt.js, JavaScript</em></p>
+</div>
 </body>
 </html>
