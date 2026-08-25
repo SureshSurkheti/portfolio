@@ -637,10 +637,11 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 }
 
 /* ─────────────── SKILLS ─────────────── */
-/* Explicit two-up rather than auto-fit: the full-width AI panel spans every
-   track, which stops auto-fit collapsing the ones the two stack panels do not
-   use — that left a whole empty column of dead space on wide screens. */
-.skills__grid { display: grid; grid-template-columns: 1fr; gap: 1.6rem; }
+/* align-items:start is the point here. Grid items stretch by default, which
+   made the short AWS panel match the tall Tech Stack panel and carry ~500px of
+   empty space inside its own border. Now each panel ends where its content
+   ends, and the AI panel runs full width beneath both. */
+.skills__grid { display: grid; grid-template-columns: 1fr; gap: 1.6rem; align-items: start; }
 @media (min-width: 880px) { .skills__grid { grid-template-columns: 1fr 1fr; } }
 .skills__panel--wide { grid-column: 1 / -1; }
 .skills__panel {
