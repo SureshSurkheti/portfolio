@@ -637,13 +637,11 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 }
 
 /* ─────────────── SKILLS ─────────────── */
-/* align-items:start is the point here. Grid items stretch by default, which
-   made the short AWS panel match the tall Tech Stack panel and carry ~500px of
-   empty space inside its own border. Now each panel ends where its content
-   ends, and the AI panel runs full width beneath both. */
-.skills__grid { display: grid; grid-template-columns: 1fr; gap: 1.6rem; align-items: start; }
-@media (min-width: 880px) { .skills__grid { grid-template-columns: 1fr 1fr; } }
-.skills__panel--wide { grid-column: 1 / -1; }
+/* Three full-width bands rather than two side-by-side columns. Tech Stack and
+   AWS hold very different amounts of content, so any two-column split leaves a
+   hole beside the shorter one. Stacking them and letting each panel column its
+   own groups internally uses the full width and removes the balancing act. */
+.skills__grid { display: grid; grid-template-columns: 1fr; gap: 1.6rem; }
 .skills__panel {
   padding: clamp(1.6rem, 4vw, 2.4rem); border-radius: var(--r-lg);
   border: 1px solid var(--stroke); background: var(--surface); backdrop-filter: blur(12px);
@@ -656,7 +654,11 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 /* ── Tech stack: grouped, honest, no invented percentages ── */
 /* Full-width rows of chips read far better than four narrow list columns,
    and the tinted icon tile makes a generic fallback glyph look deliberate. */
-.stack { display: flex; flex-direction: column; gap: 1.35rem; flex: 1; }
+/* Multi-column, not grid: five groups of unequal height leave empty cells in a
+   fixed grid, whereas columns balance the flow and fill every one. */
+.stack { columns: 300px 3; column-gap: 2.2rem; }
+.stack__group { break-inside: avoid; margin-bottom: 1.5rem; }
+.stack__group:last-child { margin-bottom: 0; }
 .stack__group h4 {
   font-family: var(--font-mono); font-size: .7rem; letter-spacing: .16em;
   text-transform: uppercase; color: var(--ink-accent); margin-bottom: .7rem;
@@ -695,7 +697,9 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 
 /* ── AWS services ── */
 .skills__note { font-size: .86rem; color: var(--text-mute); margin: -.9rem 0 1.4rem; }
-.aws-grid { display: flex; flex-direction: column; gap: 1.25rem; }
+.aws-grid { columns: 225px 4; column-gap: 2.2rem; }
+.aws-group { break-inside: avoid; margin-bottom: 1.35rem; }
+.aws-group:last-child { margin-bottom: 0; }
 .aws-group h4 {
   font-family: var(--font-mono); font-size: .68rem; letter-spacing: .16em;
   text-transform: uppercase; color: var(--ink-accent); margin-bottom: .55rem;
@@ -1087,8 +1091,12 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 
   .cursor-dot, .cursor-ring { display: none; }
 
-  /* sideways reveals would push past the viewport edge on narrow screens */
-  .reveal[data-reveal="left"], .reveal[data-reveal="right"] { transform: translateY(34px); }
+  /* Sideways reveals would push past the viewport edge on narrow screens.
+     :not(.in) matters — without it this ties with `.reveal.in { transform: none }`
+     on specificity, wins on source order, and pins the element 34px down forever
+     once it has revealed, overlapping whatever follows it. */
+  .reveal[data-reveal="left"]:not(.in),
+  .reveal[data-reveal="right"]:not(.in) { transform: translateY(34px); }
 }
 
 @media (max-width: 560px) {
@@ -1106,11 +1114,12 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   .card {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-areas: "icon title" "body body" "tags tags";
+    grid-template-areas: "icon title" "body body" "tags tags" "links links";
     align-items: center;
     column-gap: .9rem;
     padding: 1.5rem 1.35rem;
   }
+  .card__links { grid-area: links; }
   .card__icon {
     grid-area: icon; width: 48px; height: 48px;
     font-size: 1.4rem; border-radius: 14px; margin-bottom: 0;
@@ -1119,20 +1128,11 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   .card p { grid-area: body; margin-top: .85rem; }
   .card__tags { grid-area: tags; margin-top: 0; padding-top: .9rem; }
 
-  /* Filters as one swipeable row — five pills wrapped to two ragged lines. */
-  .filters {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    margin-inline: calc(var(--pad-x) * -1);
-    padding-inline: var(--pad-x);
-    padding-bottom: .4rem;
-  }
-  .filters::-webkit-scrollbar { display: none; }
-  .filter { flex: 0 0 auto; scroll-snap-align: start; }
+  /* Wrapped and centred, not a swipeable strip. Five filters is few enough to
+     show at once, and a row that clips at the screen edge hides options the
+     visitor then never uses. */
+  .filters { flex-wrap: wrap; justify-content: center; gap: .45rem; margin-bottom: 2rem; }
+  .filter { flex: 0 0 auto; }
 
 
   .project__body { padding: 1.15rem 1.15rem 1.25rem; gap: .5rem; }
@@ -1158,7 +1158,9 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   .stats { grid-template-columns: 1fr; }
   .stat + .stat::before { display: none; }
   .filters { gap: .35rem; }
-  .filter { padding: .45rem 1rem; font-size: .82rem; }
+  /* horizontal padding only — the pill keeps its height, so the tap target
+     does not shrink, but three filters now fit on the first line */
+  .filter { padding: .45rem .78rem; font-size: .82rem; }
 }
 
 /* short landscape phones */
