@@ -203,7 +203,7 @@ h1, h2, h3, h4, h5, .stat__num { font-family: var(--font-head); font-weight: 700
      size down to ~330px. Below that it wraps, and because the letters are grouped
      per word it breaks between SURESH and SURKHETI rather than mid-word. */
   display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-  gap: .1em 1em;                          /* generous space between the two words */
+  gap: .1em .7em;                         /* space between the two words */
   font-family: var(--font-head); font-size: clamp(1.5rem, 6vw, 2.6rem);
   font-weight: 800; letter-spacing: .16em;
 }
@@ -1020,7 +1020,9 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
    which is what made the three alignments read as unresolved. */
 .footer__copy {
   grid-area: copy; text-align: center;
-  padding-top: 1.4rem; border-top: 1px solid var(--stroke);
+  /* --stroke-str, not --stroke: the ambient blob washes a purple gradient across
+     this part of the footer and a 10%-white rule vanishes into it. */
+  padding-top: 1.4rem; border-top: 1px solid var(--stroke-str);
 }
 .footer__nav { display: flex; flex-wrap: wrap; gap: 1.3rem; }
 .footer__nav a { font-size: .93rem; color: var(--text-dim); position: relative; transition: color .3s; }
