@@ -571,6 +571,18 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   object-fit: cover; object-position: 50% 0; border-radius: var(--r-lg);
   border: 1px solid var(--stroke); box-shadow: var(--shadow);
 }
+/* Two-column only. The photo carries a fixed 3:2 ratio, so its height is locked
+   to its width — as the viewport narrows the copy reflows taller while the image
+   stays put, which is what left it looking stranded. Stretching the row and
+   letting the image fill it keeps the two columns the same height at every size.
+   Scoped to >=1101px: once stacked, matching the text height would be absurd. */
+@media (min-width: 1101px) {
+  .about__grid  { align-items: stretch; }
+  .about__visual { height: 100%; }
+  .about__frame { height: 100%; }
+  .about__frame img { height: 100%; aspect-ratio: auto; min-height: 360px; }
+}
+
 .about__frame::before, .about__frame::after {
   content: ""; position: absolute; width: 42%; height: 42%;
   border-radius: var(--r-lg); pointer-events: none; opacity: .75;
@@ -1144,7 +1156,7 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   .home__desc { margin-inline: auto; }
   .avatar { width: clamp(210px, 46vw, 300px); --chip-r: 58%; --chip-size: 42px; }
   .about__grid { grid-template-columns: 1fr; }
-  .about__visual { max-width: 380px; margin: 0 auto; }
+  .about__visual { max-width: 560px; margin: 0 auto; }
   .contact__grid { grid-template-columns: 1fr; }
 }
 
