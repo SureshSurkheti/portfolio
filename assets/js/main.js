@@ -31,8 +31,6 @@
 
   /* ─────────── PRELOADER ─────────── */
   const preloader = $('#preloader');
-  const prePct = $('.preloader__pct');
-  let pct = 0;
 
   /* The fourteen letters finish landing at 13 × 35ms + 500ms ≈ 0.96s, so hold
      the loader past that and let the finished name sit for a beat. Without a
@@ -40,14 +38,7 @@
   const MIN_VISIBLE = 1100;
   const shownAt = performance.now();
 
-  const tick = setInterval(() => {
-    pct = Math.min(pct + (pct < 70 ? 9 : 4), 96);
-    if (prePct) prePct.textContent = Math.round(pct) + '%';
-  }, 70);
-
   const finishLoad = () => {
-    clearInterval(tick);
-    if (prePct) prePct.textContent = '100%';
     // Never hold someone who asked for reduced motion.
     const wait = reduced ? 0 : Math.max(380, MIN_VISIBLE - (performance.now() - shownAt));
     setTimeout(() => {

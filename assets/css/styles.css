@@ -225,7 +225,6 @@ h1, h2, h3, h4, h5, .stat__num { font-family: var(--font-head); font-weight: 700
 .preloader__ltr:nth-child(5) { --n: 5 } .preloader__ltr:nth-child(6) { --n: 6 }
 .preloader__ltr:nth-child(7) { --n: 7 } .preloader__ltr:nth-child(8) { --n: 8 }
 
-.preloader__pct { margin-top: 1.1rem; font-family: var(--font-mono); font-size: .78rem; color: var(--text-mute); letter-spacing: .1em; }
 @keyframes popIn { from { opacity: 0; transform: translateY(18px) scale(.85) } to { opacity: 1; transform: none } }
 @keyframes floatY { 50% { transform: translateY(-8px) } }
 
