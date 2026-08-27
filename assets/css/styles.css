@@ -1038,10 +1038,13 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   .footer__inner {
     grid-template-columns: 1fr;
     grid-template-areas: "logo" "nav" "copy";
-    justify-items: center; text-align: center; row-gap: 1.1rem;
+    text-align: center; row-gap: 1.1rem;
   }
-  /* stretch it back so the rule still spans the column */
-  .footer__copy { justify-self: stretch; }
+  /* justify-self on an item always beats justify-items on the container, so the
+     start/end values set above have to be reset by name — otherwise the logo
+     stays pinned left and the nav pinned right even once they are stacked. */
+  .footer__inner .logo--footer, .footer__nav { justify-self: center; }
+  .footer__copy { justify-self: stretch; }   /* so the rule spans the column */
 }
 
 .to-top {
