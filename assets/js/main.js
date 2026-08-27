@@ -473,16 +473,16 @@
 
       /* Nothing configured: hand the message to the visitor's own mail client
          rather than POSTing it somewhere it would be silently lost. */
-      if (form.action.includes('xwvnkykd')) {
-        const subject = (fd.get('subject') || '').toString().trim() || 'Message from your portfolio';
-        const body = `Name: ${fd.get('name')}\nEmail: ${fd.get('email')}\n\n${fd.get('message')}`;
-        window.location.href = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        status.className = 'form__status ok';
-        status.textContent = 'Thanks for reaching out — I\'ll reply within 24 hours.';
-        submitBtn.classList.remove('loading');
-        if (icon && originalIcon) icon.className = originalIcon;
-        return;
-      }
+      // if (form.action.includes('xwvnkykd')) {
+      //   const subject = (fd.get('subject') || '').toString().trim() || 'Message from your portfolio';
+      //   const body = `Name: ${fd.get('name')}\nEmail: ${fd.get('email')}\n\n${fd.get('message')}`;
+      //   window.location.href = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      //   status.className = 'form__status ok';
+      //   status.textContent = 'Thanks for reaching out — I\'ll reply within 24 hours.';
+      //   submitBtn.classList.remove('loading');
+      //   if (icon && originalIcon) icon.className = originalIcon;
+      //   return;
+      // }
 
       const res = await fetch(form.action, {
         method: 'POST',
