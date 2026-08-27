@@ -197,16 +197,28 @@ h1, h2, h3, h4, h5, .stat__num { font-family: var(--font-head); font-weight: 700
   transition: opacity .7s var(--ease), visibility .7s;
 }
 .preloader.done { opacity: 0; visibility: hidden; }
-.preloader__inner { text-align: center; width: min(320px, 70vw); }
-.preloader__name { display: flex; justify-content: center; gap: .08em; font-family: var(--font-head); font-size: clamp(1.8rem, 7vw, 2.8rem); font-weight: 800; letter-spacing: .16em; }
-.preloader__name span {
-  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: popIn .6s var(--ease) both, floatY 2.4s ease-in-out infinite;
-  animation-delay: calc(.07s * var(--n, 0)), calc(.07s * var(--n, 0));
+.preloader__inner { text-align: center; width: min(460px, 82vw); }
+.preloader__name {
+  /* Stacked on purpose, at every width. Left to wrap, the two words fit on one
+     line at phone sizes but overflow by a few pixels on desktop — so the layout
+     would flip the wrong way round. A column is consistent and reads as a title. */
+  display: flex; flex-direction: column; align-items: center; gap: .1em;
+  font-family: var(--font-head); font-size: clamp(1.5rem, 6vw, 2.6rem);
+  font-weight: 800; letter-spacing: .16em;
 }
-.preloader__name span:nth-child(1) { --n: 1 } .preloader__name span:nth-child(2) { --n: 2 }
-.preloader__name span:nth-child(3) { --n: 3 } .preloader__name span:nth-child(4) { --n: 4 }
-.preloader__name span:nth-child(5) { --n: 5 } .preloader__name span:nth-child(6) { --n: 6 }
+/* Letters grouped per word. --o continues the stagger across the line break so
+   all fourteen read as one sweep rather than two separate runs. */
+.preloader__word { display: flex; gap: .08em; }
+.preloader__word:nth-child(2) { --o: 6; }
+.preloader__ltr {
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: popIn .5s var(--ease) both, floatY 2.4s ease-in-out infinite;
+  animation-delay: calc(.035s * (var(--n, 0) + var(--o, 0))), calc(.035s * (var(--n, 0) + var(--o, 0)));
+}
+.preloader__ltr:nth-child(1) { --n: 1 } .preloader__ltr:nth-child(2) { --n: 2 }
+.preloader__ltr:nth-child(3) { --n: 3 } .preloader__ltr:nth-child(4) { --n: 4 }
+.preloader__ltr:nth-child(5) { --n: 5 } .preloader__ltr:nth-child(6) { --n: 6 }
+.preloader__ltr:nth-child(7) { --n: 7 } .preloader__ltr:nth-child(8) { --n: 8 }
 .preloader__bar { margin: 1.4rem 0 .6rem; height: 3px; border-radius: 99px; background: var(--stroke); overflow: hidden; }
 .preloader__bar i { display: block; height: 100%; width: 0; background: var(--grad); box-shadow: var(--glow); transition: width .25s linear; }
 .preloader__pct { font-family: var(--font-mono); font-size: .78rem; color: var(--text-mute); letter-spacing: .1em; }
