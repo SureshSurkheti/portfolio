@@ -552,23 +552,7 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 @keyframes slide { to { transform: translateX(-50%) } }
 
 /* ─────────────── ABOUT ─────────────── */
-.about__grid {
-    display: grid;
-    grid-template-columns: 1.05fr .95fr;
-    gap: clamp(2.5rem, 4vw, 4rem);
-    align-items: center;
-}
-
-.about__frame img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    object-position: 50% 0;
-    border-radius: var(--r-lg);
-    border: 1px solid var(--stroke);
-    box-shadow: var(--shadow);
-}
+.about__grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
 
 .about__frame { position: relative; border-radius: var(--r-lg); }
 .about__frame img {
