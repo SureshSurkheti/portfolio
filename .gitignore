@@ -1,3 +1,4 @@
 # Local working files — not part of the deployed site
 github-setup/
 .DS_Store
+tools/.venv/

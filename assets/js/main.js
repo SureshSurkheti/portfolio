@@ -11,9 +11,17 @@
 
   /* ─────────── THEME ─────────── */
   const root = document.documentElement;
-  // Light is the default; dark only when the visitor has chosen it before.
+  /* The inline bootstrap in <head> has already applied the right theme —
+     saved choice first, OS preference otherwise. Don't clobber it here.
+     Only follow later OS changes while the visitor has made no explicit choice. */
   const savedTheme = (() => { try { return localStorage.getItem('theme'); } catch { return null; } })();
-  root.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+  if (!savedTheme) {
+    const dark = window.matchMedia('(prefers-color-scheme: dark)');
+    dark.addEventListener?.('change', e => {
+      try { if (localStorage.getItem('theme')) return; } catch { /* private mode */ }
+      root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+    });
+  }
 
   $('#themeToggle')?.addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';

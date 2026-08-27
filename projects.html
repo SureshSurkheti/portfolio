@@ -2,6 +2,17 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
+  <script>
+    /* Synchronous and inline on purpose: this must run before the first paint.
+       A deferred script would let a dark-mode visitor see a flash of white.
+       An explicit choice in localStorage always wins over the OS setting. */
+    try {
+      var t = localStorage.getItem('theme');
+      document.documentElement.setAttribute('data-theme',
+        t === 'dark' || t === 'light' ? t
+          : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    } catch (e) { /* private mode — the markup default stands */ }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Every project by Suresh Surkheti — client work for Japanese municipalities and enterprises, plus personal and open-source builds.">
   <meta name="author" content="Suresh Surkheti">
@@ -35,7 +46,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/boxicons-subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/boxicons-subset.css">
   <link rel="stylesheet" href="assets/css/styles.css">
   <noscript>
     <style>
