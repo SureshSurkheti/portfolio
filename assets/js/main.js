@@ -478,7 +478,7 @@
         const body = `Name: ${fd.get('name')}\nEmail: ${fd.get('email')}\n\n${fd.get('message')}`;
         window.location.href = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         status.className = 'form__status ok';
-        status.textContent = 'Opening your email app with the message ready to send.';
+        status.textContent = 'Thanks for reaching out — I\'ll reply within 24 hours.';
         submitBtn.classList.remove('loading');
         if (icon && originalIcon) icon.className = originalIcon;
         return;
