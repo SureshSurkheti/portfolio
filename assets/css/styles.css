@@ -552,7 +552,16 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 @keyframes slide { to { transform: translateX(-50%) } }
 
 /* ─────────────── ABOUT ─────────────── */
-.about__grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+/* minmax floors the image column: as a bare .85fr it tracked the viewport down
+   to 414px at 1200px wide, while the text column kept its size because the copy
+   holds it open. The floor only bites below ~1300px — wider than that the fr
+   already exceeds it and nothing changes. */
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(420px, .85fr) 1.15fr;
+  gap: clamp(2rem, 4.5vw, 5rem);
+  align-items: center;
+}
 
 .about__frame { position: relative; border-radius: var(--r-lg); }
 .about__frame img {
@@ -594,6 +603,11 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .about__list li { display: flex; align-items: center; gap: .6rem; font-size: .95rem; color: var(--text-dim); }
 .about__list i { color: var(--c1); font-size: 1.25rem; flex-shrink: 0; }
 .about__actions { display: flex; flex-wrap: wrap; gap: .9rem; }
+@media (max-width: 620px) {
+  /* Side by side they only covered 304px of a 368px row, which left the pair
+     looking left-aligned under full-width text. Sharing the row squares them up. */
+  .about__actions .btn { flex: 1 1 0; justify-content: center; }
+}
 
 .stats {
   margin-top: clamp(3rem, 8vw, 5rem);
