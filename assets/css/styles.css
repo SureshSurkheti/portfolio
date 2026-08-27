@@ -1000,30 +1000,38 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 
 /* ─────────────── FOOTER ─────────────── */
 .footer { border-top: 1px solid var(--stroke); background: var(--surface); padding: 2.5rem var(--pad-x); }
-/* Two rows, each holding exactly two items anchored left and right. Three items
-   on one row forced a choice between a centred nav and even gaps — with two per
-   row there is nothing to compromise, and both rows share the same alignment
-   instead of mixing left, right and centre in one small block. */
-.footer__inner, .footer__base {
-  display: flex; flex-wrap: wrap; align-items: center;
-  justify-content: space-between; gap: .7rem 1.5rem;
+/* Two rows. On one row the copyright can sit at the true centre or have equal
+   gaps either side, but not both — the logo is 116px wide and the copyright 258px,
+   so one of the two always looks off. Splitting the rows removes the choice. */
+.footer__inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "logo nav"
+    "copy copy";
+  align-items: center;
+  column-gap: 1.2rem;
+  row-gap: 1.7rem;
 }
-.footer__base {
-  margin-top: 1.6rem; padding-top: 1.4rem;
-  border-top: 1px solid var(--stroke);
-}
+.footer__inner .logo--footer { grid-area: logo; justify-self: start; }
+.footer__nav  { grid-area: nav;  justify-self: end; }
+.footer__copy { grid-area: copy; justify-self: center; text-align: center; }
 .footer__nav { display: flex; flex-wrap: wrap; gap: 1.3rem; }
 .footer__nav a { font-size: .93rem; color: var(--text-dim); position: relative; transition: color .3s; }
 .footer__nav a::after { content: ""; position: absolute; left: 0; bottom: -3px; width: 0; height: 1.5px; background: var(--grad); transition: width .35s var(--ease); }
 .footer__nav a:hover { color: var(--text); }
 .footer__nav a:hover::after { width: 100%; }
-.footer__copy, .footer__built { font-size: .85rem; color: var(--text-mute); }
+.footer__copy { font-size: .85rem; color: var(--text-mute); }
 
 /* The three parts sit on one line while they fit. Below ~840px the copyright
    wrapped to a second row and space-between left it hard against the left edge,
    which read as a mistake — so stack and centre instead of letting it wrap. */
 @media (max-width: 840px) {
-  .footer__inner, .footer__base { flex-direction: column; text-align: center; }
+  .footer__inner {
+    grid-template-columns: 1fr;
+    grid-template-areas: "logo" "nav" "copy";
+    justify-items: center; text-align: center; row-gap: 1.2rem;
+  }
 }
 
 .to-top {
