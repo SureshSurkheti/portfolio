@@ -90,7 +90,7 @@
   --stroke-str: rgba(9, 14, 32, .26);
   --text: #0d1226;
   --text-dim: #45506b;
-  --text-mute: #67718a;
+  --text-mute: #636c84;  /* was #67718a — 4.24:1 on section bg, just under AA */
   --shadow: 0 24px 60px -26px rgba(20, 30, 70, .28);
   --shadow-card: 0 10px 28px -14px rgba(19, 28, 64, .16), 0 2px 6px -2px rgba(19, 28, 64, .07);
   --shadow-card-hi: 0 26px 50px -20px rgba(19, 28, 64, .24), 0 4px 12px -4px rgba(19, 28, 64, .10);
