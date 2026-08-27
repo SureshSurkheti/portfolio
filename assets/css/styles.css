@@ -559,6 +559,17 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
     align-items: center;
 }
 
+.about__frame img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    object-position: 50% 0;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--stroke);
+    box-shadow: var(--shadow);
+}
+
 .about__frame { position: relative; border-radius: var(--r-lg); }
 .about__frame img {
   /* height:auto is required — the img's height attribute is a presentational
