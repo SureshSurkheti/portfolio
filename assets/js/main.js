@@ -561,7 +561,4 @@
     } catch { /* leave it hidden */ }
   })();
 
-  /* ─────────── MISC ─────────── */
-  const year = $('#year');
-  if (year) year.textContent = String(new Date().getFullYear());
 })();
