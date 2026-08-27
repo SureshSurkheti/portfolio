@@ -992,7 +992,10 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 #submitBtn.loading i { animation: spin 1s linear infinite; }
 
 /* ─────────────── FOOTER ─────────────── */
-.footer { border-top: 1px solid var(--stroke); background: var(--surface); padding: 2.5rem var(--pad-x); }
+/* Extra bottom padding is deliberate: .to-top is fixed at bottom-right and
+   occupies the last ~70px of the viewport, so without it the button lands on
+   the copyright line once you reach the end of the page. */
+.footer { border-top: 1px solid var(--stroke); background: var(--surface); padding: 2.5rem var(--pad-x) 5.5rem; }
 .footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem; }
 .footer__nav { display: flex; flex-wrap: wrap; gap: 1.3rem; }
 .footer__nav a { font-size: .93rem; color: var(--text-dim); position: relative; transition: color .3s; }
@@ -1000,6 +1003,13 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .footer__nav a:hover { color: var(--text); }
 .footer__nav a:hover::after { width: 100%; }
 .footer__copy { font-size: .85rem; color: var(--text-mute); }
+
+/* The three parts sit on one line while they fit. Below ~840px the copyright
+   wrapped to a second row and space-between left it hard against the left edge,
+   which read as a mistake — so stack and centre instead of letting it wrap. */
+@media (max-width: 840px) {
+  .footer__inner { flex-direction: column; text-align: center; }
+}
 
 .to-top {
   position: fixed; right: 1.35rem; bottom: 1.35rem; z-index: 140;
@@ -1157,7 +1167,6 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   .about__badge { right: -.4rem; bottom: 1rem; padding: .7rem .9rem; }
   .about__badge strong { font-size: 1.5rem; }
   .stats { grid-template-columns: repeat(2, 1fr); }
-  .footer__inner { flex-direction: column; text-align: center; }
   .scroll-hint { display: none; }
   .to-top { right: 1rem; bottom: 1rem; width: 44px; height: 44px; }
 }
