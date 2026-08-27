@@ -31,7 +31,6 @@
 
   /* ─────────── PRELOADER ─────────── */
   const preloader = $('#preloader');
-  const preBar = $('.preloader__bar i');
   const prePct = $('.preloader__pct');
   let pct = 0;
 
@@ -43,13 +42,11 @@
 
   const tick = setInterval(() => {
     pct = Math.min(pct + (pct < 70 ? 9 : 4), 96);
-    if (preBar) preBar.style.width = pct + '%';
     if (prePct) prePct.textContent = Math.round(pct) + '%';
   }, 70);
 
   const finishLoad = () => {
     clearInterval(tick);
-    if (preBar) preBar.style.width = '100%';
     if (prePct) prePct.textContent = '100%';
     // Never hold someone who asked for reduced motion.
     const wait = reduced ? 0 : Math.max(380, MIN_VISIBLE - (performance.now() - shownAt));
