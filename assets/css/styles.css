@@ -999,44 +999,31 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 #submitBtn.loading i { animation: spin 1s linear infinite; }
 
 /* ─────────────── FOOTER ─────────────── */
-/* Extra bottom padding is deliberate: .to-top is fixed at bottom-right and
-   occupies the last ~70px of the viewport, so without it the button lands on
-   the copyright line once you reach the end of the page. */
-.footer { border-top: 1px solid var(--stroke); background: var(--surface); padding: 2.5rem var(--pad-x) 5.5rem; }
-/* Two rows rather than one. On a single row the middle item can either sit at
-   the true centre or have equal gaps either side, but not both — the logo is
-   116px and the copyright 258px, so one of the two always looks wrong. Splitting
-   them means the logo, the nav and the copyright each get an honest position. */
-.footer__inner {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "logo nav"
-    "copy copy";
-  align-items: center;
-  column-gap: 1.2rem;
-  row-gap: 1.7rem;
+.footer { border-top: 1px solid var(--stroke); background: var(--surface); padding: 2.5rem var(--pad-x); }
+/* Two rows, each holding exactly two items anchored left and right. Three items
+   on one row forced a choice between a centred nav and even gaps — with two per
+   row there is nothing to compromise, and both rows share the same alignment
+   instead of mixing left, right and centre in one small block. */
+.footer__inner, .footer__base {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: .7rem 1.5rem;
 }
-.footer__inner .logo--footer { grid-area: logo; justify-self: start; }
-.footer__nav  { grid-area: nav;  justify-self: end; }
-.footer__copy { grid-area: copy; justify-self: center; text-align: center; }
+.footer__base {
+  margin-top: 1.6rem; padding-top: 1.4rem;
+  border-top: 1px solid var(--stroke);
+}
 .footer__nav { display: flex; flex-wrap: wrap; gap: 1.3rem; }
 .footer__nav a { font-size: .93rem; color: var(--text-dim); position: relative; transition: color .3s; }
 .footer__nav a::after { content: ""; position: absolute; left: 0; bottom: -3px; width: 0; height: 1.5px; background: var(--grad); transition: width .35s var(--ease); }
 .footer__nav a:hover { color: var(--text); }
 .footer__nav a:hover::after { width: 100%; }
-.footer__copy { font-size: .85rem; color: var(--text-mute); }
+.footer__copy, .footer__built { font-size: .85rem; color: var(--text-mute); }
 
 /* The three parts sit on one line while they fit. Below ~840px the copyright
    wrapped to a second row and space-between left it hard against the left edge,
    which read as a mistake — so stack and centre instead of letting it wrap. */
 @media (max-width: 840px) {
-  .footer__inner {
-    grid-template-columns: 1fr;
-    grid-template-areas: "logo" "nav" "copy";
-    justify-items: center; text-align: center; row-gap: 1.2rem;
-  }
-  .footer__inner .logo--footer, .footer__nav, .footer__copy { justify-self: center; }
+  .footer__inner, .footer__base { flex-direction: column; text-align: center; }
 }
 
 .to-top {
@@ -1048,6 +1035,9 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   transition: opacity .4s, visibility .4s, transform .45s var(--ease);
 }
 .to-top.show { opacity: 1; visibility: visible; transform: none; }
+/* Hidden over the footer: it is fixed bottom-right, so it would otherwise sit on
+   the footer's right-hand column. Cheaper than padding the footer around it. */
+.to-top.show.at-footer { opacity: 0; visibility: hidden; transform: translateY(20px) scale(.8); }
 .to-top:hover { transform: translateY(-4px) scale(1.06); }
 
 

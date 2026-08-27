@@ -134,6 +134,17 @@
     });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* The button is fixed bottom-right, which is exactly where the footer's right
+     column sits. Fade it out while the footer is on screen rather than padding
+     the footer to make room for it. */
+  const footerEl = $('.footer');
+  if (footerEl && 'IntersectionObserver' in window) {
+    new IntersectionObserver(
+      ([entry]) => toTop?.classList.toggle('at-footer', entry.isIntersecting),
+      { rootMargin: '0px 0px -8px 0px' }
+    ).observe(footerEl);
+  }
   window.addEventListener('resize', onScroll);
   onScroll();
 
