@@ -203,7 +203,7 @@ h1, h2, h3, h4, h5, .stat__num { font-family: var(--font-head); font-weight: 700
      size down to ~330px. Below that it wraps, and because the letters are grouped
      per word it breaks between SURESH and SURKHETI rather than mid-word. */
   display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-  gap: .1em .4em;
+  gap: .1em 1em;                          /* generous space between the two words */
   font-family: var(--font-head); font-size: clamp(1.5rem, 6vw, 2.6rem);
   font-weight: 800; letter-spacing: .16em;
 }
@@ -220,6 +220,12 @@ h1, h2, h3, h4, h5, .stat__num { font-family: var(--font-head); font-weight: 700
 .preloader__ltr:nth-child(3) { --n: 3 } .preloader__ltr:nth-child(4) { --n: 4 }
 .preloader__ltr:nth-child(5) { --n: 5 } .preloader__ltr:nth-child(6) { --n: 6 }
 .preloader__ltr:nth-child(7) { --n: 7 } .preloader__ltr:nth-child(8) { --n: 8 }
+
+/* Tablet and phone: stack the two words. One line still fits down to ~360px,
+   but a full-width name crowds the small viewport — a column reads better. */
+@media (max-width: 1024px) {
+  .preloader__name { flex-direction: column; gap: .1em; }
+}
 .preloader__bar { margin: 1.4rem 0 .6rem; height: 3px; border-radius: 99px; background: var(--stroke); overflow: hidden; }
 .preloader__bar i { display: block; height: 100%; width: 0; background: var(--grad); box-shadow: var(--glow); transition: width .25s linear; }
 .preloader__pct { font-family: var(--font-mono); font-size: .78rem; color: var(--text-mute); letter-spacing: .1em; }
@@ -997,12 +1003,23 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
    occupies the last ~70px of the viewport, so without it the button lands on
    the copyright line once you reach the end of the page. */
 .footer { border-top: 1px solid var(--stroke); background: var(--surface); padding: 2.5rem var(--pad-x) 5.5rem; }
-/* A grid, not space-between flex: with flex the equal gaps push the middle
-   item toward whichever end is narrower — the logo is 116px and the copyright
-   258px, so the nav sat 71px left of centre. Equal 1fr rails fix that. */
-.footer__inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1.2rem; }
-.footer__inner .logo--footer { justify-self: start; }
-.footer__copy { justify-self: end; }
+/* Two rows rather than one. On a single row the middle item can either sit at
+   the true centre or have equal gaps either side, but not both — the logo is
+   116px and the copyright 258px, so one of the two always looks wrong. Splitting
+   them means the logo, the nav and the copyright each get an honest position. */
+.footer__inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "logo nav"
+    "copy copy";
+  align-items: center;
+  column-gap: 1.2rem;
+  row-gap: 1.7rem;
+}
+.footer__inner .logo--footer { grid-area: logo; justify-self: start; }
+.footer__nav  { grid-area: nav;  justify-self: end; }
+.footer__copy { grid-area: copy; justify-self: center; text-align: center; }
 .footer__nav { display: flex; flex-wrap: wrap; gap: 1.3rem; }
 .footer__nav a { font-size: .93rem; color: var(--text-dim); position: relative; transition: color .3s; }
 .footer__nav a::after { content: ""; position: absolute; left: 0; bottom: -3px; width: 0; height: 1.5px; background: var(--grad); transition: width .35s var(--ease); }
@@ -1014,8 +1031,12 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
    wrapped to a second row and space-between left it hard against the left edge,
    which read as a mistake — so stack and centre instead of letting it wrap. */
 @media (max-width: 840px) {
-  .footer__inner { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-  .footer__inner .logo--footer, .footer__copy { justify-self: center; }
+  .footer__inner {
+    grid-template-columns: 1fr;
+    grid-template-areas: "logo" "nav" "copy";
+    justify-items: center; text-align: center; row-gap: 1.2rem;
+  }
+  .footer__inner .logo--footer, .footer__nav, .footer__copy { justify-self: center; }
 }
 
 .to-top {
