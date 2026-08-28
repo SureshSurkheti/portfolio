@@ -122,22 +122,21 @@
 <!-- ══════════ HERO ══════════ -->
 <section class="home" id="home">
   <canvas class="particles" id="particles" aria-hidden="true"></canvas>
+  <div class="home__glow" id="heroGlow" aria-hidden="true"></div>
 
   <div class="home__inner">
     <div class="home__text">
       <p class="badge"><i class="bx bx-radio-circle-marked"></i> Software Engineer · Oita, Japan</p>
-      <p class="home__hi">Hello, I'm</p>
-      <h1 class="home__name">
-        <span class="reveal-word">Suresh</span>
-        <span class="reveal-word gradient-text">Surkheti</span>
+      <h1 class="home__statement">
+        <span class="home__eyebrow">Suresh Surkheti</span>
+        <span class="reveal-word">I build the platforms</span>
+        <span class="reveal-word gradient-text">Japanese cities run on.</span>
       </h1>
-      <h2 class="home__role">I'm a <span class="typed-text" id="typed"></span><span class="caret">|</span></h2>
       <p class="home__desc">
-        Software engineer with <strong>4 years</strong> across Nepal and Japan, building
-        <strong>full-stack web platforms</strong> — Vue &amp; TypeScript on the front, Python and
-        FastAPI behind it, shipped onto AWS. Currently delivering public-sector and enterprise
-        systems for clients across Japan.
+        GIS portals, asset-management platforms, citizen apps and multi-district voucher
+        systems — <strong>12+ delivered</strong> in four years across Nepal and Japan.
       </p>
+      <p class="home__stack">Vue · Nuxt · TypeScript · Python · FastAPI · AWS · Terraform · Docker</p>
 
       <div class="home__cta">
         <a href="#work" class="btn btn--primary magnetic"><span>View My Work</span><i class="bx bx-right-arrow-alt"></i></a>
@@ -154,19 +153,6 @@
       </div>
     </div>
 
-    <div class="home__visual">
-      <div class="avatar" id="avatar">
-        <span class="avatar__ring avatar__ring--1"></span>
-        <span class="avatar__ring avatar__ring--2"></span>
-        <span class="avatar__glow"></span>
-        <img src="assets/img/suresh-avatar.webp" alt="Portrait of Suresh Surkheti" class="avatar__img"
-             width="530" height="530" fetchpriority="high" decoding="async">
-        <span class="avatar__chip avatar__chip--1"><i class="bx bxl-javascript"></i></span>
-        <span class="avatar__chip avatar__chip--2"><i class="bx bxl-vuejs"></i></span>
-        <span class="avatar__chip avatar__chip--3"><i class="bx bxl-python"></i></span>
-        <span class="avatar__chip avatar__chip--4"><i class="bx bxl-aws"></i></span>
-      </div>
-    </div>
   </div>
 
   <a href="#about" class="scroll-hint" aria-label="Scroll to about">
@@ -193,7 +179,7 @@
 
 <!-- ══════════ ABOUT ══════════ -->
 <section class="about section" id="about">
-  <div class="section__head reveal">
+  <div class="section__head reveal" data-num="01">
     <span class="eyebrow">01 — About</span>
     <h2 class="section__title">Get to <span class="gradient-text">know me</span></h2>
   </div>
@@ -201,8 +187,8 @@
   <div class="about__grid">
     <div class="about__visual reveal" data-reveal="left">
       <div class="about__frame tilt">
-        <img src="assets/img/suresh-about.webp" alt="Suresh Surkheti at his desk"
-             width="720" height="480" loading="lazy" decoding="async">
+        <img src="assets/img/suresh-avatar.webp" alt="Portrait of Suresh Surkheti"
+             width="530" height="530" loading="lazy" decoding="async">
         <div class="about__badge">
           <strong>4</strong>
           <span>Years of<br>experience</span>
@@ -256,7 +242,7 @@
 
 <!-- ══════════ SERVICES ══════════ -->
 <section class="services section section--band" id="services">
-  <div class="section__head reveal">
+  <div class="section__head reveal" data-num="02">
     <span class="eyebrow">02 — Services</span>
     <h2 class="section__title">What I <span class="gradient-text">do best</span></h2>
     <p class="section__sub">What I do for clients in Japan — from the component library to the API behind it.</p>
@@ -304,7 +290,7 @@
 
 <!-- ══════════ SKILLS ══════════ -->
 <section class="skills section" id="skills">
-  <div class="section__head reveal">
+  <div class="section__head reveal" data-num="03">
     <span class="eyebrow">03 — Skills</span>
     <h2 class="section__title">My <span class="gradient-text">toolkit</span></h2>
     <p class="section__sub">What I build with day to day, and how I approach a project.</p>
@@ -430,7 +416,7 @@
 
 <!-- ══════════ WORK ══════════ -->
 <section class="work section section--band" id="work">
-  <div class="section__head reveal">
+  <div class="section__head reveal" data-num="04">
     <span class="eyebrow">04 — Portfolio</span>
     <h2 class="section__title">Latest <span class="gradient-text">projects</span></h2>
     <p class="section__sub">Client work delivered from Oita, Japan. Names are withheld where the system is internal or under agreement.</p>
@@ -618,7 +604,7 @@
 <!-- ══════════ JOURNEY ══════════ -->
 <!-- ══════════ PERSONAL ══════════ -->
 <section class="personal section" id="personal">
-  <div class="section__head reveal">
+  <div class="section__head reveal" data-num="05">
     <span class="eyebrow">05 — Personal</span>
     <h2 class="section__title">Built on my <span class="gradient-text">own time</span></h2>
     <p class="section__sub">Things I build outside client work — shipped products and the projects I learned on. Source is public.</p>
@@ -674,9 +660,45 @@
 </section>
 
 <section class="journey section section--band" id="journey">
-  <div class="section__head reveal">
+  <div class="section__head reveal" data-num="06">
     <span class="eyebrow">06 — Journey</span>
     <h2 class="section__title">Experience &amp; <span class="gradient-text">education</span></h2>
+  </div>
+
+  <!-- Journey map: dot-matrix Japan + Nepal generated from real country outlines
+       (the ocean between them is compressed; each country keeps its true shape).
+       Regenerate with tools/genmap.py. Pins mark career chapters, never client
+       sites — client municipalities stay anonymous by design. -->
+  <div class="jmap reveal" role="img" aria-label="Journey map: studied and started my career in Nepal from 2017 to 2024, then moved to Oita, Japan in 2024, where I have delivered 12+ platforms.">
+    <svg class="jmap__svg" viewBox="0 0 1000 560" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="jmapGrad" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" style="stop-color: var(--c1)"/>
+          <stop offset="1" style="stop-color: var(--c3)"/>
+        </linearGradient>
+      </defs>
+      <path class="jmap__dots jmap__dots--np" d="M65.0 430.3h.01M71.6 430.3h.01M78.2 430.3h.01M61.7 436.0h.01M68.3 436.0h.01M74.9 436.0h.01M81.5 436.0h.01M88.1 436.0h.01M51.8 441.8h.01M58.4 441.8h.01M65.0 441.8h.01M71.6 441.8h.01M78.2 441.8h.01M84.8 441.8h.01M91.4 441.8h.01M98.0 441.8h.01M48.5 447.5h.01M55.1 447.5h.01M61.7 447.5h.01M68.3 447.5h.01M74.9 447.5h.01M81.5 447.5h.01M88.1 447.5h.01M94.7 447.5h.01M101.3 447.5h.01M51.8 453.2h.01M58.4 453.2h.01M65.0 453.2h.01M71.6 453.2h.01M78.2 453.2h.01M84.8 453.2h.01M91.4 453.2h.01M98.0 453.2h.01M104.6 453.2h.01M111.2 453.2h.01M117.8 453.2h.01M48.5 458.9h.01M55.1 458.9h.01M61.7 458.9h.01M68.3 458.9h.01M74.9 458.9h.01M81.5 458.9h.01M88.1 458.9h.01M94.7 458.9h.01M101.3 458.9h.01M107.9 458.9h.01M114.5 458.9h.01M121.1 458.9h.01M45.2 464.6h.01M51.8 464.6h.01M58.4 464.6h.01M65.0 464.6h.01M71.6 464.6h.01M78.2 464.6h.01M84.8 464.6h.01M91.4 464.6h.01M98.0 464.6h.01M104.6 464.6h.01M111.2 464.6h.01M117.8 464.6h.01M124.4 464.6h.01M55.1 470.3h.01M61.7 470.3h.01M68.3 470.3h.01M74.9 470.3h.01M81.5 470.3h.01M88.1 470.3h.01M94.7 470.3h.01M101.3 470.3h.01M107.9 470.3h.01M114.5 470.3h.01M121.1 470.3h.01M127.7 470.3h.01M134.3 470.3h.01M140.9 470.3h.01M65.0 476.0h.01M71.6 476.0h.01M78.2 476.0h.01M84.8 476.0h.01M91.4 476.0h.01M98.0 476.0h.01M104.6 476.0h.01M111.2 476.0h.01M117.8 476.0h.01M124.4 476.0h.01M131.0 476.0h.01M137.6 476.0h.01M144.2 476.0h.01M150.8 476.0h.01M74.9 481.8h.01M81.5 481.8h.01M88.1 481.8h.01M94.7 481.8h.01M101.3 481.8h.01M107.9 481.8h.01M114.5 481.8h.01M121.1 481.8h.01M127.7 481.8h.01M134.3 481.8h.01M140.9 481.8h.01M147.5 481.8h.01M154.1 481.8h.01M160.7 481.8h.01M84.8 487.5h.01M91.4 487.5h.01M98.0 487.5h.01M104.6 487.5h.01M111.2 487.5h.01M117.8 487.5h.01M124.4 487.5h.01M131.0 487.5h.01M137.6 487.5h.01M144.2 487.5h.01M150.8 487.5h.01M157.4 487.5h.01M164.0 487.5h.01M170.6 487.5h.01M177.2 487.5h.01M94.7 493.2h.01M101.3 493.2h.01M107.9 493.2h.01M114.5 493.2h.01M121.1 493.2h.01M127.7 493.2h.01M134.3 493.2h.01M140.9 493.2h.01M147.5 493.2h.01M154.1 493.2h.01M160.7 493.2h.01M167.3 493.2h.01M173.9 493.2h.01M180.5 493.2h.01M187.1 493.2h.01M193.7 493.2h.01M200.3 493.2h.01M206.9 493.2h.01M104.6 498.9h.01M111.2 498.9h.01M117.8 498.9h.01M124.4 498.9h.01M131.0 498.9h.01M137.6 498.9h.01M144.2 498.9h.01M150.8 498.9h.01M157.4 498.9h.01M164.0 498.9h.01M170.6 498.9h.01M177.2 498.9h.01M183.8 498.9h.01M190.4 498.9h.01M197.0 498.9h.01M203.6 498.9h.01M114.5 504.6h.01M121.1 504.6h.01M127.7 504.6h.01M134.3 504.6h.01M140.9 504.6h.01M147.5 504.6h.01M154.1 504.6h.01M160.7 504.6h.01M167.3 504.6h.01M173.9 504.6h.01M180.5 504.6h.01M187.1 504.6h.01M193.7 504.6h.01M200.3 504.6h.01M206.9 504.6h.01M144.2 510.3h.01M150.8 510.3h.01M157.4 510.3h.01M164.0 510.3h.01M170.6 510.3h.01M177.2 510.3h.01M183.8 510.3h.01M190.4 510.3h.01M197.0 510.3h.01M203.6 510.3h.01M210.2 510.3h.01M147.5 516.1h.01M154.1 516.1h.01M160.7 516.1h.01M167.3 516.1h.01M173.9 516.1h.01M180.5 516.1h.01M187.1 516.1h.01M193.7 516.1h.01M200.3 516.1h.01M206.9 516.1h.01M164.0 521.8h.01M170.6 521.8h.01M177.2 521.8h.01M183.8 521.8h.01M190.4 521.8h.01M197.0 521.8h.01M203.6 521.8h.01M210.2 521.8h.01M187.1 527.5h.01M193.7 527.5h.01M200.3 527.5h.01M206.9 527.5h.01"/>
+      <path class="jmap__dots jmap__dots--jp" d="M795.1 37.7h.01M798.8 44.1h.01M806.2 44.1h.01M795.1 50.5h.01M802.5 50.5h.01M809.9 50.5h.01M791.4 56.9h.01M798.8 56.9h.01M806.2 56.9h.01M813.6 56.9h.01M795.1 63.3h.01M802.5 63.3h.01M809.9 63.3h.01M817.3 63.3h.01M824.7 63.3h.01M791.4 69.7h.01M798.8 69.7h.01M806.2 69.7h.01M813.6 69.7h.01M821.0 69.7h.01M828.4 69.7h.01M835.8 69.7h.01M843.2 69.7h.01M858.0 69.7h.01M865.4 69.7h.01M787.7 76.1h.01M795.1 76.1h.01M802.5 76.1h.01M809.9 76.1h.01M817.3 76.1h.01M824.7 76.1h.01M832.1 76.1h.01M839.5 76.1h.01M846.9 76.1h.01M854.3 76.1h.01M861.7 76.1h.01M869.1 76.1h.01M791.4 82.5h.01M798.8 82.5h.01M806.2 82.5h.01M813.6 82.5h.01M821.0 82.5h.01M828.4 82.5h.01M835.8 82.5h.01M843.2 82.5h.01M850.6 82.5h.01M858.0 82.5h.01M865.4 82.5h.01M765.5 88.9h.01M772.9 88.9h.01M780.3 88.9h.01M787.7 88.9h.01M795.1 88.9h.01M802.5 88.9h.01M809.9 88.9h.01M817.3 88.9h.01M824.7 88.9h.01M832.1 88.9h.01M839.5 88.9h.01M846.9 88.9h.01M854.3 88.9h.01M861.7 88.9h.01M869.1 88.9h.01M761.8 95.3h.01M769.2 95.3h.01M776.6 95.3h.01M784.0 95.3h.01M791.4 95.3h.01M798.8 95.3h.01M806.2 95.3h.01M813.6 95.3h.01M821.0 95.3h.01M828.4 95.3h.01M835.8 95.3h.01M843.2 95.3h.01M850.6 95.3h.01M758.1 101.8h.01M765.5 101.8h.01M772.9 101.8h.01M780.3 101.8h.01M787.7 101.8h.01M795.1 101.8h.01M802.5 101.8h.01M809.9 101.8h.01M817.3 101.8h.01M824.7 101.8h.01M832.1 101.8h.01M754.4 108.2h.01M761.8 108.2h.01M769.2 108.2h.01M776.6 108.2h.01M784.0 108.2h.01M798.8 108.2h.01M806.2 108.2h.01M813.6 108.2h.01M821.0 108.2h.01M828.4 108.2h.01M758.1 114.6h.01M765.5 114.6h.01M772.9 114.6h.01M780.3 114.6h.01M809.9 114.6h.01M817.3 114.6h.01M824.7 114.6h.01M754.4 121.0h.01M761.8 121.0h.01M769.2 121.0h.01M776.6 121.0h.01M821.0 121.0h.01M758.1 127.4h.01M765.5 127.4h.01M772.9 127.4h.01M780.3 127.4h.01M754.4 133.8h.01M761.8 133.8h.01M769.2 133.8h.01M776.6 133.8h.01M761.8 146.6h.01M769.2 146.6h.01M776.6 146.6h.01M784.0 146.6h.01M758.1 153.0h.01M765.5 153.0h.01M772.9 153.0h.01M780.3 153.0h.01M787.7 153.0h.01M754.4 159.4h.01M761.8 159.4h.01M769.2 159.4h.01M776.6 159.4h.01M784.0 159.4h.01M758.1 165.8h.01M765.5 165.8h.01M772.9 165.8h.01M780.3 165.8h.01M787.7 165.8h.01M754.4 172.2h.01M761.8 172.2h.01M769.2 172.2h.01M776.6 172.2h.01M784.0 172.2h.01M791.4 172.2h.01M758.1 178.7h.01M765.5 178.7h.01M772.9 178.7h.01M780.3 178.7h.01M787.7 178.7h.01M795.1 178.7h.01M761.8 185.1h.01M769.2 185.1h.01M776.6 185.1h.01M784.0 185.1h.01M791.4 185.1h.01M758.1 191.5h.01M765.5 191.5h.01M772.9 191.5h.01M780.3 191.5h.01M787.7 191.5h.01M754.4 197.9h.01M761.8 197.9h.01M769.2 197.9h.01M776.6 197.9h.01M784.0 197.9h.01M791.4 197.9h.01M750.7 204.3h.01M758.1 204.3h.01M765.5 204.3h.01M772.9 204.3h.01M780.3 204.3h.01M787.7 204.3h.01M754.4 210.7h.01M761.8 210.7h.01M769.2 210.7h.01M776.6 210.7h.01M784.0 210.7h.01M750.7 217.1h.01M758.1 217.1h.01M765.5 217.1h.01M772.9 217.1h.01M747.0 223.5h.01M754.4 223.5h.01M761.8 223.5h.01M769.2 223.5h.01M735.9 229.9h.01M743.3 229.9h.01M750.7 229.9h.01M758.1 229.9h.01M765.5 229.9h.01M772.9 229.9h.01M732.2 236.3h.01M739.6 236.3h.01M747.0 236.3h.01M754.4 236.3h.01M761.8 236.3h.01M769.2 236.3h.01M721.1 242.7h.01M728.5 242.7h.01M735.9 242.7h.01M743.3 242.7h.01M750.7 242.7h.01M758.1 242.7h.01M765.5 242.7h.01M772.9 242.7h.01M687.8 249.1h.01M717.4 249.1h.01M724.8 249.1h.01M732.2 249.1h.01M739.6 249.1h.01M747.0 249.1h.01M754.4 249.1h.01M761.8 249.1h.01M769.2 249.1h.01M684.1 255.6h.01M691.5 255.6h.01M706.3 255.6h.01M713.7 255.6h.01M721.1 255.6h.01M728.5 255.6h.01M735.9 255.6h.01M743.3 255.6h.01M750.7 255.6h.01M758.1 255.6h.01M765.5 255.6h.01M772.9 255.6h.01M680.4 262.0h.01M687.8 262.0h.01M695.2 262.0h.01M702.6 262.0h.01M710.0 262.0h.01M717.4 262.0h.01M724.8 262.0h.01M732.2 262.0h.01M739.6 262.0h.01M747.0 262.0h.01M754.4 262.0h.01M761.8 262.0h.01M769.2 262.0h.01M676.7 268.4h.01M684.1 268.4h.01M691.5 268.4h.01M698.9 268.4h.01M706.3 268.4h.01M713.7 268.4h.01M721.1 268.4h.01M728.5 268.4h.01M735.9 268.4h.01M743.3 268.4h.01M750.7 268.4h.01M758.1 268.4h.01M765.5 268.4h.01M673.0 274.8h.01M680.4 274.8h.01M687.8 274.8h.01M695.2 274.8h.01M702.6 274.8h.01M710.0 274.8h.01M717.4 274.8h.01M724.8 274.8h.01M732.2 274.8h.01M739.6 274.8h.01M747.0 274.8h.01M754.4 274.8h.01M761.8 274.8h.01M676.7 281.2h.01M684.1 281.2h.01M691.5 281.2h.01M698.9 281.2h.01M706.3 281.2h.01M713.7 281.2h.01M721.1 281.2h.01M728.5 281.2h.01M735.9 281.2h.01M743.3 281.2h.01M750.7 281.2h.01M758.1 281.2h.01M765.5 281.2h.01M643.4 287.6h.01M673.0 287.6h.01M680.4 287.6h.01M687.8 287.6h.01M695.2 287.6h.01M702.6 287.6h.01M710.0 287.6h.01M717.4 287.6h.01M724.8 287.6h.01M732.2 287.6h.01M739.6 287.6h.01M747.0 287.6h.01M754.4 287.6h.01M761.8 287.6h.01M602.7 294.0h.01M610.1 294.0h.01M617.5 294.0h.01M624.9 294.0h.01M632.3 294.0h.01M639.7 294.0h.01M647.1 294.0h.01M654.5 294.0h.01M661.9 294.0h.01M669.3 294.0h.01M676.7 294.0h.01M684.1 294.0h.01M691.5 294.0h.01M698.9 294.0h.01M706.3 294.0h.01M713.7 294.0h.01M721.1 294.0h.01M728.5 294.0h.01M735.9 294.0h.01M743.3 294.0h.01M750.7 294.0h.01M758.1 294.0h.01M599.0 300.4h.01M606.4 300.4h.01M613.8 300.4h.01M621.2 300.4h.01M628.6 300.4h.01M636.0 300.4h.01M643.4 300.4h.01M650.8 300.4h.01M658.2 300.4h.01M665.6 300.4h.01M673.0 300.4h.01M680.4 300.4h.01M687.8 300.4h.01M695.2 300.4h.01M702.6 300.4h.01M710.0 300.4h.01M717.4 300.4h.01M724.8 300.4h.01M732.2 300.4h.01M739.6 300.4h.01M747.0 300.4h.01M754.4 300.4h.01M595.3 306.8h.01M602.7 306.8h.01M610.1 306.8h.01M617.5 306.8h.01M624.9 306.8h.01M632.3 306.8h.01M639.7 306.8h.01M647.1 306.8h.01M654.5 306.8h.01M661.9 306.8h.01M669.3 306.8h.01M676.7 306.8h.01M684.1 306.8h.01M691.5 306.8h.01M698.9 306.8h.01M706.3 306.8h.01M713.7 306.8h.01M721.1 306.8h.01M728.5 306.8h.01M735.9 306.8h.01M743.3 306.8h.01M584.2 313.2h.01M591.6 313.2h.01M599.0 313.2h.01M606.4 313.2h.01M613.8 313.2h.01M621.2 313.2h.01M628.6 313.2h.01M636.0 313.2h.01M643.4 313.2h.01M650.8 313.2h.01M658.2 313.2h.01M665.6 313.2h.01M673.0 313.2h.01M680.4 313.2h.01M687.8 313.2h.01M695.2 313.2h.01M702.6 313.2h.01M710.0 313.2h.01M717.4 313.2h.01M724.8 313.2h.01M732.2 313.2h.01M573.1 319.6h.01M580.5 319.6h.01M587.9 319.6h.01M595.3 319.6h.01M602.7 319.6h.01M610.1 319.6h.01M617.5 319.6h.01M624.9 319.6h.01M654.5 319.6h.01M661.9 319.6h.01M669.3 319.6h.01M676.7 319.6h.01M684.1 319.6h.01M691.5 319.6h.01M569.4 326.0h.01M576.8 326.0h.01M584.2 326.0h.01M591.6 326.0h.01M599.0 326.0h.01M606.4 326.0h.01M628.6 326.0h.01M636.0 326.0h.01M658.2 326.0h.01M665.6 326.0h.01M673.0 326.0h.01M680.4 326.0h.01M565.7 332.5h.01M573.1 332.5h.01M580.5 332.5h.01M587.9 332.5h.01M610.1 332.5h.01M624.9 332.5h.01M632.3 332.5h.01M639.7 332.5h.01M654.5 332.5h.01M661.9 332.5h.01M669.3 332.5h.01M676.7 332.5h.01M554.6 338.9h.01M562.0 338.9h.01M569.4 338.9h.01M606.4 338.9h.01M613.8 338.9h.01M621.2 338.9h.01M628.6 338.9h.01M636.0 338.9h.01M643.4 338.9h.01M658.2 338.9h.01M665.6 338.9h.01M673.0 338.9h.01M550.9 345.3h.01M558.3 345.3h.01M565.7 345.3h.01M573.1 345.3h.01M595.3 345.3h.01M602.7 345.3h.01M610.1 345.3h.01M617.5 345.3h.01M632.3 345.3h.01M539.8 351.7h.01M547.2 351.7h.01M554.6 351.7h.01M562.0 351.7h.01M569.4 351.7h.01M576.8 351.7h.01M584.2 351.7h.01M599.0 351.7h.01M606.4 351.7h.01M543.5 358.1h.01M550.9 358.1h.01M558.3 358.1h.01M565.7 358.1h.01M573.1 358.1h.01M580.5 358.1h.01M595.3 358.1h.01M602.7 358.1h.01M610.1 358.1h.01M539.8 364.5h.01M547.2 364.5h.01M554.6 364.5h.01M562.0 364.5h.01M569.4 364.5h.01M576.8 364.5h.01M550.9 370.9h.01M558.3 370.9h.01M565.7 370.9h.01M573.1 370.9h.01M580.5 370.9h.01M554.6 377.3h.01M562.0 377.3h.01M569.4 377.3h.01M576.8 377.3h.01M558.3 383.7h.01M565.7 383.7h.01M573.1 383.7h.01M554.6 390.1h.01M562.0 390.1h.01M569.4 390.1h.01M550.9 396.5h.01M558.3 396.5h.01M565.7 396.5h.01M573.1 396.5h.01M554.6 402.9h.01M562.0 402.9h.01"/>
+      <path class="jmap__arc" pathLength="1" d="M152 496 Q 350 232 579 351"/>
+      <g class="jmap__pin jmap__pin--np">
+        <circle class="jmap__pin-glow" cx="152" cy="496" r="13"/>
+        <circle class="jmap__pin-core" cx="152" cy="496" r="5"/>
+      </g>
+      <g class="jmap__pin jmap__pin--jp">
+        <circle class="jmap__ripple" cx="579" cy="351" r="9"/>
+        <circle class="jmap__ripple jmap__ripple--late" cx="579" cy="351" r="9"/>
+        <circle class="jmap__pin-glow" cx="579" cy="351" r="15"/>
+        <circle class="jmap__pin-core" cx="579" cy="351" r="6"/>
+      </g>
+    </svg>
+    <div class="jmap__chip jmap__chip--np" style="--x: 15.2%; --y: 88.6%">
+      <strong>Nepal</strong>
+      <span>2017 – 2024 · student → developer</span>
+    </div>
+    <div class="jmap__chip jmap__chip--jp" style="--x: 57.9%; --y: 62.8%">
+      <strong>Oita, Japan</strong>
+      <span>2024 – now · 12+ platforms</span>
+    </div>
   </div>
 
   <div class="timeline">
@@ -706,7 +728,7 @@
 
 <!-- ══════════ CONTACT ══════════ -->
 <section class="contact section" id="contact">
-  <div class="section__head reveal">
+  <div class="section__head reveal" data-num="07">
     <span class="eyebrow">07 — Contact</span>
     <h2 class="section__title">Let's build <span class="gradient-text">something</span></h2>
     <p class="section__sub">Have a project in mind, or just want to say hello? My inbox is open.</p>
@@ -731,7 +753,7 @@
         </li>
         <li>
           <span class="contact__ico"><i class="bx bx-map"></i></span>
-          <div><small>Location</small><span>Oita, Japan</span></div>
+          <div><small>Location</small><span>Oita, Japan <em class="contact__clock" id="jstClock"></em></span></div>
         </li>
       </ul>
 

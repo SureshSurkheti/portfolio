@@ -32,10 +32,11 @@
   /* ─────────── PRELOADER ─────────── */
   const preloader = $('#preloader');
 
-  /* The fourteen letters finish landing at 13 × 35ms + 500ms ≈ 0.96s, so hold
-     the loader past that and let the finished name sit for a beat. Without a
-     floor, a warm cache dismisses it in ~200ms and the name never lands. */
-  const MIN_VISIBLE = 1100;
+  /* The name writes itself letter by letter: 75ms × 14 letters + 380ms for the
+     last letter to land ≈ 1.4s, then a light wave sweeps through the letters.
+     The floor covers the write plus most of that first shine pass — without it,
+     a warm cache dismisses the loader in ~200ms and the name never gets written. */
+  const MIN_VISIBLE = 2200;
   const shownAt = performance.now();
 
   const finishLoad = () => {
@@ -282,17 +283,27 @@
       });
     });
 
-    // Hero avatar reacts to cursor position across the whole hero
+    // A soft light trails the cursor across the hero. The lerp loop only runs
+    // while the pointer is inside — it parks itself once the glow catches up.
     const hero = $('#home');
-    const avatar = $('#avatar');
-    if (hero && avatar) {
+    const glow = $('#heroGlow');
+    if (hero && glow) {
+      let gx = 0, gy = 0, tx2 = 0, ty2 = 0, glowRaf = 0;
+      const glowLoop = () => {
+        gx += (tx2 - gx) * 0.08;
+        gy += (ty2 - gy) * 0.08;
+        glow.style.transform = `translate3d(${gx}px, ${gy}px, 0)`;
+        glowRaf = (Math.abs(tx2 - gx) > .5 || Math.abs(ty2 - gy) > .5)
+          ? requestAnimationFrame(glowLoop) : 0;
+      };
       hero.addEventListener('pointermove', e => {
         const r = hero.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        avatar.style.transform = `perspective(1000px) rotateY(${x * 14}deg) rotateX(${y * -12}deg) translateZ(0)`;
-      });
-      hero.addEventListener('pointerleave', () => { avatar.style.transform = ''; });
+        tx2 = e.clientX - r.left; ty2 = e.clientY - r.top;
+        if (!hero.classList.contains('lit')) { gx = tx2; gy = ty2; }
+        hero.classList.add('lit');
+        if (!glowRaf) glowRaf = requestAnimationFrame(glowLoop);
+      }, { passive: true });
+      hero.addEventListener('pointerleave', () => hero.classList.remove('lit'));
     }
   }
 
@@ -509,6 +520,16 @@
   $$('.field input, .field textarea').forEach(input => {
     input.addEventListener('input', () => input.closest('.field')?.classList.remove('invalid'));
   });
+
+  /* ─────────── OITA LOCAL TIME ─────────── */
+  const clock = $('#jstClock');
+  if (clock) {
+    const fmt = new Intl.DateTimeFormat('en-GB',
+      { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
+    const tick = () => { clock.textContent = `· ${fmt.format(new Date())} JST`; };
+    tick();
+    setInterval(tick, 30000);
+  }
 
   /* ─────────── COPY EMAIL ─────────── */
   const copyBtn = $('#copyEmail');
