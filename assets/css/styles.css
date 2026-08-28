@@ -417,11 +417,11 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .section {
   padding: clamp(3.5rem, 6.5vw, 5.5rem) var(--pad-x);
   position: relative;
-  /* Land a nav jump just above the heading: cancel the section's top padding,
-     then add back 5rem of breathing room — enough to keep the ghost numeral's
-     crown out from under the header (it rises ~50px above the head on phones,
-     ~76px on desktop) instead of decapitating it on every anchor jump. */
-  scroll-margin-top: calc(5rem - clamp(3.5rem, 6.5vw, 5.5rem));
+  /* Land a nav jump exactly on the section boundary: the border sits flush
+     under the header, no sliver of the previous section shows, and the
+     section's own top padding (56px phone / 88px desktop) is what gives the
+     ghost numeral's crown (~50px / ~76px above the head) its room. */
+  scroll-margin-top: 0;
 }
 .section__head { position: relative; max-width: 820px; margin: 0 auto clamp(2.2rem, 4.5vw, 3.4rem); text-align: center; }
 /* Ghost numeral behind each section title — the number from the eyebrow chip,
