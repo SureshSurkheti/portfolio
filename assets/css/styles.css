@@ -472,7 +472,12 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 /* avatar */
 .home__visual { display: grid; place-items: center; }
 .avatar {
-  position: relative; width: clamp(230px, 34vw, 470px); aspect-ratio: 1;
+  position: relative;
+  /* Sized from its own column, not the viewport. As 34vw it ignored the space it
+     had — only 63% of the column at 1900px, yet shrinking to 338px at 1101px just
+     as the copy beside it reflowed to 746px tall. 92% leaves room for the chips,
+     which orbit outside the box at --chip-r. */
+  width: min(520px, 92%); aspect-ratio: 1;
   display: grid; place-items: center;
   animation: fadeIn 1.2s var(--ease) both .5s;
   transform-style: preserve-3d;
