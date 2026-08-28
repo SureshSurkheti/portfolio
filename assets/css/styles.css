@@ -1132,6 +1132,22 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .jmap.in .jmap__chip--np { opacity: 1; transition-delay: .8s; }
 .jmap.in .jmap__chip--jp { opacity: 1; transition-delay: 2.25s; }
 
+/* Below 700px the 1000-unit viewBox renders each dot at ~1px — the countries
+   dissolve into faint dust. Everything gets bolder as the map gets smaller:
+   fatter dots, higher opacity, a thicker arc, bigger pins (r is an SVG
+   geometry property, animatable from CSS in every current browser). */
+@media (max-width: 700px) {
+  .jmap__dots { stroke-width: 4.6; stroke: var(--text-dim); }
+  .jmap.in .jmap__dots--np { opacity: .92; }
+  .jmap.in .jmap__dots--jp { opacity: 1; }
+  [data-theme="light"] .jmap.in .jmap__dots--np,
+  [data-theme="light"] .jmap.in .jmap__dots--jp { opacity: .95; }
+  .jmap__arc { stroke-width: 3.6; }
+  .jmap__pin-core { r: 8; }
+  .jmap__pin-glow { r: 20; }
+  .jmap__ripple { r: 13; stroke-width: 2.6; }
+}
+
 /* Below 700px the shrinking map can no longer hold two floating chips without
    them colliding, so they drop out of the overlay and stack as caption rows,
    each keyed to its pin by a colour dot. */
