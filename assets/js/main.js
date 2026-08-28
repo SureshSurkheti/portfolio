@@ -32,19 +32,20 @@
   /* ─────────── PRELOADER ─────────── */
   const preloader = $('#preloader');
 
-  /* The name writes itself letter by letter: 75ms × 14 letters + 380ms for the
-     last letter to land ≈ 1.4s, then a light wave sweeps through the letters.
-     The floor covers the write plus most of that first shine pass — without it,
-     a warm cache dismisses the loader in ~200ms and the name never gets written. */
-  const MIN_VISIBLE = 2200;
+  /* The letters write in one by one: 90ms × 14 + 320ms for the last to land
+     ≈ 1.6s, then the finished name holds for a beat. Without the floor, a warm
+     cache dismisses the loader in ~200ms and the name never gets written. */
+  const introSeen = document.documentElement.classList.contains('intro-seen');
+  const MIN_VISIBLE = introSeen ? 0 : 2200;
   const shownAt = performance.now();
 
   const finishLoad = () => {
-    // Never hold someone who asked for reduced motion.
-    const wait = reduced ? 0 : Math.max(380, MIN_VISIBLE - (performance.now() - shownAt));
+    // Never hold someone who asked for reduced motion, or a repeat visitor.
+    const wait = (reduced || introSeen) ? 0 : Math.max(380, MIN_VISIBLE - (performance.now() - shownAt));
     setTimeout(() => {
       preloader?.classList.add('done');
       document.body.classList.add('loaded');
+      try { sessionStorage.setItem('introSeen', '1'); } catch { /* private mode */ }
       startTyped();
     }, wait);
   };

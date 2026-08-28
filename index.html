@@ -12,6 +12,12 @@
         t === 'dark' || t === 'light' ? t
           : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
     } catch (e) { /* private mode — the markup default stands */ }
+    /* The name-writing intro plays once per session: repeat loads and
+       within-site navigation skip straight to the page. Decided here, before
+       the preloader's CSS animations can start. */
+    try {
+      if (sessionStorage.getItem('introSeen')) document.documentElement.classList.add('intro-seen');
+    } catch (e) { /* private mode — the intro just plays again */ }
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Suresh Surkheti — Software Engineer in Oita, Japan. 4 years building full-stack web platforms in Vue, Nuxt, TypeScript, Python and FastAPI for municipal and enterprise clients, deployed on AWS.">

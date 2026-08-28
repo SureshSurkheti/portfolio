@@ -49,7 +49,7 @@
   --stroke-str: rgba(255, 255, 255, .20);
   --text: #eef1f7;
   --text-dim: #a4adc0;
-  --text-mute: #737d92;
+  --text-mute: #7e88a0;  /* 4.35:1 read as dim on real screens; this clears 4.5 on the page ground */
   --shadow: 0 24px 60px -20px rgba(0, 0, 0, .8);
   /* card-level elevation: what makes a surface read as a surface */
   --shadow-card: 0 16px 36px -22px rgba(0, 0, 0, .85);
@@ -206,7 +206,9 @@ body::after {
   transition: opacity .7s var(--ease), visibility .7s;
 }
 .preloader.done { opacity: 0; visibility: hidden; }
-.preloader__inner { text-align: center; width: min(640px, 88vw); }
+/* relative so the pen tip can ride the ink edge from OUTSIDE the masked name
+   (inside it, the mask swallows the pen exactly where it travels) */
+.preloader__inner { position: relative; text-align: center; width: min(640px, 88vw); }
 .preloader__name {
   /* One line wherever it fits — the box is wide enough for both words at every
      size down to ~330px. Below that it wraps, and because the letters are grouped
@@ -222,44 +224,37 @@ body::after {
 }
 /* Letters grouped per word. --o continues the stagger across the line break so
    all fourteen read as one sweep rather than two separate runs. */
-.preloader__word { display: flex; gap: .08em; perspective: 700px; }
+.preloader__word { display: flex; gap: .08em; }
+/* Repeat visit in the same session: skip the show, the loader clears at once. */
+.intro-seen .preloader__ltr { animation-delay: 0s, 0s; animation-duration: .01s, 0s; }
 .preloader__word:nth-child(2) { --o: 6; }
-/* The name writes itself: each letter materialises from a blur in strict
-   left-to-right order (75ms apart), like ink landing. The gentle float only
-   starts once that letter has finished writing, so the two transforms never
-   fight. main.js holds the loader until the last letter has landed. */
+/* Letters write in one by one, and each takes a different colour: the brand
+   gradient is stretched to ~15x the letter width and every letter samples its
+   own slice of it — cyan at the start of the name, indigo through the middle,
+   fuchsia at the end. Different per letter, one family overall. */
 .preloader__ltr {
   --k: calc(var(--n, 0) + var(--o, 0));
-  background: var(--grad); background-size: 220% 100%;
+  background: var(--grad);
+  background-size: 1500% 100%;
+  background-position: calc((var(--k) - 1) * 7.7%) 0;
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  transform-origin: 50% 100%;
-  /* Three layers: the letter writes in (a tile flipping up through perspective),
-     then floats gently, and once the whole name is down a wave of light sweeps
-     through the letters — the shine delay is staggered by the same letter index
-     so it travels left to right. */
   animation:
-    writeIn .38s var(--ease) both,
-    floatY 2.6s ease-in-out infinite,
-    nameShine 3s ease-in-out infinite;
+    writeIn .32s var(--ease) both,
+    floatY 2.6s ease-in-out infinite;
   animation-delay:
-    calc(.075s * var(--k)),
-    calc(.075s * var(--k) + .38s),
-    calc(1.45s + .06s * var(--k));
+    calc(.09s * var(--k) + .25s),
+    calc(.09s * var(--k) + .57s);
+}
+@keyframes writeIn {
+  from { opacity: 0; filter: blur(7px); transform: translateY(.4em) scale(.75); }
+  to { opacity: 1; filter: blur(0); transform: none; }
 }
 .preloader__ltr:nth-child(1) { --n: 1 } .preloader__ltr:nth-child(2) { --n: 2 }
 .preloader__ltr:nth-child(3) { --n: 3 } .preloader__ltr:nth-child(4) { --n: 4 }
 .preloader__ltr:nth-child(5) { --n: 5 } .preloader__ltr:nth-child(6) { --n: 6 }
 .preloader__ltr:nth-child(7) { --n: 7 } .preloader__ltr:nth-child(8) { --n: 8 }
 
-@keyframes writeIn {
-  from { opacity: 0; filter: blur(10px); transform: translateY(.5em) rotateX(58deg) scale(.82); }
-  60% { filter: blur(0); }
-  to { opacity: 1; filter: blur(0); transform: none; }
-}
-@keyframes nameShine {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
+
 @keyframes floatY { 50% { transform: translateY(-8px) } }
 
 /* ─────────────── AMBIENT BACKGROUND ─────────────── */
@@ -976,6 +971,21 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .project__desc { font-size: .89rem; color: var(--text-dim); }
 
 .project__tech { display: flex; flex-wrap: wrap; gap: .35rem; }
+/* Card surfaces sit lighter than the page, so --text-mute lands at 3.5–4.1:1
+   there in dark mode — under AA and genuinely dim on real screens. The small
+   metadata on cards takes the stronger ink in dark; light mode already passes. */
+[data-theme="dark"] .project__tech i,
+[data-theme="dark"] .project__aws i,
+
+[data-theme="dark"] .project__note,
+[data-theme="dark"] .early__title span,
+[data-theme="dark"] .early__list li,
+[data-theme="dark"] .jmap__chip span,
+[data-theme="dark"] .tl-loc { color: var(--text-dim); }
+/* These pills carry their own lighter background, so even --text-dim lands at
+   4.47:1 — a hair under AA. One step brighter clears it. */
+[data-theme="dark"] .card__tags i { color: #aeb7cd; }
+
 .project__tech i {
   font-style: normal; font-family: var(--font-mono); font-size: .68rem;
   padding: .18rem .5rem; border-radius: 99px;
@@ -1084,13 +1094,18 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .jmap__svg { display: block; width: 100%; height: auto; }
 
 .jmap__dots {
-  fill: none; stroke: var(--text-mute); stroke-width: 3; stroke-linecap: round;
+  fill: none; stroke: var(--text-mute); stroke-width: 3.3; stroke-linecap: round;
   opacity: 0; transition: opacity 1.1s ease;
 }
-.jmap.in .jmap__dots--np { opacity: .5; transition-delay: .15s; }
-.jmap.in .jmap__dots--jp { opacity: .55; transition-delay: .5s; }
-[data-theme="light"] .jmap.in .jmap__dots--np { opacity: .7; }
-[data-theme="light"] .jmap.in .jmap__dots--jp { opacity: .75; }
+.jmap.in .jmap__dots--np { opacity: .68; transition-delay: .15s; }
+.jmap.in .jmap__dots--jp { opacity: .75; transition-delay: .5s; }
+/* Dark screens flatten subtle greys — the countries take the brighter ink. */
+[data-theme="dark"] .jmap__dots,
+:root:not([data-theme="light"]) .jmap__dots { stroke: var(--text-dim); }
+[data-theme="dark"] .jmap.in .jmap__dots--np { opacity: .8; }
+[data-theme="dark"] .jmap.in .jmap__dots--jp { opacity: .9; }
+[data-theme="light"] .jmap.in .jmap__dots--np { opacity: .85; }
+[data-theme="light"] .jmap.in .jmap__dots--jp { opacity: .9; }
 
 /* pathLength="1" normalises the arc, so dasharray/offset of 1 hides it and
    animating the offset to 0 draws it tip-first. */
