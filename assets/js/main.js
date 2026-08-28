@@ -346,6 +346,13 @@
       el.addEventListener('pointerleave', () => ring?.classList.remove('grow'));
     });
 
+    // over the hero's chart the ring becomes a survey reticle
+    const heroMap = $('.home__map');
+    if (heroMap) {
+      heroMap.addEventListener('pointerenter', () => ring?.classList.add('crosshair'));
+      heroMap.addEventListener('pointerleave', () => ring?.classList.remove('crosshair'));
+    }
+
     document.addEventListener('pointerleave', () => document.body.classList.remove('cursor-on'));
   }
 
@@ -520,6 +527,22 @@
 
   $$('.field input, .field textarea').forEach(input => {
     input.addEventListener('input', () => input.closest('.field')?.classList.remove('invalid'));
+  });
+
+  /* ─────────── MARGIN COORDINATES ─────────── */
+  /* The lat/long acquire like a GPS fix: counting up to Oita's position. */
+  $$('.home__coord').forEach(el => {
+    const finalText = el.textContent;
+    const target = parseFloat(finalText);
+    const suffix = finalText.replace(/[\d.]+/, '');
+    if (reduced || !target) return;
+    const t0 = performance.now(), DUR = 1700;
+    (function tick() {
+      const p = Math.min(1, (performance.now() - t0) / DUR);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * eased).toFixed(4) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    })();
   });
 
   /* ─────────── OITA LOCAL TIME ─────────── */

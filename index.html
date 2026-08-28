@@ -27,7 +27,7 @@
   <title>Suresh Surkheti — Software Engineer</title>
 
   <!-- Tab icon: inline SVG, no extra request -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='.55' stop-color='%23818cf8'/%3E%3Cstop offset='1' stop-color='%23e879f9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Segoe UI,Helvetica,Arial,sans-serif' font-size='38' font-weight='700' fill='%2304050a' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f0b429'/%3E%3Cstop offset='.55' stop-color='%23e09112'/%3E%3Cstop offset='1' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Segoe UI,Helvetica,Arial,sans-serif' font-size='38' font-weight='700' fill='%2304050a' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 
   <!-- Link previews (LinkedIn, WhatsApp, X, Slack). These must be absolute URLs;
        crawlers will not resolve a relative og:image. -->
@@ -51,7 +51,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&family=Fraunces:ital,wght@1,600&display=swap" rel="stylesheet">
   <link rel="preload" href="assets/fonts/boxicons-subset.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/boxicons-subset.css?v=20260828">
   <link rel="stylesheet" href="assets/css/styles.css?v=20260828">
@@ -127,8 +127,26 @@
 
 <!-- ══════════ HERO ══════════ -->
 <section class="home" id="home">
-  <canvas class="particles" id="particles" aria-hidden="true"></canvas>
   <div class="home__glow" id="heroGlow" aria-hidden="true"></div>
+
+  <!-- Oita's real coordinates, running down the left margin like a map sheet -->
+  <span class="home__coord home__coord--n" aria-hidden="true">33.2396°N</span>
+  <span class="home__coord home__coord--e" aria-hidden="true">131.6089°E</span>
+
+  <!-- The journey as cartography: dashed flight path, Kathmandu to Oita -->
+  <svg class="home__map" viewBox="0 0 420 320" aria-hidden="true" focusable="false">
+    <defs>
+      <mask id="mapDraw">
+        <path class="home__map-drawmask" d="M96 244 Q 396 224 348 66" pathLength="1"/>
+      </mask>
+    </defs>
+    <path class="home__map-path" mask="url(#mapDraw)" d="M96 244 Q 396 224 348 66"/>
+    <circle class="home__map-from" cx="96" cy="244" r="5"/>
+    <circle class="home__map-ring" cx="348" cy="66" r="9"/>
+    <circle class="home__map-to" cx="348" cy="66" r="5"/>
+    <text class="home__map-label" x="96" y="270" text-anchor="middle">KATHMANDU</text>
+    <text class="home__map-label home__map-label--to" x="348" y="42" text-anchor="middle">OITA 大分</text>
+  </svg>
 
   <div class="home__inner">
     <div class="home__text">
@@ -136,51 +154,39 @@
       <h1 class="home__statement">
         <span class="home__eyebrow">Suresh Surkheti</span>
         <span class="reveal-word">I build the platforms</span>
-        <span class="reveal-word gradient-text">Japanese cities run on.</span>
+        <span class="reveal-word"><em class="home__serif">Japanese cities</em> run&nbsp;on<span class="home__dot">.</span></span>
       </h1>
       <p class="home__desc">
         <strong>12+ platforms delivered</strong> in four years across Nepal and Japan —
         GIS portals, asset management, citizen apps and multi-district voucher systems.
       </p>
-      <p class="home__stack">Vue · Nuxt · TypeScript · Python · FastAPI · AWS · Terraform · Docker</p>
 
       <div class="home__cta">
         <a href="#work" class="btn btn--primary magnetic"><span>View My Work</span><i class="bx bx-right-arrow-alt"></i></a>
         <a href="resume.pdf" class="btn btn--outline magnetic" id="resumeBtn" download hidden><span>Download CV</span><i class="bx bx-download"></i></a>
       </div>
+    </div>
+  </div>
 
-      <div class="home__sci">
-        <a href="https://github.com/SureshSurkheti" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="bx bxl-github"></i></a>
-        <a href="https://www.linkedin.com/in/sureshsurkheti" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
-        <a href="https://www.instagram.com/sureshsurkheti30" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="https://www.tiktok.com/@suresh.surkheti10" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="bx bxl-tiktok"></i></a>
-        <a href="https://www.facebook.com/suresh.surkheti.39" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="bx bxl-facebook-circle"></i></a>
+  <!-- Working footer bar: the proof, the stack as a ticker, the profiles that matter -->
+  <div class="home__bar">
+    <div class="home__bar-stats">
+      <div><strong>12+</strong><span>Platforms</span></div>
+      <div><strong>2</strong><span>Countries</span></div>
+      <div><strong>4 yrs</strong><span>Civic tech</span></div>
+    </div>
+    <div class="home__bar-ticker" aria-hidden="true">
+      <div class="home__bar-track">
+        <span>VUE — NUXT — TYPESCRIPT — PYTHON — FASTAPI — AWS — TERRAFORM — DOCKER —&nbsp;</span><span>VUE — NUXT — TYPESCRIPT — PYTHON — FASTAPI — AWS — TERRAFORM — DOCKER —&nbsp;</span>
       </div>
     </div>
-
+    <div class="home__bar-sci">
+      <a href="https://github.com/SureshSurkheti" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://www.linkedin.com/in/sureshsurkheti" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://www.instagram.com/sureshsurkheti30" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
   </div>
-
-  <a href="#about" class="scroll-hint" aria-label="Scroll to about">
-    <span class="scroll-hint__mouse"><i></i></span>
-    <span class="scroll-hint__label">Scroll</span>
-  </a>
 </section>
-
-<!-- ══════════ MARQUEE ══════════ -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee__track">
-    <div class="marquee__group">
-      <span>TypeScript</span><i>✦</i><span>Vue.js</span><i>✦</i><span>Nuxt.js</span><i>✦</i><span>FastAPI</span><i>✦</i>
-      <span>AWS</span><i>✦</i><span>Terraform</span><i>✦</i><span>Docker</span><i>✦</i><span>Python</span><i>✦</i>
-      <span>Lambda</span><i>✦</i><span>DynamoDB</span><i>✦</i><span>Playwright</span><i>✦</i><span>Tailwind</span><i>✦</i>
-    </div>
-    <div class="marquee__group">
-      <span>TypeScript</span><i>✦</i><span>Vue.js</span><i>✦</i><span>Nuxt.js</span><i>✦</i><span>FastAPI</span><i>✦</i>
-      <span>AWS</span><i>✦</i><span>Terraform</span><i>✦</i><span>Docker</span><i>✦</i><span>Python</span><i>✦</i>
-      <span>Lambda</span><i>✦</i><span>DynamoDB</span><i>✦</i><span>Playwright</span><i>✦</i><span>Tailwind</span><i>✦</i>
-    </div>
-  </div>
-</div>
 
 <!-- ══════════ ABOUT ══════════ -->
 <section class="about section" id="about">
@@ -237,11 +243,12 @@
        numbers, or delete any stat you cannot back up in conversation.
        An inflated number is worse than no number if a client asks about it.
        ========================================================== -->
-  <div class="stats reveal">
-    <div class="stat"><div class="stat__num"><span class="counter" data-target="4">0</span></div><p>Years Experience</p></div>
+  <!-- The hero bar already states 12+ platforms / 2 countries / 4 yrs — this
+       strip carries only the facts the hero does not. -->
+  <div class="stats stats--three reveal">
     <div class="stat"><div class="stat__num"><span class="counter" data-target="20">0</span>+</div><p>Projects Shipped</p></div>
     <div class="stat"><div class="stat__num"><span class="counter" data-target="18">0</span>+</div><p>AWS Services Used</p></div>
-    <div class="stat"><div class="stat__num"><span class="counter" data-target="2">0</span></div><p>Countries Worked In</p></div>
+    <div class="stat"><div class="stat__num">N3</div><p>Japanese · JLPT Certified</p></div>
   </div>
 </section>
 
@@ -438,7 +445,7 @@
   <div class="work__grid" id="workGrid">
     <article class="project reveal" data-cat="gov">
       <div class="project__media">
-        <img src="assets/img/project-gis.svg" alt="Civil Land Regulation and GIS Portal — Regional Japanese prefecture"
+        <img src="assets/img/project-gis.svg?v=2" alt="Civil Land Regulation and GIS Portal — Regional Japanese prefecture"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Public Sector</span>
       </div>
@@ -456,7 +463,7 @@
     </article>
     <article class="project reveal" data-cat="enterprise">
       <div class="project__media">
-        <img src="assets/img/project-asset.svg" alt="Enterprise Asset Management Platform — Major domestic conglomerate"
+        <img src="assets/img/project-asset.svg?v=2" alt="Enterprise Asset Management Platform — Major domestic conglomerate"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Enterprise</span>
       </div>
@@ -473,7 +480,7 @@
     </article>
     <article class="project reveal" data-cat="enterprise">
       <div class="project__media">
-        <img src="assets/img/project-mapping.svg" alt="Mapping and Geolocation Engine — Tier-1 Japanese mapping corporation"
+        <img src="assets/img/project-mapping.svg?v=2" alt="Mapping and Geolocation Engine — Tier-1 Japanese mapping corporation"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Enterprise</span>
       </div>
@@ -491,7 +498,7 @@
     </article>
     <article class="project reveal" data-cat="gov">
       <div class="project__media">
-        <img src="assets/img/project-community.svg" alt="Community and Volunteer Platform — Prefectural social initiatives office"
+        <img src="assets/img/project-community.svg?v=2" alt="Community and Volunteer Platform — Prefectural social initiatives office"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Public Sector</span>
       </div>
@@ -509,7 +516,7 @@
     </article>
     <article class="project reveal" data-cat="mobile gov">
       <div class="project__media">
-        <img src="assets/img/project-smartcity.svg" alt="Smart City Citizen App — Municipal Japanese government body"
+        <img src="assets/img/project-smartcity.svg?v=2" alt="Smart City Citizen App — Municipal Japanese government body"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Mobile · Public Sector</span>
       </div>
@@ -526,7 +533,7 @@
     </article>
     <article class="project reveal" data-cat="app">
       <div class="project__media">
-        <img src="assets/img/project-intercom.svg" alt="NTC Intercom App"
+        <img src="assets/img/project-intercom.svg?v=2" alt="NTC Intercom App"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Web App</span>
       </div>
@@ -545,7 +552,7 @@
     </article>
     <article class="project reveal" data-cat="gov">
       <div class="project__media">
-        <img src="assets/img/project-voucher.svg" alt="Municipal Voucher Issuance System — Consortium of 4+ municipalities"
+        <img src="assets/img/project-voucher.svg?v=2" alt="Municipal Voucher Issuance System — Consortium of 4+ municipalities"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Public Sector</span>
       </div>
@@ -563,7 +570,7 @@
     </article>
     <article class="project reveal" data-cat="enterprise app">
       <div class="project__media">
-        <img src="assets/img/project-inventory.svg" alt="Office Equipment Tracking Tool — Administrative office network"
+        <img src="assets/img/project-inventory.svg?v=2" alt="Office Equipment Tracking Tool — Administrative office network"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Enterprise</span>
       </div>
