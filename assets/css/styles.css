@@ -479,7 +479,8 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   display: flex; align-items: center;
   padding: calc(var(--header-h) + 3rem) var(--pad-x) 6rem;
 }
-.particles { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .75; }
+/* Quiet enough that the eye lands on name → headline → CTA, not the backdrop. */
+.particles { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .45; }
 
 /* Light mode gets its own identity instead of "dark mode minus the drama":
    dark is night in Oita (starfield), light is daybreak — azure breaking from
@@ -517,9 +518,10 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 
 .badge {
   display: inline-flex; align-items: center; gap: .5rem;
-  padding: .4rem 1rem .4rem .7rem; border-radius: 99px;
+  padding: .45rem 1.05rem .45rem .75rem; border-radius: 99px;
   border: 1px solid var(--stroke); background: var(--surface); backdrop-filter: blur(10px);
-  font-size: .84rem; color: var(--text-dim); margin-bottom: 1.5rem;
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 1.5rem;
   animation: fadeUp .8s var(--ease) both .2s;
 }
 .badge i { color: var(--ok); font-size: 1.1rem; animation: pulse 1.8s ease-in-out infinite; }
@@ -530,9 +532,9 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
    in the h1 for search and for anyone looking him up by name. */
 .home__eyebrow {
   display: block; font-family: var(--font-mono);
-  font-size: clamp(.78rem, 1.4vw, .92rem); font-weight: 500;
-  letter-spacing: .22em; text-transform: uppercase; color: var(--text-mute);
-  margin-bottom: clamp(.9rem, 2vw, 1.4rem);
+  font-size: clamp(.84rem, 1.5vw, 1rem); font-weight: 500;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--text-dim);
+  margin-bottom: clamp(1.1rem, 2.4vw, 1.8rem);
   animation: fadeUp .8s var(--ease) both .3s;
 }
 .home__statement {
@@ -560,8 +562,9 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .home__statement .reveal-word { display: block; }
 .home__stack {
   margin-top: 1.4rem; font-family: var(--font-mono);
-  font-size: clamp(.76rem, 1.5vw, .88rem); letter-spacing: .06em;
-  color: var(--text-mute); animation: fadeUp .8s var(--ease) both .95s;
+  font-size: clamp(.66rem, 1.3vw, .78rem); letter-spacing: .14em;
+  text-transform: uppercase; color: var(--text-mute);
+  animation: fadeUp .8s var(--ease) both .95s;
 }
 .reveal-word { display: inline-block; animation: wordUp 1s var(--ease) both; }
 .reveal-word:nth-child(1) { animation-delay: .4s; }
@@ -576,9 +579,9 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 
 .home__sci { display: flex; gap: .7rem; margin-top: 2.2rem; }
 .home__sci a {
-  display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px;
+  display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px;
   border: 1px solid var(--stroke); background: var(--surface); backdrop-filter: blur(8px);
-  font-size: 1.3rem; color: var(--text-dim); position: relative; overflow: hidden;
+  font-size: 1.15rem; color: var(--text-dim); position: relative; overflow: hidden;
   transition: color .3s, transform .4s var(--ease), border-color .3s, box-shadow .4s;
   animation: fadeUp .6s var(--ease) both; animation-delay: calc(1.1s + .08s * var(--i, 1));
 }
@@ -590,6 +593,11 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .home__sci a:nth-child(4) { --i: 4 }
 .home__sci a:nth-child(5) { --i: 5 }
 .home__sci a:nth-child(6) { --i: 6 }
+/* GitHub and LinkedIn are what recruiters click — they keep full presence;
+   the personal networks stay reachable but step back. Dim the icon, not the
+   link: fadeUp's fill holds the link's own opacity at 1. */
+.home__sci a:nth-child(n+3) i { opacity: .6; transition: opacity .3s; }
+.home__sci a:nth-child(n+3):hover i { opacity: 1; }
 .home__sci a::before { content: ""; position: absolute; inset: 0; background: var(--grad); opacity: 0; transition: opacity .35s; z-index: -1; }
 .home__sci a:hover { color: var(--on-accent); transform: translateY(-6px) rotate(-6deg); border-color: transparent; box-shadow: 0 14px 30px -10px rgba(34, 211, 238, .6); }
 .home__sci a:hover::before { opacity: 1; }
