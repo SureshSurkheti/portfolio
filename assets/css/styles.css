@@ -329,11 +329,11 @@ body::after {
 .navbar { display: flex; align-items: center; gap: .3rem; }
 .navbar a {
   position: relative; padding: .5rem .85rem; font-size: .95rem; font-weight: 500;
-  color: var(--text-dim); border-radius: 99px; transition: color .3s;
+  color: var(--text-dim); border-radius: 9px; transition: color .3s;
   animation: fadeDown .6s var(--ease) both; animation-delay: calc(.06s * var(--i));
 }
 .navbar a::before {
-  content: ""; position: absolute; inset: 0; border-radius: 99px;
+  content: ""; position: absolute; inset: 0; border-radius: 9px;
   background: var(--surface-2); border: 1px solid var(--stroke);
   opacity: 0; transform: scale(.8); transition: opacity .3s, transform .3s var(--ease);
   z-index: -1;
@@ -346,9 +346,9 @@ body::after {
    map pins, so location feedback reads as part of the cartography rather than a
    generic underline. The pill alone was too quiet to anchor the eye in dark. */
 .navbar a.active::after {
-  content: ""; position: absolute; left: 50%; bottom: -1px;
-  width: 4px; height: 4px; margin-left: -2px; border-radius: 50%;
-  background: var(--acc-gfx); box-shadow: 0 0 7px var(--acc-gfx);
+  content: ""; position: absolute; left: 50%; bottom: -8px;
+  width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%;
+  background: var(--acc-gfx); box-shadow: 0 0 8px var(--acc-gfx);
   animation: navDot .4s var(--ease) both;
 }
 @keyframes navDot { from { opacity: 0; transform: translateY(-3px) } }
@@ -1077,7 +1077,7 @@ body::after {
 /* ─────────────── WORK ─────────────── */
 .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin-bottom: 2.5rem; }
 .filter {
-  padding: .55rem 1.25rem; border-radius: 99px; font-size: .9rem; font-weight: 500;
+  padding: .55rem 1.25rem; border-radius: 9px; font-size: .9rem; font-weight: 500;
   border: 1px solid var(--stroke); background: var(--surface-2); color: var(--text-dim);
   box-shadow: var(--shadow-card);
   transition: color .3s, background .3s, border-color .3s, transform .3s var(--ease);
