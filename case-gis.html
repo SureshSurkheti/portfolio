@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <script>
     /* Synchronous and inline on purpose: this must run before the first paint.
        A deferred script would let a dark-mode visitor see a flash of white.
-       An explicit choice in localStorage always wins over the OS setting. */
+       An explicit choice in localStorage always wins; otherwise the site
+       follows the device's own colour-scheme setting, light or dark. */
     try {
       var t = localStorage.getItem('theme');
       document.documentElement.setAttribute('data-theme',

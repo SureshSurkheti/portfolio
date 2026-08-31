@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <script>
   /* Synchronous and inline on purpose: this must run before the first paint.
      A deferred script would let a dark-mode visitor see a flash of white.
-     An explicit choice in localStorage always wins over the OS setting. */
+     Precedence: an explicit choice in localStorage, then an explicit OS
+       preference, then dark. The dark media query reads false both when someone
+       wants light and when no preference exists, so light is queried directly
+       and only the no-preference case falls through to the brand default. */
   try {
     var t = localStorage.getItem('theme');
     document.documentElement.setAttribute('data-theme',
