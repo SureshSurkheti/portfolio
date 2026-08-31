@@ -285,21 +285,6 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ─────────────── CURSOR ─────────────── */
-.cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 9998; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity .3s; }
-.cursor-dot { width: 6px; height: 6px; background: var(--c1); box-shadow: 0 0 12px var(--c1); }
-.cursor-ring { width: 34px; height: 34px; border: 1.5px solid var(--stroke-str); transition: opacity .3s, width .3s var(--ease), height .3s var(--ease), border-color .3s, background .3s; }
-body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
-.cursor-ring.grow { width: 62px; height: 62px; border-color: var(--c1); background: rgba(240, 180, 41, .08); }
-/* over the hero map the ring reads as a survey reticle */
-.cursor-ring.crosshair { border-color: var(--acc-gfx); }
-.cursor-ring.crosshair::before, .cursor-ring.crosshair::after {
-  content: ""; position: absolute; left: 50%; top: 50%;
-  background: var(--acc-gfx); transform: translate(-50%, -50%);
-}
-.cursor-ring.crosshair::before { width: 1.5px; height: 150%; }
-.cursor-ring.crosshair::after { height: 1.5px; width: 150%; }
-
 /* ─────────────── SCROLL PROGRESS ─────────────── */
 .scroll-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 200; background: transparent; }
 .scroll-progress i { display: block; height: 100%; width: 0; background: var(--grad); box-shadow: 0 0 14px rgba(240, 180, 41, .8); }
@@ -357,6 +342,16 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 .navbar a:hover::before { opacity: 1; transform: scale(1); }
 .navbar a.active { color: var(--text); }
 .navbar a.active::before { opacity: 1; transform: scale(1); background: var(--grad-soft); border-color: var(--stroke-str); }
+/* A waypoint under the current section — the same amber marker language as the
+   map pins, so location feedback reads as part of the cartography rather than a
+   generic underline. The pill alone was too quiet to anchor the eye in dark. */
+.navbar a.active::after {
+  content: ""; position: absolute; left: 50%; bottom: -1px;
+  width: 4px; height: 4px; margin-left: -2px; border-radius: 50%;
+  background: var(--acc-gfx); box-shadow: 0 0 7px var(--acc-gfx);
+  animation: navDot .4s var(--ease) both;
+}
+@keyframes navDot { from { opacity: 0; transform: translateY(-3px) } }
 
 .header__actions { position: relative; z-index: 3; display: flex; align-items: center; gap: .6rem; }
 .theme-toggle {
@@ -552,8 +547,8 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 /* The flight path: Kathmandu (open ring) to Oita (amber pin), dashes flowing */
 .home__map {
   position: absolute; z-index: 0;
-  right: clamp(.5rem, 3vw, 4rem); top: 14%;
-  width: clamp(300px, 29vw, 470px); height: auto;
+  right: clamp(.5rem, 2.4vw, 3rem); top: 12%;
+  width: clamp(320px, 34vw, 580px); height: auto;
   animation: fadeUp 1.2s var(--ease) both .9s;
 }
 .home__map-path {
@@ -730,8 +725,10 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 }
 .home__bar-ticker {
   overflow: hidden; display: flex; align-items: center; min-width: 0;
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  /* A wide fade on both edges: a marquee necessarily enters mid-word, and a
+     generous ramp reads as motion rather than text cut off at a border. */
+  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
 }
 .home__bar-track {
   display: flex; white-space: nowrap;
@@ -748,6 +745,11 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   color: var(--text-dim); transition: color .3s, background .3s;
 }
 .home__bar-sci a:hover { color: var(--acc); background: color-mix(in srgb, var(--acc-gfx) 8%, transparent); }
+/* On paper the mono metadata sat at 4.55:1 — over the line but with no margin,
+   which is thin for 12px type on a dim laptop screen. The stronger ink keeps it
+   subordinate to the numbers while clearing AA with room to spare. */
+[data-theme="light"] .home__bar-track,
+[data-theme="light"] .home__bar-stats span { color: var(--text-dim); }
 
 /* avatar */
 .home__visual { display: grid; place-items: center; }
@@ -1621,8 +1623,7 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
     left: calc(var(--tl-rail) - var(--tl-dot) / 2); right: auto;
   }
 
-  .cursor-dot, .cursor-ring { display: none; }
-
+  
   /* Sideways reveals would push past the viewport edge on narrow screens.
      :not(.in) matters — without it this ties with `.reveal.in { transform: none }`
      on specificity, wins on source order, and pins the element 34px down forever
@@ -1713,8 +1714,7 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 }
 
 @media print {
-  .header, .to-top, .preloader, .bg-fx, .particles, .home__glow, .scroll-hint, .marquee, .cursor-dot, .cursor-ring { display: none !important; }
-  body { background: #fff; color: #000; }
+  .header, .to-top, .preloader, .bg-fx, .particles, .home__glow, .scroll-hint, .marquee,   body { background: #fff; color: #000; }
 }
 
 /* ─────────────── STATS: three-cell variant (About) ─────────────── */

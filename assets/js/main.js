@@ -321,41 +321,6 @@
     });
   }
 
-  /* ─────────── CUSTOM CURSOR ─────────── */
-  if (finePointer && !reduced) {
-    const dot = $('.cursor-dot');
-    const ring = $('.cursor-ring');
-    let rx = window.innerWidth / 2, ry = window.innerHeight / 2;
-    let tx = rx, ty = ry;
-
-    window.addEventListener('pointermove', e => {
-      tx = e.clientX; ty = e.clientY;
-      document.body.classList.add('cursor-on');
-      if (dot) dot.style.transform = `translate(${tx - 3}px, ${ty - 3}px)`;
-    }, { passive: true });
-
-    (function loop() {
-      rx += (tx - rx) * 0.16;
-      ry += (ty - ry) * 0.16;
-      if (ring) ring.style.transform = `translate(${rx - 17}px, ${ry - 17}px)`;
-      requestAnimationFrame(loop);
-    })();
-
-    $$('a, button, .project, .card').forEach(el => {
-      el.addEventListener('pointerenter', () => ring?.classList.add('grow'));
-      el.addEventListener('pointerleave', () => ring?.classList.remove('grow'));
-    });
-
-    // over the hero's chart the ring becomes a survey reticle
-    const heroMap = $('.home__map');
-    if (heroMap) {
-      heroMap.addEventListener('pointerenter', () => ring?.classList.add('crosshair'));
-      heroMap.addEventListener('pointerleave', () => ring?.classList.remove('crosshair'));
-    }
-
-    document.addEventListener('pointerleave', () => document.body.classList.remove('cursor-on'));
-  }
-
   /* ─────────── HERO PARTICLE CONSTELLATION ─────────── */
   const canvas = $('#particles');
   if (canvas && !reduced) {
