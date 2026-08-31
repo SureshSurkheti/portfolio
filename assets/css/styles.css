@@ -1708,6 +1708,19 @@ body::after {
   .to-top { right: 1rem; bottom: 1rem; width: 44px; height: 44px; }
 }
 
+/* Very small phones (320px). Two things break here that do not at 375:
+   the badge label runs to a second line, and "ENGINEERING" is a single
+   unbreakable word wider than its third of the stats bar, so nowrap clips it.
+   Neither can be solved by wrapping — only by tightening the type. */
+@media (max-width: 360px) {
+  .badge { font-size: .7rem; letter-spacing: .04em; padding-inline: .7rem; gap: .38rem; }
+  .badge i { font-size: .95rem; }
+  .home__bar-stats span { font-size: .64rem; letter-spacing: .02em; }
+  .home__bar-stats strong { font-size: 1.1rem; }
+  .home__bar-stats > div { padding-inline: .5rem; }
+  .home__bar-track { font-size: .68rem; letter-spacing: .14em; }
+}
+
 @media (max-width: 380px) {
   /* The longest roles wrap to two lines here, and the typewriter would jog the
      whole hero by ~17px on every rotation. Reserve the taller box up front. */
@@ -1897,3 +1910,25 @@ body::after {
   display: inline-flex; align-items: center; gap: .42rem;
 }
 .aws-group li:hover .aws-ico { opacity: 1; }
+
+/* ── Touch targets ───────────────────────────────────────────────────────
+   Everything interactive clears WCAG 2.2's 24px minimum already, but the
+   controls people actually tap sat at 38–42px, under Apple's 44pt guideline.
+   Scoped to the stacked layout, which is where fingers rather than a mouse are
+   doing the pointing; desktop keeps its tighter proportions. */
+@media (max-width: 900px) {
+  .theme-toggle { width: 44px; height: 44px; }
+  .menu-toggle  { width: 44px; height: 44px; }
+  .filter { min-height: 44px; display: inline-flex; align-items: center; }
+  .home__bar-sci a { min-height: 44px; }
+  .navbar a { min-height: 44px; display: flex; align-items: center; justify-content: center; }
+  .copy-btn { width: 44px; height: 44px; }
+  .logo { min-height: 44px; }
+  .footer__nav a { display: inline-flex; align-items: center; min-height: 44px; }
+  .project__links a, .case__back,
+  .card__links a, .early__link, .contact__list a {
+    min-height: 44px; display: inline-flex; align-items: center;
+  }
+  /* Links sitting inside a sentence keep their natural size — WCAG exempts
+     inline targets, and padding them out would break the prose line. */
+}
