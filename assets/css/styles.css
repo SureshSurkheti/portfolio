@@ -196,7 +196,6 @@ body::after {
   font-style: italic; font-weight: 600; letter-spacing: -.01em;
   color: var(--acc);
 }
- }
 
 /* ─────────────── PRELOADER ─────────────── */
 .preloader {
@@ -482,11 +481,16 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
 /* ─────────────── HERO ─────────────── */
 .home {
   position: relative; min-height: 100svh; overflow: clip;
-  display: flex; align-items: flex-start;
-  /* content anchors near the top like a spread — on tall windows the spare
-     height falls below the text, where the stats bar owns the edge, instead
-     of pooling under the header */
-  padding: calc(var(--header-h) + clamp(3rem, 9svh, 6.5rem)) var(--pad-x) 10rem;
+  display: flex; align-items: center;
+  /* The content is centred in the band between the header and the stats bar.
+     Padding the bottom by the bar's own height plus the same gap used at the
+     top makes the two visual gaps equal at every window height — anchoring to
+     the top instead pooled 450px of dead space above the bar on tall screens. */
+  --hero-bar-h: 84px;
+  --hero-gap: clamp(2rem, 4.5svh, 3.6rem);
+  padding:
+    calc(var(--header-h) + var(--hero-gap)) var(--pad-x)
+    calc(var(--hero-bar-h) + var(--hero-gap));
   /* solid ground: the page's aurora blobs stop at the hero's edge — in here
      the palette is charcoal/paper + amber only */
   background-color: var(--bg);
@@ -633,6 +637,25 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   .home__desc { max-width: 46ch; }
 }
 .home__statement .reveal-word { display: block; }
+/* Short desktop windows (14" laptops, 768p monitors): the hero would push the
+   stats bar past the fold. Compress the vertical rhythm and the display scale
+   so the whole pitch — headline, proof, actions, bar — lands on one screen. */
+@media (min-width: 1101px) and (max-height: 860px) {
+  .home { --hero-gap: 1.4rem; }
+  .home__statement { font-size: clamp(2.7rem, 4.1vw, 4.4rem); margin-bottom: 1rem; }
+  .badge { margin-bottom: 1rem; }
+  .home__eyebrow { margin-bottom: .75rem; }
+  .home__desc { margin-top: .9rem; }
+  .home__cta { margin-top: 1.5rem; }
+}
+@media (min-width: 1101px) and (max-height: 720px) {
+  .home { --hero-gap: .9rem; }
+  .home__statement { font-size: clamp(2.3rem, 3.4vw, 3.5rem); margin-bottom: .8rem; }
+  .home__desc { font-size: .97rem; }
+  .home__cta { margin-top: 1.2rem; }
+  .badge { margin-bottom: .8rem; }
+}
+
 .home__stack {
   margin-top: 1.4rem; font-family: var(--font-mono);
   font-size: clamp(.66rem, 1.3vw, .78rem); letter-spacing: .14em;
@@ -1564,6 +1587,18 @@ body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
   .home__bar-stats > div:last-child { border-right: 0; }
   .home__bar-ticker { border-top: 1px solid var(--stroke); padding-block: .55rem; }
   .home__bar-sci { display: none; }
+}
+
+/* Tablets have the width for the profile links; phones do not. */
+@media (min-width: 601px) and (max-width: 1100px) {
+  .home__bar-sci { display: flex; border-top: 1px solid var(--stroke); }
+  .home__bar-sci a {
+    flex: 1 1 0; padding-block: .65rem;
+    border-left: 0; border-right: 1px solid var(--stroke);
+  }
+  .home__bar-sci a:last-child { border-right: 0; }
+}
+@media (max-width: 1100px) {
 
   .home__inner { grid-template-columns: 1fr; gap: 2.5rem; }
   .avatar { width: clamp(210px, 46vw, 300px); --chip-r: 58%; --chip-size: 42px; }
