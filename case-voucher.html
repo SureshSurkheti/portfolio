@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    /* Synchronous and inline on purpose: this must run before the first paint.
+       A deferred script would let a dark-mode visitor see a flash of white.
+       An explicit choice in localStorage always wins over the OS setting. */
+    try {
+      var t = localStorage.getItem('theme');
+      document.documentElement.setAttribute('data-theme',
+        t === 'dark' || t === 'light' ? t
+          : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    } catch (e) { /* private mode — the markup default stands */ }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Case study: a multi-tenant digital gift-voucher (商品券) platform serving four regional Japanese municipalities — architecture, constraints and delivery.">
+  <meta name="author" content="Suresh Surkheti">
+  <meta name="theme-color" content="#05060a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#eceff6" media="(prefers-color-scheme: light)">
+  
+  <title>Municipal Voucher Platform — Case Study · Suresh Surkheti</title>
+
+  <!-- Real icon files, not a data: URI — Google's favicon crawler and most link
+       previews cannot fetch data URIs, which left the site showing a generic globe. -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+
+  <!-- Link previews (LinkedIn, WhatsApp, X, Slack). These must be absolute URLs;
+       crawlers will not resolve a relative og:image. -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sureshsurkheti.com/case-voucher">
+  <meta property="og:title" content="Municipal Voucher Platform — Case Study">
+  <meta property="og:description" content="How a multi-tenant digital gift-voucher platform served four regional Japanese municipalities from one codebase — architecture, constraints and delivery.">
+  <meta property="og:image" content="https://sureshsurkheti.com/assets/img/suresh-social.jpg">
+  <meta property="og:site_name" content="Suresh Surkheti">
+  <meta property="og:image:width" content="960">
+  <meta property="og:image:height" content="504">
+  <meta property="og:image:alt" content="Suresh Surkheti — Software Engineer in Oita, Japan">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Municipal Voucher Platform — Case Study">
+  <meta name="twitter:description" content="Architecture and delivery of a multi-tenant 商品券 platform for four Japanese municipalities.">
+  <meta name="twitter:image" content="https://sureshsurkheti.com/assets/img/suresh-social.jpg">
+  <meta name="twitter:image:alt" content="Suresh Surkheti — Software Engineer in Oita, Japan">
+
+  <link rel="canonical" href="https://sureshsurkheti.com/case-voucher">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&family=Fraunces:ital,wght@1,600&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/boxicons-subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/boxicons-subset.css?v=20260828">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260828">
+  <noscript>
+    <style>
+      /* Never hide content behind JS: show everything if scripts are off. */
+      .preloader { display: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .particles { display: none; }
+    </style>
+  </noscript>
+</head>
+<body class="page-projects">
+
+<a href="#case" class="skip-link">Skip to content</a>
+
+<!-- ══════════ AMBIENT BACKGROUND ══════════ -->
+<div class="bg-fx" aria-hidden="true">
+  <div class="blob blob--1"></div>
+  <div class="blob blob--2"></div>
+  <div class="blob blob--3"></div>
+  <div class="grid-lines"></div>
+  <div class="noise"></div>
+</div>
+
+<div class="scroll-progress" aria-hidden="true"><i id="scrollBar"></i></div>
+
+<header class="header" id="header">
+  <a href="index.html" class="logo" aria-label="Home">
+    <span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span>
+    <span class="logo__text">Suresh<em>.</em></span>
+  </a>
+
+  <nav class="navbar" id="navbar" aria-label="Main navigation">
+    <a href="index.html" style="--i:1"><span>Home</span></a>
+    <a href="index.html#about" style="--i:2"><span>About</span></a>
+    <a href="index.html#services" style="--i:3"><span>Services</span></a>
+    <a href="index.html#skills" style="--i:4"><span>Skills</span></a>
+    <a href="index.html#work" style="--i:5"><span>Work</span></a>
+    <a href="index.html#personal" style="--i:6"><span>Personal</span></a>
+    <a href="index.html#journey" style="--i:7"><span>Journey</span></a>
+    <a href="index.html#contact" style="--i:8"><span>Contact</span></a>
+  </nav>
+
+  <div class="header__actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle colour theme">
+      <i class="bx bx-moon"></i><i class="bx bx-sun"></i>
+    </button>
+    <a href="index.html#contact" class="btn btn--sm btn--ghost header__cta">Hire Me</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbar">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="case">
+
+<section class="section case">
+  <div class="case__head reveal">
+    <a class="case__back" href="index.html#work"><i class="bx bx-left-arrow-alt"></i>All work</a>
+    <span class="eyebrow">Case study</span>
+    <h1 class="section__title">Municipal <span class="gradient-text">voucher platform</span></h1>
+    <p class="section__sub">
+      A multi-tenant digital gift-voucher (商品券) platform serving four regional
+      municipalities from one codebase.
+    </p>
+  </div>
+
+  <dl class="case__meta reveal">
+    <div><dt>Role</dt><dd>Full-Stack Engineer</dd></div>
+    <div><dt>Client</dt><dd>Consortium of 4+ municipalities</dd></div>
+    <div><dt>Surface</dt><dd>Resident wallet · merchant redemption · admin</dd></div>
+    <div><dt>Status</dt><dd>Publicly launched</dd></div>
+  </dl>
+
+  <div class="case__body">
+    <section class="case__block reveal">
+      <h2>The problem</h2>
+      <p>
+        Regional municipalities issue 商品券 — gift vouchers spent with local merchants —
+        to stimulate their own economies. Each municipality runs its own scheme, with its
+        own rules, budget and merchant list, and each had been handling issuance on paper.
+        Paper vouchers are slow to distribute, hard to reconcile, and impossible to audit
+        in real time.
+      </p>
+      <p>
+        Building four separate systems would have meant four deployments, four security
+        reviews and four maintenance burdens. The platform had to serve every municipality
+        from one codebase while keeping each one's data completely separate.
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Architecture</h2>
+      <p>
+        Residents and merchants reach the platform over TLS terminated at the load balancer;
+        everything behind it runs in private subnets. The application tier resolves which
+        municipality a request belongs to and scopes every query to that tenant. Ledger
+        records are encrypted through managed keys rather than application-held secrets, so
+        key rotation and access are auditable outside the codebase.
+      </p>
+      
+      <div class="arch-scroll">
+      <svg class="arch" viewBox="0 0 880 560" role="img"
+           aria-label="Architecture: residents and merchants reach the platform over TLS terminated by an Application Load Balancer; inside the VPC a Nuxt and TypeScript application tier writes to an RDS voucher ledger, encrypting records through KMS, with CloudWatch collecting metrics, logs and alarms.">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" class="arch__head"/>
+          </marker>
+        </defs>
+
+        <!-- clients -->
+        <rect class="arch__box" x="150" y="18" width="180" height="56" rx="8"/>
+        <text class="arch__t" x="240" y="42">Residents</text>
+        <text class="arch__s" x="240" y="60">voucher wallet</text>
+
+        <rect class="arch__box" x="550" y="18" width="180" height="56" rx="8"/>
+        <text class="arch__t" x="640" y="42">Merchants</text>
+        <text class="arch__s" x="640" y="60">redemption</text>
+
+        <path class="arch__line" d="M240 74 L240 100 L400 100 L400 128" marker-end="url(#ah)"/>
+        <path class="arch__line" d="M640 74 L640 100 L480 100 L480 128" marker-end="url(#ah)"/>
+        <text class="arch__tag" x="440" y="94">HTTPS · ACM certificate</text>
+
+        <!-- edge -->
+        <rect class="arch__box arch__box--accent" x="300" y="128" width="280" height="54" rx="8"/>
+        <text class="arch__t" x="440" y="151">Application Load Balancer</text>
+        <text class="arch__s" x="440" y="169">TLS termination · health checks</text>
+
+        <path class="arch__line" d="M440 182 L440 214" marker-end="url(#ah)"/>
+
+        <!-- vpc -->
+        <rect class="arch__vpc" x="60" y="212" width="760" height="272" rx="12"/>
+        <text class="arch__vpclabel" x="78" y="234">VPC · private subnets</text>
+
+        <rect class="arch__box" x="120" y="252" width="300" height="76" rx="8"/>
+        <text class="arch__t" x="270" y="280">Application tier</text>
+        <text class="arch__s" x="270" y="299">Nuxt · TypeScript · Pinia</text>
+        <text class="arch__s" x="270" y="316">tenant routing per municipality</text>
+
+        <rect class="arch__box" x="520" y="252" width="240" height="76" rx="8"/>
+        <text class="arch__t" x="640" y="280">KMS</text>
+        <text class="arch__s" x="640" y="299">managed keys</text>
+        <text class="arch__s" x="640" y="316">ledger record encryption</text>
+
+        <rect class="arch__box" x="120" y="392" width="300" height="72" rx="8"/>
+        <text class="arch__t" x="270" y="419">RDS</text>
+        <text class="arch__s" x="270" y="438">voucher ledger</text>
+        <text class="arch__s" x="270" y="455">isolated per tenant</text>
+
+        <rect class="arch__box" x="520" y="392" width="240" height="72" rx="8"/>
+        <text class="arch__t" x="640" y="419">CloudWatch</text>
+        <text class="arch__s" x="640" y="438">metrics · logs</text>
+        <text class="arch__s" x="640" y="455">issuance &amp; redemption alarms</text>
+
+        <path class="arch__line" d="M270 328 L270 386" marker-end="url(#ah)"/>
+        <text class="arch__tag" x="196" y="362">write / redeem</text>
+
+        <path class="arch__line" d="M420 290 L514 290" marker-end="url(#ah)"/>
+        <path class="arch__line arch__line--dash" d="M420 428 L514 428" marker-end="url(#ah)"/>
+        <path class="arch__line arch__line--dash" d="M340 328 L340 356 L560 356 L560 386" marker-end="url(#ah)"/>
+      </svg>
+      </div>
+
+      <p class="case__caption">
+        Client names and endpoints are withheld; the diagram describes the architecture only.
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Constraints that shaped it</h2>
+      <ul class="case__list">
+        <li><strong>Public money, real-time truth.</strong> Every issuance and redemption
+          moves public funds, so the ledger is the source of truth and reconciliation has to
+          hold under concurrent redemption.</li>
+        <li><strong>Tenant isolation.</strong> One municipality must never be able to observe
+          or affect another's data, budget or merchants — enforced in the data layer, not
+          only in the UI.</li>
+        <li><strong>Peak-day load.</strong> Voucher schemes open on an announced date, so
+          traffic is not evenly distributed — it arrives in a spike.</li>
+        <li><strong>Public-sector compliance.</strong> Encrypted data, scoped access and
+          audited change, to the standards the platform ships under.</li>
+      </ul>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Outcome</h2>
+      <p>
+        All four schemes went live on the platform — each with its own rules, budget,
+        merchant list and calendar — running from a single codebase and a single
+        deployment rather than four parallel systems.
+      </p>
+      <p>
+        The biggest change landed on merchants. Digital redemption removed voucher
+        collection altogether: settlements reach their bank accounts automatically instead
+        of being counted, bundled and reconciled by hand. Residents spend to one-yen
+        precision instead of in fixed paper denominations, so no value is stranded in
+        change. Administrators watch issuance and redemption as it happens rather than
+        reconstructing it from paper weeks after the fact — which is what makes a
+        publicly funded scheme auditable in the first place.
+      </p>
+      <p>
+        Where residents could choose between formats, more of them took the digital
+        voucher than the paper one.
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Stack</h2>
+      <div class="case__stack">
+        <div><h3>Application</h3><p>TypeScript · Vue.js · Nuxt.js · Pinia · Tailwind</p></div>
+        <div><h3>Infrastructure</h3><p>AWS — VPC · RDS · ELB · CloudWatch · KMS · ACM</p></div>
+      </div>
+    </section>
+
+    <div class="case__cta reveal">
+      <a href="index.html#contact" class="btn btn--primary"><span>Talk about this work</span><i class="bx bx-right-arrow-alt"></i></a>
+      <a href="index.html#work" class="btn btn--outline"><span>See other projects</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <a href="index.html" class="logo logo--footer">
+      <span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span><span class="logo__text">Suresh<em>.</em></span>
+    </a>
+    <nav class="footer__nav">
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#work">Work</a>
+      <a href="https://blog.sureshsurkheti.com" target="_blank" rel="noopener noreferrer">Travel blog</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <p class="footer__copy">© 2024 Suresh Surkheti</p>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="bx bx-chevron-up"></i></button>
+
+<script src="assets/js/main.js?v=20260828" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://sureshsurkheti.com/case-voucher#article",
+      "headline": "Municipal Voucher Platform — Case Study",
+      "description": "How a multi-tenant digital gift-voucher (商品券) platform served four regional Japanese municipalities from one codebase — architecture, constraints and delivery.",
+      "url": "https://sureshsurkheti.com/case-voucher",
+      "datePublished": "2026-08-31",
+      "dateModified": "2026-08-31",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://sureshsurkheti.com/#person"
+      },
+      "publisher": {
+        "@id": "https://sureshsurkheti.com/#person"
+      },
+      "isPartOf": {
+        "@id": "https://sureshsurkheti.com/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://sureshsurkheti.com/case-voucher#webpage"
+      },
+      "image": "https://sureshsurkheti.com/assets/img/suresh-social.jpg",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Multi-tenant architecture"
+        },
+        {
+          "@type": "Thing",
+          "name": "Public sector software"
+        },
+        {
+          "@type": "Thing",
+          "name": "Amazon Web Services"
+        }
+      ],
+      "keywords": "multi-tenant, AWS, Nuxt, TypeScript, RDS, KMS, public sector, Japan"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://sureshsurkheti.com/case-voucher#webpage",
+      "url": "https://sureshsurkheti.com/case-voucher",
+      "name": "Municipal Voucher Platform — Case Study · Suresh Surkheti",
+      "isPartOf": {
+        "@id": "https://sureshsurkheti.com/#website"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sureshsurkheti.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Work",
+          "item": "https://sureshsurkheti.com/#work"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Municipal Voucher Platform"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

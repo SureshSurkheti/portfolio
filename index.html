@@ -72,6 +72,26 @@
 </head>
 <body>
 
+<!-- AWS service glyphs, referenced by <use> in the toolkit -->
+<svg class="aws-sprite" aria-hidden="true" focusable="false"><defs>
+  <symbol id="aws-route53" viewBox="0 0 24 24"><path d="M12 3.6 19 6.6v5.1c0 4.1-2.9 7.3-7 8.7-4.1-1.4-7-4.6-7-8.7V6.6Z"/><path d="M9.4 14.2h3.1a1.7 1.7 0 0 0 0-3.4h-.6m.6 0a1.6 1.6 0 0 0 0-3.2H9.6"/></symbol>
+  <symbol id="aws-acm" viewBox="0 0 24 24"><rect x="3.8" y="4.4" width="16.4" height="11.2" rx="2"/><path d="M9.2 19.6l2.8-1.8 2.8 1.8V15.6H9.2Z"/><path d="M7.2 8.4h4.2M7.2 11.4h2.6"/></symbol>
+  <symbol id="aws-cloudfront" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.6 2.9 2.6 12.1 0 16M12 4c-2.6 2.9-2.6 12.1 0 16"/></symbol>
+  <symbol id="aws-s3" viewBox="0 0 24 24"><path d="M4.6 6.6h14.8l-1.5 12.1a1.8 1.8 0 0 1-1.8 1.6H7.9a1.8 1.8 0 0 1-1.8-1.6Z"/><path d="M4.6 6.6c0-1.2 3.3-2.2 7.4-2.2s7.4 1 7.4 2.2"/></symbol>
+  <symbol id="aws-apigw" viewBox="0 0 24 24"><rect x="3.6" y="4.6" width="16.8" height="14.8" rx="2.4"/><path d="M9.6 9.2 7 12l2.6 2.8M14.4 9.2 17 12l-2.6 2.8"/></symbol>
+  <symbol id="aws-lambda" viewBox="0 0 24 24"><path d="M7.4 5.2h3.1l6.1 13.6"/><path d="M12.4 11.6 7.2 18.8"/></symbol>
+  <symbol id="aws-dynamodb" viewBox="0 0 24 24"><path d="M5 7.2c0-1.4 3.1-2.6 7-2.6s7 1.2 7 2.6v9.6c0 1.4-3.1 2.6-7 2.6s-7-1.2-7-2.6Z"/><path d="M5 7.2c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6"/><path d="m12.6 11.8-2 3.2h2.8l-2 3.2"/></symbol>
+  <symbol id="aws-ssm" viewBox="0 0 24 24"><path d="M4.4 8.4h15.2M4.4 15.6h15.2"/><circle cx="9.2" cy="8.4" r="2.1"/><circle cx="15.2" cy="15.6" r="2.1"/></symbol>
+  <symbol id="aws-cloudwatch" viewBox="0 0 24 24"><path d="M7.4 16.6a3.6 3.6 0 0 1 .5-7.2 4.7 4.7 0 0 1 8.7-1.2 3.4 3.4 0 0 1 1.2 6.6"/><circle cx="12" cy="15" r="3.2"/><path d="m14.4 17.4 2.2 2.2"/></symbol>
+  <symbol id="aws-iam" viewBox="0 0 24 24"><rect x="5.4" y="10.6" width="13.2" height="9" rx="2.2"/><path d="M8.6 10.6V8.2a3.4 3.4 0 0 1 6.8 0v2.4"/><circle cx="12" cy="15" r="1.4"/></symbol>
+  <symbol id="aws-kms" viewBox="0 0 24 24"><circle cx="8" cy="12" r="3.4"/><path d="M11.4 12h8.2M17.2 12v3M14.4 12v2.2"/></symbol>
+  <symbol id="aws-ec2" viewBox="0 0 24 24"><rect x="4.4" y="4.4" width="15.2" height="15.2" rx="2.2"/><path d="M8 8.6h8M8 12h8M8 15.4h4.6"/></symbol>
+  <symbol id="aws-vpc" viewBox="0 0 24 24"><rect x="3.8" y="5.6" width="16.4" height="12.8" rx="2.2" stroke-dasharray="3 2.6"/><rect x="8.4" y="9.6" width="7.2" height="4.8" rx="1.4"/></symbol>
+  <symbol id="aws-elb" viewBox="0 0 24 24"><path d="M12 3.8v5.4"/><path d="M4.4 20.2v-3.8a2 2 0 0 1 2-2h11.2a2 2 0 0 1 2 2v3.8"/><path d="M12 9.2v5.2"/><circle cx="12" cy="3.8" r="1.2"/></symbol>
+  <symbol id="aws-rds" viewBox="0 0 24 24"><path d="M5 7.2c0-1.4 3.1-2.6 7-2.6s7 1.2 7 2.6v9.6c0 1.4-3.1 2.6-7 2.6s-7-1.2-7-2.6Z"/><path d="M5 7.2c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6M5 12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6"/></symbol>
+  <symbol id="aws-cognito" viewBox="0 0 24 24"><circle cx="10.6" cy="8.6" r="3.4"/><path d="M4.4 19.6c0-3.4 2.8-5.4 6.2-5.4.9 0 1.8.1 2.6.4"/><path d="m14.4 16.6 2.2 2.2 4-4"/></symbol>
+</defs></svg>
+
 <a href="#home" class="skip-link">Skip to content</a>
 
 <!-- ══════════ PRELOADER ══════════ -->
@@ -99,7 +119,7 @@
 <!-- ══════════ HEADER ══════════ -->
 <header class="header" id="header">
   <a href="#home" class="logo" aria-label="Home">
-    <span class="logo__mark">S</span>
+    <span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span>
     <span class="logo__text">Suresh<em>.</em></span>
   </a>
 
@@ -175,7 +195,7 @@
     <div class="home__bar-stats">
       <div><strong>12+</strong><span>Platforms</span></div>
       <div><strong>2</strong><span>Countries</span></div>
-      <div><strong>4 yrs</strong><span>Civic tech</span></div>
+      <div><strong>4+ yrs</strong><span>Civic tech</span></div>
     </div>
     <div class="home__bar-ticker" aria-hidden="true">
       <div class="home__bar-track">
@@ -203,7 +223,7 @@
         <img src="assets/img/suresh-avatar.webp" alt="Portrait of Suresh Surkheti"
              width="530" height="530" loading="lazy" decoding="async">
         <div class="about__badge">
-          <strong>4</strong>
+          <strong>4+</strong>
           <span>Years of<br>experience</span>
         </div>
       </div>
@@ -245,11 +265,11 @@
        numbers, or delete any stat you cannot back up in conversation.
        An inflated number is worse than no number if a client asks about it.
        ========================================================== -->
-  <!-- The hero bar already states 12+ platforms / 2 countries / 4 yrs — this
+  <!-- The hero bar already states 12+ platforms / 2 countries / 4+ yrs — this
        strip carries only the facts the hero does not. -->
   <div class="stats stats--three reveal">
-    <div class="stat"><div class="stat__num"><span class="counter" data-target="20">0</span>+</div><p>Projects Shipped</p></div>
-    <div class="stat"><div class="stat__num"><span class="counter" data-target="18">0</span>+</div><p>AWS Services Used</p></div>
+    <div class="stat"><div class="stat__num"><span class="counter" data-target="12">0</span>+</div><p>Projects Shipped</p></div>
+    <div class="stat"><div class="stat__num"><span class="counter" data-target="16">0</span></div><p>AWS Services Used</p></div>
     <div class="stat"><div class="stat__num">N3</div><p>Japanese · JLPT Certified</p></div>
   </div>
 </section>
@@ -374,27 +394,53 @@
     <div class="skills__panel reveal" data-reveal="right">
       <h3 class="skills__heading"><i class="bx bxl-aws"></i> AWS Services</h3>
       <p class="skills__note">Services I've worked with on client projects.</p>
+      <!-- Every service here appears on a delivered project card above; the
+           panel note promises client-project experience, so the list has to be
+           traceable. Icons are drawn in the site's own line style rather than
+           AWS's multicolour marks, which would fight the amber system. -->
       <div class="aws-grid">
         <div class="aws-group">
-          <h4>Compute</h4>
-          <ul><li>EC2</li><li>ECS</li><li>Fargate</li><li>Lambda</li></ul>
+          <h4>Edge &amp; Delivery</h4>
+          <ul>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-route53"/></svg>Route 53</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-cloudfront"/></svg>CloudFront</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-acm"/></svg>ACM</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-apigw"/></svg>API Gateway</li>
+          </ul>
         </div>
         <div class="aws-group">
-          <h4>Network &amp; Delivery</h4>
-          <ul><li>VPC</li><li>Route 53</li><li>CloudFront</li><li>API Gateway</li><li>ELB</li><li>ACM</li><li>WAF</li></ul>
+          <h4>Compute</h4>
+          <ul>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-lambda"/></svg>Lambda</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-ec2"/></svg>EC2</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-vpc"/></svg>VPC</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-elb"/></svg>ELB</li>
+          </ul>
         </div>
         <div class="aws-group">
           <h4>Data &amp; Storage</h4>
-          <ul><li>RDS</li><li>DynamoDB</li><li>S3</li></ul>
+          <ul>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-s3"/></svg>S3</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-dynamodb"/></svg>DynamoDB</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-rds"/></svg>RDS</li>
+          </ul>
         </div>
         <div class="aws-group">
           <h4>Security</h4>
-          <ul><li>IAM</li><li>KMS</li><li>Secrets Manager</li><li>Cognito</li></ul>
+          <ul>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-iam"/></svg>IAM</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-kms"/></svg>KMS</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-cognito"/></svg>Cognito</li>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-ssm"/></svg>SSM Parameter Store</li>
+          </ul>
         </div>
         <div class="aws-group">
           <h4>Operations</h4>
-          <ul><li>CloudWatch</li><li>Auto Scaling</li></ul>
+          <ul>
+            <li><svg class="aws-ico" aria-hidden="true"><use href="#aws-cloudwatch"/></svg>CloudWatch</li>
+          </ul>
         </div>
+      </div>
       </div>
     </div>
 
@@ -450,6 +496,7 @@
         <img src="assets/img/project-gis.svg?v=2" alt="Civil Land Regulation and GIS Portal — Regional Japanese prefecture"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Public Sector</span>
+        <span class="project__flag"><i class="bx bx-network-chart"></i>Case study</span>
       </div>
       <div class="project__body">
         <h3>Civil Land Regulation &amp; GIS Portal</h3>
@@ -461,6 +508,31 @@
         <div class="project__tech"><i>FastAPI</i><i>Vue.js</i><i>Nuxt.js</i><i>Vuetify</i><i>Terraform</i><i>Docker</i></div>
         <div class="project__aws"><span>AWS</span><i>VPC</i><i>EC2</i><i>S3</i><i>RDS</i><i>CloudWatch</i><i>IAM</i></div>
         <p class="project__note"><i class="bx bx-globe"></i>Publicly launched municipal platform</p>
+        <div class="project__links">
+          <a href="case-gis.html"><i class="bx bx-network-chart"></i>Read the case study</a>
+        </div>
+      </div>
+    </article>
+    <article class="project reveal" data-cat="gov">
+      <div class="project__media">
+        <img src="assets/img/project-voucher.svg?v=2" alt="Municipal Voucher Issuance System — Consortium of 4+ municipalities"
+             width="1200" height="750" loading="lazy" decoding="async">
+        <span class="project__cat">Public Sector</span>
+        <span class="project__flag"><i class="bx bx-network-chart"></i>Case study</span>
+      </div>
+      <div class="project__body">
+        <h3>Municipal Voucher Issuance System</h3>
+        <div class="project__meta">
+          <span class="project__client"><i class="bx bx-buildings"></i>Consortium of 4+ municipalities</span>
+          <span class="project__role"><i class="bx bx-user-voice"></i>Full-Stack Engineer</span>
+        </div>
+        <p>Multi-tenant digital gift voucher (商品券) platform spanning several regional municipalities, securing high-volume ledger transactions with managed cryptographic keys.</p>
+        <div class="project__tech"><i>TypeScript</i><i>Vue.js</i><i>Nuxt.js</i><i>Pinia</i><i>Tailwind</i></div>
+        <div class="project__aws"><span>AWS</span><i>VPC</i><i>RDS</i><i>ELB</i><i>CloudWatch</i><i>KMS</i><i>ACM</i></div>
+        <p class="project__note"><i class="bx bx-globe"></i>Publicly launched municipal platform</p>
+        <div class="project__links">
+          <a href="case-voucher.html"><i class="bx bx-network-chart"></i>Read the case study</a>
+        </div>
       </div>
     </article>
     <article class="project reveal" data-cat="enterprise">
@@ -552,24 +624,6 @@
         <div class="project__tech"><i>Svelte</i><i>JavaScript</i></div>
       </div>
     </article>
-    <article class="project reveal" data-cat="gov">
-      <div class="project__media">
-        <img src="assets/img/project-voucher.svg?v=2" alt="Municipal Voucher Issuance System — Consortium of 4+ municipalities"
-             width="1200" height="750" loading="lazy" decoding="async">
-        <span class="project__cat">Public Sector</span>
-      </div>
-      <div class="project__body">
-        <h3>Municipal Voucher Issuance System</h3>
-        <div class="project__meta">
-          <span class="project__client"><i class="bx bx-buildings"></i>Consortium of 4+ municipalities</span>
-          <span class="project__role"><i class="bx bx-user-voice"></i>Full-Stack Engineer</span>
-        </div>
-        <p>Multi-tenant digital gift voucher (商品券) platform spanning several regional municipalities, securing high-volume ledger transactions with managed cryptographic keys.</p>
-        <div class="project__tech"><i>TypeScript</i><i>Vue.js</i><i>Nuxt.js</i><i>Pinia</i><i>Tailwind</i></div>
-        <div class="project__aws"><span>AWS</span><i>VPC</i><i>RDS</i><i>ELB</i><i>CloudWatch</i><i>KMS</i><i>ACM</i></div>
-        <p class="project__note"><i class="bx bx-globe"></i>Publicly launched municipal platform</p>
-      </div>
-    </article>
     <article class="project reveal" data-cat="enterprise app">
       <div class="project__media">
         <img src="assets/img/project-inventory.svg?v=2" alt="Office Equipment Tracking Tool — Administrative office network"
@@ -584,7 +638,7 @@
         </div>
         <p>Internal logistics tool logging office supplies and IT equipment across several workspaces, so every item's current location and holder stay traceable.</p>
         <div class="project__tech"><i>TypeScript</i><i>JavaScript</i><i>Vue.js</i><i>Terraform</i><i>Docker</i></div>
-        <div class="project__aws"><span>AWS</span><i>DynamoDB</i></div>
+        <div class="project__aws"><span>AWS</span><i>Route 53</i><i>ACM</i><i>CloudFront</i><i>S3</i><i>API Gateway</i><i>Lambda</i><i>DynamoDB</i><i>SSM Parameter Store</i><i>CloudWatch</i><i>IAM</i></div>
         <p class="project__note"><i class="bx bx-lock-alt"></i>Internal enterprise system — not publicly linkable</p>
       </div>
     </article>
@@ -821,13 +875,13 @@
 <footer class="footer">
   <div class="footer__inner">
     <a href="#home" class="logo logo--footer">
-      <span class="logo__mark">S</span><span class="logo__text">Suresh<em>.</em></span>
+      <span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span><span class="logo__text">Suresh<em>.</em></span>
     </a>
     <nav class="footer__nav">
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#work">Work</a>
-      <a href="https://blog.sureshsurkheti.com" target="_blank" rel="noopener noreferrer">Blog</a>
+      <a href="https://blog.sureshsurkheti.com" target="_blank" rel="noopener noreferrer">Travel blog</a>
       <a href="#contact">Contact</a>
     </nav>
     <p class="footer__copy">© 2024 Suresh Surkheti</p>

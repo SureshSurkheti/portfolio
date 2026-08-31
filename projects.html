@@ -77,14 +77,11 @@
   <div class="noise"></div>
 </div>
 
-<div class="cursor-dot" aria-hidden="true"></div>
-<div class="cursor-ring" aria-hidden="true"></div>
-
 <div class="scroll-progress" aria-hidden="true"><i id="scrollBar"></i></div>
 
 <header class="header" id="header">
   <a href="index.html" class="logo" aria-label="Home">
-    <span class="logo__mark">S</span>
+    <span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span>
     <span class="logo__text">Suresh<em>.</em></span>
   </a>
 
@@ -133,6 +130,7 @@
         <img src="assets/img/project-gis.svg?v=2" alt="Civil Land Regulation and GIS Portal — Regional Japanese prefecture"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Public Sector</span>
+        <span class="project__flag"><i class="bx bx-network-chart"></i>Case study</span>
       </div>
       <div class="project__body">
         <h2>Civil Land Regulation &amp; GIS Portal</h2>
@@ -144,6 +142,9 @@
         <div class="project__tech"><i>FastAPI</i><i>Vue.js</i><i>Nuxt.js</i><i>Vuetify</i><i>Terraform</i><i>Docker</i></div>
         <div class="project__aws"><span>AWS</span><i>VPC</i><i>EC2</i><i>S3</i><i>RDS</i><i>CloudWatch</i><i>IAM</i></div>
         <p class="project__note"><i class="bx bx-globe"></i>Publicly launched municipal platform</p>
+        <div class="project__links">
+          <a href="case-gis.html"><i class="bx bx-network-chart"></i>Read the case study</a>
+        </div>
       </div>
     </article>
 <article class="project reveal" data-cat="enterprise">
@@ -240,6 +241,7 @@
         <img src="assets/img/project-voucher.svg?v=2" alt="Municipal Voucher Issuance System — Consortium of 4+ municipalities"
              width="1200" height="750" loading="lazy" decoding="async">
         <span class="project__cat">Public Sector</span>
+        <span class="project__flag"><i class="bx bx-network-chart"></i>Case study</span>
       </div>
       <div class="project__body">
         <h2>Municipal Voucher Issuance System</h2>
@@ -251,6 +253,9 @@
         <div class="project__tech"><i>TypeScript</i><i>Vue.js</i><i>Nuxt.js</i><i>Pinia</i><i>Tailwind</i></div>
         <div class="project__aws"><span>AWS</span><i>VPC</i><i>RDS</i><i>ELB</i><i>CloudWatch</i><i>KMS</i><i>ACM</i></div>
         <p class="project__note"><i class="bx bx-globe"></i>Publicly launched municipal platform</p>
+        <div class="project__links">
+          <a href="case-voucher.html"><i class="bx bx-network-chart"></i>Read the case study</a>
+        </div>
       </div>
     </article>
 <article class="project reveal" data-cat="enterprise app">
@@ -267,7 +272,7 @@
         </div>
         <p>Internal logistics tool logging office supplies and IT equipment across several workspaces, so every item's current location and holder stay traceable.</p>
         <div class="project__tech"><i>TypeScript</i><i>JavaScript</i><i>Vue.js</i><i>Terraform</i><i>Docker</i></div>
-        <div class="project__aws"><span>AWS</span><i>DynamoDB</i></div>
+        <div class="project__aws"><span>AWS</span><i>Route 53</i><i>ACM</i><i>CloudFront</i><i>S3</i><i>API Gateway</i><i>Lambda</i><i>DynamoDB</i><i>SSM Parameter Store</i><i>CloudWatch</i><i>IAM</i></div>
         <p class="project__note"><i class="bx bx-lock-alt"></i>Internal enterprise system — not publicly linkable</p>
       </div>
     </article>
@@ -354,13 +359,13 @@
 <footer class="footer">
   <div class="footer__inner">
     <a href="index.html" class="logo logo--footer">
-      <span class="logo__mark">S</span><span class="logo__text">Suresh<em>.</em></span>
+      <span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span><span class="logo__text">Suresh<em>.</em></span>
     </a>
     <nav class="footer__nav">
       <a href="index.html#about">About</a>
       <a href="index.html#services">Services</a>
       <a href="index.html#work">Work</a>
-      <a href="https://blog.sureshsurkheti.com" target="_blank" rel="noopener noreferrer">Blog</a>
+      <a href="https://blog.sureshsurkheti.com" target="_blank" rel="noopener noreferrer">Travel blog</a>
       <a href="index.html#contact">Contact</a>
     </nav>
     <p class="footer__copy">© 2024 Suresh Surkheti</p>

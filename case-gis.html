@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    /* Synchronous and inline on purpose: this must run before the first paint.
+       A deferred script would let a dark-mode visitor see a flash of white.
+       An explicit choice in localStorage always wins over the OS setting. */
+    try {
+      var t = localStorage.getItem('theme');
+      document.documentElement.setAttribute('data-theme',
+        t === 'dark' || t === 'light' ? t
+          : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    } catch (e) { /* private mode — the markup default stands */ }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Case study: a public GIS portal built so a prefecture could administer Japan\'s embankment regulation law (盛土規制法) — regulated zones, permit review and isolated network layers.">
+  <meta name="author" content="Suresh Surkheti">
+  <meta name="theme-color" content="#05060a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#eceff6" media="(prefers-color-scheme: light)">
+  
+  <title>Land Regulation &amp; GIS Portal — Case Study · Suresh Surkheti</title>
+
+  <!-- Real icon files, not a data: URI — Google's favicon crawler and most link
+       previews cannot fetch data URIs, which left the site showing a generic globe. -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+
+  <!-- Link previews (LinkedIn, WhatsApp, X, Slack). These must be absolute URLs;
+       crawlers will not resolve a relative og:image. -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sureshsurkheti.com/case-gis">
+  <meta property="og:title" content="Land Regulation &amp; GIS Portal — Case Study">
+  <meta property="og:description" content="How a prefecture administers Japan\'s embankment regulation law through a public GIS portal — architecture, constraints and delivery.">
+  <meta property="og:image" content="https://sureshsurkheti.com/assets/img/suresh-social.jpg">
+  <meta property="og:site_name" content="Suresh Surkheti">
+  <meta property="og:image:width" content="960">
+  <meta property="og:image:height" content="504">
+  <meta property="og:image:alt" content="Suresh Surkheti — Software Engineer in Oita, Japan">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Land Regulation &amp; GIS Portal — Case Study">
+  <meta name="twitter:description" content="A public GIS portal for administering Japan\'s 盛土規制法 — regulated zones, permit review, isolated network layers.">
+  <meta name="twitter:image" content="https://sureshsurkheti.com/assets/img/suresh-social.jpg">
+  <meta name="twitter:image:alt" content="Suresh Surkheti — Software Engineer in Oita, Japan">
+
+  <link rel="canonical" href="https://sureshsurkheti.com/case-gis">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&family=Fraunces:ital,wght@1,600&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/boxicons-subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/boxicons-subset.css?v=20260828">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260828">
+  <noscript>
+    <style>
+      /* Never hide content behind JS: show everything if scripts are off. */
+      .preloader { display: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .particles { display: none; }
+    </style>
+  </noscript>
+</head>
+<body class="page-projects">
+
+<a href="#case" class="skip-link">Skip to content</a>
+
+<!-- ══════════ AMBIENT BACKGROUND ══════════ -->
+<div class="bg-fx" aria-hidden="true">
+  <div class="blob blob--1"></div>
+  <div class="blob blob--2"></div>
+  <div class="blob blob--3"></div>
+  <div class="grid-lines"></div>
+  <div class="noise"></div>
+</div>
+
+<div class="scroll-progress" aria-hidden="true"><i id="scrollBar"></i></div>
+
+<header class="header" id="header">
+  <a href="index.html" class="logo" aria-label="Home">
+    <span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span>
+    <span class="logo__text">Suresh<em>.</em></span>
+  </a>
+
+  <nav class="navbar" id="navbar" aria-label="Main navigation">
+    <a href="index.html" style="--i:1"><span>Home</span></a>
+    <a href="index.html#about" style="--i:2"><span>About</span></a>
+    <a href="index.html#services" style="--i:3"><span>Services</span></a>
+    <a href="index.html#skills" style="--i:4"><span>Skills</span></a>
+    <a href="index.html#work" style="--i:5"><span>Work</span></a>
+    <a href="index.html#personal" style="--i:6"><span>Personal</span></a>
+    <a href="index.html#journey" style="--i:7"><span>Journey</span></a>
+    <a href="index.html#contact" style="--i:8"><span>Contact</span></a>
+  </nav>
+
+  <div class="header__actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle colour theme">
+      <i class="bx bx-moon"></i><i class="bx bx-sun"></i>
+    </button>
+    <a href="index.html#contact" class="btn btn--sm btn--ghost header__cta">Hire Me</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbar">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="case">
+
+<section class="section case">
+  <div class="case__head reveal">
+    <a class="case__back" href="index.html#work"><i class="bx bx-left-arrow-alt"></i>All work</a>
+    <span class="eyebrow">Case study</span>
+    <h1 class="section__title">Land regulation &amp; <span class="gradient-text">GIS portal</span></h1>
+    <p class="section__sub">
+      A public mapping portal built so a prefecture could administer Japan's embankment
+      regulation law — and so residents could check their own land against it.
+    </p>
+  </div>
+
+  <dl class="case__meta reveal">
+    <div><dt>Role</dt><dd>Full-Stack Engineer</dd></div>
+    <div><dt>Client</dt><dd>Regional Japanese prefecture</dd></div>
+    <div><dt>Surface</dt><dd>Public map · permit review · administration</dd></div>
+    <div><dt>Status</dt><dd>Publicly launched</dd></div>
+  </dl>
+
+  <div class="case__body">
+    <section class="case__block reveal">
+      <h2>The problem</h2>
+      <p>
+        In May 2023 Japan brought the <strong>宅地造成及び特定盛土等規制法</strong> — the
+        embankment regulation law — into force. It replaced a narrower residential-land
+        statute with a nationwide regime that regulates dangerous fill and earth stockpiling
+        <em>regardless of what the land is used for</em>: residential, forest, agricultural,
+        all of it. The change followed a series of fatal landslides caused by embankments
+        that no single authority had been responsible for inspecting.
+      </p>
+      <p>
+        The law puts the work on prefectures. They have to designate regulated zones across
+        their whole territory, review and permit any earthwork inside those zones, and keep
+        an inspection record for each site. That is a fundamentally spatial problem — a
+        boundary on a map, a parcel, a permit, and a history — and it had to be answerable
+        both by officials reviewing applications and by any resident asking a simple
+        question: <em>is my land inside a regulated zone?</em>
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Architecture</h2>
+      <p>
+        The portal is one application serving two very different audiences, so the network
+        shape matters more than the feature list. The application tier is reachable from the
+        internet; the regulatory data is not. Zone boundaries, parcels, permits and
+        inspection history live in a database in a private subnet with no route in from
+        outside — the app tier is the only thing that can reach it. Map layers and permit
+        documents are served from object storage through scoped roles rather than shared
+        credentials, and every tier reports to a single log and metric stream, which is what
+        makes an administrative decision reconstructable later.
+      </p>
+      
+      <div class="arch-scroll">
+      <svg class="arch" viewBox="0 0 880 600" role="img"
+           aria-label="Architecture: the public and prefectural reviewers reach an application tier running in the VPC's public subnet; that tier reads and writes regulatory and spatial data in an RDS instance held in a private subnet with no route from the internet, pulls map layers and permit documents from S3 through scoped IAM roles, and emits metrics and logs to CloudWatch.">
+        <defs>
+          <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" class="arch__head"/>
+          </marker>
+        </defs>
+
+        <rect class="arch__box" x="110" y="18" width="220" height="58" rx="8"/>
+        <text class="arch__t" x="220" y="43">Public &amp; surveyors</text>
+        <text class="arch__s" x="220" y="62">zone lookup · applications</text>
+
+        <rect class="arch__box" x="550" y="18" width="220" height="58" rx="8"/>
+        <text class="arch__t" x="660" y="43">Prefectural reviewers</text>
+        <text class="arch__s" x="660" y="62">permit review · designation</text>
+
+        <path class="arch__line" d="M220 76 L220 104 L400 104 L400 152" marker-end="url(#ah2)"/>
+        <path class="arch__line" d="M660 76 L660 104 L480 104 L480 152" marker-end="url(#ah2)"/>
+        <text class="arch__tag" x="440" y="98">HTTPS</text>
+
+        <!-- vpc -->
+        <rect class="arch__vpc" x="60" y="150" width="620" height="330" rx="12"/>
+        <text class="arch__vpclabel" x="78" y="172">VPC</text>
+
+        <rect class="arch__vpc arch__vpc--sub" x="90" y="186" width="560" height="112" rx="10"/>
+        <text class="arch__vpclabel" x="106" y="206">Public subnet</text>
+        <rect class="arch__box arch__box--accent" x="230" y="216" width="290" height="70" rx="8"/>
+        <text class="arch__t" x="375" y="243">Application tier · EC2</text>
+        <text class="arch__s" x="375" y="262">FastAPI · Nuxt · Vuetify</text>
+        <text class="arch__s" x="375" y="279">map rendering · permit workflow</text>
+
+        <rect class="arch__vpc arch__vpc--sub" x="90" y="330" width="560" height="126" rx="10"/>
+        <text class="arch__vpclabel" x="106" y="350">Private subnet · no route from the internet</text>
+        <rect class="arch__box" x="230" y="362" width="290" height="76" rx="8"/>
+        <text class="arch__t" x="375" y="389">RDS</text>
+        <text class="arch__s" x="375" y="408">regulated zones · parcels</text>
+        <text class="arch__s" x="375" y="425">permits · inspection history</text>
+
+        <path class="arch__line" d="M375 286 L375 356" marker-end="url(#ah2)"/>
+
+        <!-- outside the vpc -->
+        <rect class="arch__box" x="708" y="216" width="150" height="70" rx="8"/>
+        <text class="arch__t" x="783" y="243">S3</text>
+        <text class="arch__s" x="783" y="262">map layers</text>
+        <text class="arch__s" x="783" y="279">permit documents</text>
+
+        <rect class="arch__box" x="708" y="368" width="150" height="70" rx="8"/>
+        <text class="arch__t" x="783" y="395">CloudWatch</text>
+        <text class="arch__s" x="783" y="414">metrics · logs</text>
+        <text class="arch__s" x="783" y="431">audit trail</text>
+
+        <path class="arch__line" d="M520 251 L702 251" marker-end="url(#ah2)"/>
+        <text class="arch__tag" x="612" y="242">IAM role</text>
+        <path class="arch__line arch__line--dash" d="M520 400 L702 400" marker-end="url(#ah2)"/>
+
+        <text class="arch__tag" x="440" y="516">Terraform · Docker — every layer above defined as code</text>
+      </svg>
+      </div>
+
+      <p class="case__caption">
+        Client names and endpoints are withheld; the diagram describes the architecture only.
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Constraints that shaped it</h2>
+      <ul class="case__list">
+        <li><strong>Public-sector data standards.</strong> Isolated network layers, scoped
+          access and audited change were requirements the platform shipped under, not
+          improvements added afterwards.</li>
+        <li><strong>Two audiences, one truth.</strong> A resident checking a parcel and an
+          official approving a permit have to be looking at the same zone boundary — so the
+          public map and the review workflow read from one dataset, not a published copy.</li>
+        <li><strong>Spatial data is heavy.</strong> Boundaries and parcels are large, slow to
+          transfer and expensive to redraw, so what gets rendered in the browser and what
+          stays on the server is an architectural decision, not a detail.</li>
+        <li><strong>Reproducible infrastructure.</strong> Public-sector environments get
+          rebuilt, audited and handed over, so the whole stack is defined in Terraform and
+          runs in containers rather than existing as configuration someone once clicked.</li>
+      </ul>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Outcome</h2>
+      <p>
+        The platform launched as the prefecture's public disclosure system for the law,
+        and it runs as two surfaces over one dataset. Officials administer permits and
+        notifications internally; what they approve is what the public map shows.
+      </p>
+      <p>
+        On the public side, regulated zones and individual embankment sites are drawn over
+        the national mapping agency's base tiles — street map, pale map and aerial imagery —
+        so a resident, surveyor or contractor can find a location and see for themselves
+        whether it sits inside a residential-development control zone or a specified
+        embankment control zone. That is the question that previously meant a phone call to
+        the office or a trip to the counter, and it is now answerable at any hour by anyone.
+      </p>
+      <p>
+        Each site carries its regulatory <strong>status</strong> rather than being a plain
+        pin — permitted, notified, construction complete, or discontinued — and clicking one
+        opens its record. A searchable list covers the same data for anyone who would rather
+        work from a table than a map. Because the statute requires specified particulars to
+        be published, the disclosure surface is a legal obligation in its own right, not a
+        convenience layer: what appears there, and how accurately it is placed, is the
+        prefecture meeting a duty.
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Stack</h2>
+      <div class="case__stack">
+        <div><h3>Application</h3><p>FastAPI · Vue.js · Nuxt.js · Vuetify</p></div>
+        <div><h3>Infrastructure</h3><p>AWS — VPC · EC2 · S3 · RDS · CloudWatch · IAM · Terraform · Docker</p></div>
+      </div>
+    </section>
+
+    <div class="case__cta reveal">
+      <a href="index.html#contact" class="btn btn--primary"><span>Talk about this work</span><i class="bx bx-right-arrow-alt"></i></a>
+      <a href="case-voucher.html" class="btn btn--outline"><span>Next case study</span><i class="bx bx-right-arrow-alt"></i></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <a href="index.html" class="logo logo--footer">
+      <span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span><span class="logo__text">Suresh<em>.</em></span>
+    </a>
+    <nav class="footer__nav">
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#work">Work</a>
+      <a href="https://blog.sureshsurkheti.com" target="_blank" rel="noopener noreferrer">Travel blog</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <p class="footer__copy">© 2024 Suresh Surkheti</p>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="bx bx-chevron-up"></i></button>
+
+<script src="assets/js/main.js?v=20260828" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://sureshsurkheti.com/case-gis#article",
+      "headline": "Land Regulation & GIS Portal — Case Study",
+      "description": "How a prefecture administers Japan's embankment regulation law (盛土規制法) through a public GIS portal — architecture, constraints and delivery.",
+      "url": "https://sureshsurkheti.com/case-gis",
+      "datePublished": "2026-08-31",
+      "dateModified": "2026-08-31",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://sureshsurkheti.com/#person"
+      },
+      "publisher": {
+        "@id": "https://sureshsurkheti.com/#person"
+      },
+      "isPartOf": {
+        "@id": "https://sureshsurkheti.com/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://sureshsurkheti.com/case-gis#webpage"
+      },
+      "image": "https://sureshsurkheti.com/assets/img/suresh-social.jpg",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Geographic information systems"
+        },
+        {
+          "@type": "Thing",
+          "name": "Public sector software"
+        },
+        {
+          "@type": "Thing",
+          "name": "Amazon Web Services"
+        }
+      ],
+      "keywords": "GIS, spatial data, AWS, FastAPI, Nuxt, VPC, public sector, Japan, 盛土規制法"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://sureshsurkheti.com/case-gis#webpage",
+      "url": "https://sureshsurkheti.com/case-gis",
+      "name": "Land Regulation & GIS Portal — Case Study · Suresh Surkheti",
+      "isPartOf": {
+        "@id": "https://sureshsurkheti.com/#website"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sureshsurkheti.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Work",
+          "item": "https://sureshsurkheti.com/#work"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Land Regulation & GIS Portal"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>
