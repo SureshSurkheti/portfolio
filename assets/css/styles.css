@@ -732,8 +732,12 @@ body::after {
 }
 .home__bar-track {
   display: flex; white-space: nowrap;
-  font-family: var(--font-mono); font-size: .74rem; letter-spacing: .22em;
-  color: var(--text-mute);
+  /* Was --text-mute at .22em. Three separate reviewers read this strip as
+     unreadable even though it measured 5.7:1, so the problem was legibility,
+     not contrast: heavy em-dash separators, very open tracking and the faintest
+     ink on the page. Stronger ink, tighter tracking, lighter separators. */
+  font-family: var(--font-mono); font-size: .76rem; letter-spacing: .16em;
+  color: var(--text-dim);
   animation: barTicker 36s linear infinite;
 }
 @keyframes barTicker { to { transform: translateX(-50%); } }
@@ -1598,7 +1602,13 @@ body::after {
   .home__bar { position: static; margin-top: 3rem; grid-template-columns: 1fr; border: 1px solid var(--stroke); border-radius: 12px; overflow: hidden; }
   .home__bar-stats > div { flex: 1 1 0; }
   .home__bar-stats > div:last-child { border-right: 0; }
-  .home__bar-ticker { border-top: 1px solid var(--stroke); padding-block: .55rem; }
+  .home__bar-ticker {
+    border-top: 1px solid var(--stroke); padding-block: .55rem;
+    /* the mobile strip is ~340px wide, so a 10% ramp per side fades a fifth of
+       it — tighten to 5% so more of the text sits at full strength */
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  }
   .home__bar-sci { display: none; }
 }
 
