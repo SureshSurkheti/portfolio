@@ -539,7 +539,10 @@ body::after {
 .home__coord {
   position: absolute; left: clamp(.6rem, 1.6vw, 1.6rem); z-index: 1;
   writing-mode: vertical-rl; font-family: var(--font-mono);
-  font-size: .68rem; letter-spacing: .3em; color: var(--text-dim);
+  /* Map-sheet edge marks: Oita's real position. Decorative, so aria-hidden —
+     but .3em of tracking on vertical type stretched the digits far enough apart
+     that they stopped reading as a number. Slightly larger, slightly tighter. */
+  font-size: .72rem; letter-spacing: .2em; color: var(--text-dim);
   animation: fadeUp 1s var(--ease) both 1.2s;
 }
 .home__coord--n { top: 16%; }
