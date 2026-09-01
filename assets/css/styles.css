@@ -486,18 +486,10 @@ body::after {
   padding:
     calc(var(--header-h) + var(--hero-gap)) var(--pad-x)
     calc(var(--hero-bar-h) + var(--hero-gap) + 1.6rem);
-  /* Opaque ground so the drifting page blobs cannot wash over the cartography —
-     but the hero then loses the warmth every other section has, and reads as a
-     different theme. It gets its own wash instead: the same amber, held far
-     lower than the section bands so the contour lines and flight path stay
-     legible over it. */
-  background-color: var(--bg);
-}
-[data-theme="dark"] .home,
-:root:not([data-theme="light"]) .home {
-  background-image:
-    radial-gradient(95% 65% at 10% 6%, rgba(240, 180, 41, .085), transparent 62%),
-    radial-gradient(75% 55% at 92% 94%, rgba(217, 119, 6, .06), transparent 66%);
+  /* Deliberately transparent. This was opaque once, to stop the page's drifting
+     blobs washing over the cartography — but that was decided while the blobs
+     were still cyan and violet. Once they turned amber, blocking them only made
+     the hero the single section without the page's warmth. */
 }
 /* Quiet enough that the eye lands on name → headline → CTA, not the backdrop. */
 .particles { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .45; }
