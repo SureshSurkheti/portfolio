@@ -381,9 +381,15 @@ body::after {
 @keyframes fadeDown { from { opacity: 0; transform: translateY(-14px) } to { opacity: 1; transform: none } }
 
 /* ─────────────── BUTTONS ─────────────── */
+/* Radius is --r-sm (12px), the same token the small surfaces use, and it is set
+   once here: the hero pair used to override to 8px while every other button on
+   the site sat at 10px, a split with nothing behind it. 12px is deliberately
+   short of the ~30% -of-height softness the icon tiles use — rendered side by
+   side, 15-18px reads like a consumer app button, which undercuts the technical
+   tone the rest of the page is going for. */
 .btn {
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
-  padding: .95rem 1.7rem; border-radius: 10px; font-weight: 600; font-size: .95rem;
+  padding: .95rem 1.7rem; border-radius: var(--r-sm); font-weight: 600; font-size: .95rem;
   letter-spacing: .01em; overflow: hidden; isolation: isolate;
   transition: transform .35s var(--ease), box-shadow .35s var(--ease), color .3s, border-color .3s;
   will-change: transform;
@@ -690,11 +696,9 @@ body::after {
 .home__cta { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2.1rem; animation: fadeUp .8s var(--ease) both 1s; }
 /* In the hero the buttons drop the pill and the gradient: a solid ink block
    and a ruled outline, like plates on a map legend. */
-.home__cta .btn { border-radius: 8px; }
 .home__cta .btn--primary { background: var(--text); color: var(--bg-2); box-shadow: none; }
 .home__cta .btn--primary::after { background: var(--acc-gfx); }
 .home__cta .btn--primary:hover { color: #0b0d12; box-shadow: 0 14px 34px -14px var(--acc-gfx); }
-.home__cta .btn--outline { border-radius: 8px; }
 
 .home__sci { display: flex; gap: .7rem; margin-top: 2.2rem; }
 .home__sci a {
