@@ -160,10 +160,14 @@
   <svg class="home__map" viewBox="0 0 420 320" aria-hidden="true" focusable="false">
     <defs>
       <mask id="mapDraw">
-        <path class="home__map-drawmask" d="M96 244 Q 396 224 348 66" pathLength="1"/>
+        <path class="home__map-drawmask" d="M96 244 Q 222 85 348 66" pathLength="1"/>
       </mask>
     </defs>
-    <path class="home__map-path" mask="url(#mapDraw)" d="M96 244 Q 396 224 348 66"/>
+    <!-- Control (222,85) bows the arc north of the straight chord, the way a real
+         great circle between two northern-hemisphere cities runs. The old control
+         (396,224) sat right of the endpoint, so the line sagged south, overshot
+         Oita and hooked back. Keep this d in sync with the mask path above. -->
+    <path class="home__map-path" mask="url(#mapDraw)" d="M96 244 Q 222 85 348 66"/>
     <circle class="home__map-from" cx="96" cy="244" r="5"/>
     <circle class="home__map-ring" cx="348" cy="66" r="9"/>
     <circle class="home__map-to" cx="348" cy="66" r="5"/>
