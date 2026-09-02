@@ -576,8 +576,17 @@ body::after {
 /* The flight path: Kathmandu (open ring) to Oita (amber pin), dashes flowing */
 .home__map {
   position: absolute; z-index: 0;
-  right: clamp(.5rem, 2.4vw, 3rem); top: 12%;
-  width: clamp(320px, 34vw, 580px); height: auto;
+  top: 12%; height: auto;
+  /* Right edge lines up with the header's Let's Talk button, so the hero has one
+     right margin instead of two. What has to land on --pad-x is the OITA label,
+     though, not the SVG box: at 10.5px with .22em tracking those 11 mono
+     characters span ~95 units centred on x=348, ending at x≈393 of the 420-unit
+     viewBox. That leaves 6.4% of the box empty, so anchoring the box itself
+     would stop the visible label ~31px short of the button. Subtracting the
+     slack aligns the ink at every width. */
+  --map-w: clamp(320px, 34vw, 580px);
+  width: var(--map-w);
+  right: calc(var(--pad-x) - var(--map-w) * .064);
   animation: fadeUp 1.2s var(--ease) both .9s;
 }
 .home__map-path {
