@@ -1,0 +1,14 @@
+<!doctype html><meta charset="utf-8"><title>wait</title><body style="margin:0">
+<script>
+const u=new URLSearchParams(location.search),W=+u.get('w');
+const f=document.createElement('iframe');
+f.style.cssText='border:0;width:'+W+'px;height:900px;position:absolute;top:0;left:0';
+f.src='/index.html';
+f.onload=()=>{const d=f.contentDocument;
+ const e=d.querySelector('#work .work__grid'), ft=d.querySelector('.footer__inner');
+ const b=e.getBoundingClientRect(), fb=ft.getBoundingClientRect();
+ document.title='@@'+[W,'margin='+Math.round(b.left),'content='+Math.round(b.width),
+   'footerMargin='+Math.round(fb.left),'footerContent='+Math.round(fb.width),
+   'ovf='+(d.documentElement.scrollWidth>W+1)].join(' ')+'@@';};
+document.body.appendChild(f);
+</script>

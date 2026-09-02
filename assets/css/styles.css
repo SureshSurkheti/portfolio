@@ -430,22 +430,24 @@ body::after {
   scroll-margin-top: 0;
 }
 
-/* Content ceiling for large monitors. --pad-x tops out at 128px, so above
-   ~1700px every section grew without limit: measured on a 27in QHD the project
-   grid was 2294px (three 760px cards) and the About copy ran 1273px — roughly
-   160 characters a line, about twice a comfortable measure. The hero is
-   deliberately exempt: its map is pinned to the viewport edge and the stats bar
-   is full-bleed, so centring its text would only open a gap between them.
-   1440px keeps the three-up card width close to what a 14in laptop shows.
-   Below 1696px the old padding already yields <1440px, so nothing moves. */
-@media (min-width: 1700px) {
-  /* Widening the padding rather than introducing a centred grid column: as a
-     grid, children carrying `margin: 0 auto` (the section heads) stop stretching
-     and shrink to fit-content, which quietly narrowed them from 820px to 620px.
-     Percentage padding resolves against the body width, so this leaves every
-     child's block layout exactly as it is below the breakpoint. */
-  .section { padding-inline: calc((100% - 1440px) / 2); }
-}
+/* Content ceiling. Without one, --pad-x (6vw) let every section grow forever:
+   on a 27in QHD the project grid measured 2294px — three 760px cards — and the
+   About copy ran 1273px, about 160 characters a line against a comfortable 75.
+   The ceiling is 1440px, close to the three-up card width a 14in laptop shows.
+
+   max() rather than a media query, because a breakpoint here snaps. 6vw only
+   reaches its 8rem cap at a 2133px viewport, so at a 1700px breakpoint the
+   padding jumped 102px -> 130px and the content lurched 1496px -> 1440px. The
+   two expressions cross at 1636px on their own; max() picks the larger at every
+   width and the transition is continuous.
+
+   The hero is deliberately exempt: its map is pinned to the viewport edge and
+   the stats bar is full-bleed, so centring its text would only open a gap
+   between them. Percentage padding resolves against the body width, and using
+   padding rather than a centred grid column leaves every child's block layout
+   untouched — as grid items, the section heads' `margin: 0 auto` would stop
+   them stretching and quietly narrow them from 820px to 620px. */
+.section { padding-inline: max(var(--pad-x), (100% - 1440px) / 2); }
 .section__head { position: relative; max-width: 820px; margin: 0 auto clamp(2.2rem, 4.5vw, 3.4rem); text-align: center; }
 /* Ghost numeral behind each section title — the number from the eyebrow chip,
    blown up to editorial scale. data-num lives on .section__head. */
@@ -1481,13 +1483,11 @@ body::after {
 
 /* ─────────────── FOOTER ─────────────── */
 .footer { border-top: 1px solid var(--stroke); background: var(--surface); padding: 2.5rem var(--pad-x); }
-/* Same 1440px ceiling as .section. It has to live here rather than beside that
-   rule: .footer's `padding` shorthand above has equal specificity and comes
-   later in the file, so an earlier padding-inline loses to it. The background
-   stays full-bleed — only the inner row is bounded. */
-@media (min-width: 1700px) {
-  .footer { padding-inline: calc((100% - 1440px) / 2); }
-}
+/* Same 1440px ceiling as .section, and it has to live here rather than beside
+   that rule: .footer's `padding` shorthand above has equal specificity and comes
+   later in the file, so an earlier padding-inline would lose to it. The
+   background stays full-bleed — only the inner row is bounded. */
+.footer { padding-inline: max(var(--pad-x), (100% - 1440px) / 2); }
 /* Two rows. On one row the copyright can sit at the true centre or have equal
    gaps either side, but not both — the logo is 116px wide and the copyright 258px,
    so one of the two always looks off. Splitting the rows removes the choice. */
