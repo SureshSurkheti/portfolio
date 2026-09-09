@@ -981,7 +981,12 @@ body::after {
 
 /* ─────────────── CARDS (services) ─────────────── */
 .services__grid, .personal__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.4rem; }
-@media (min-width: 1080px) { .services__grid, .personal__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1080px) { .services__grid { grid-template-columns: repeat(3, 1fr); } }
+/* Personal holds four cards, so it can't share Services' three-up rule — that
+   leaves one card stranded alone on a second row. Two-by-two through the middle
+   widths, four across once there is room for four 290px columns. */
+@media (min-width: 1080px) { .personal__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1400px) { .personal__grid { grid-template-columns: repeat(4, 1fr); } }
 .card {
   position: relative; padding: 2rem 1.8rem; border-radius: var(--r-lg);
   border: 1px solid var(--stroke); background: var(--surface); backdrop-filter: blur(12px);
