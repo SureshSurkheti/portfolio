@@ -559,4 +559,10 @@
     } catch { /* leave it hidden */ }
   })();
 
+  /* ─────────── FOOTER YEAR ─────────── */
+  /* The year was hard-coded and had gone two years stale on all four pages — on
+     a portfolio that reads as an abandoned site. The span carries the current
+     year as its fallback, so with JS off it is still right rather than empty. */
+  $$('.footer__year').forEach(el => { el.textContent = new Date().getFullYear(); });
+
 })();

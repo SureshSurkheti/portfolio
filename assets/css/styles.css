@@ -1496,57 +1496,103 @@ body::after {
 #submitBtn.loading i { animation: spin 1s linear infinite; }
 
 /* ─────────────── FOOTER ─────────────── */
-.footer { border-top: 1px solid var(--stroke); background: var(--surface); padding: 2.5rem var(--pad-x); }
+.footer { border-top: 1px solid var(--stroke); background: var(--surface); padding: 3.2rem var(--pad-x) 2.2rem; }
 /* Same 1440px ceiling as .section, and it has to live here rather than beside
    that rule: .footer's `padding` shorthand above has equal specificity and comes
    later in the file, so an earlier padding-inline would lose to it. The
    background stays full-bleed — only the inner row is bounded. */
 .footer { padding-inline: max(var(--pad-x), (100% - 1440px) / 2); }
-/* Two rows. On one row the copyright can sit at the true centre or have equal
-   gaps either side, but not both — the logo is 116px wide and the copyright 258px,
-   so one of the two always looks off. Splitting the rows removes the choice. */
+
+/* Three columns over one full-width copyright row. This was logo + links +
+   copyright, which left the case-study pages with no way to reach him at all:
+   the hero's social links exist on the home page only, and scroll away. Brand,
+   navigation and contact each take a column; the copyright keeps the stretched
+   rule it already had, which gives it a base to sit on rather than leaving it
+   floating under the row above. */
 .footer__inner {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.2fr);
   grid-template-areas:
-    "logo nav"
-    "copy copy";
-  align-items: center;
-  column-gap: 1.2rem;
-  row-gap: 1.5rem;
+    "brand nav connect"
+    "copy  copy copy";
+  column-gap: clamp(2rem, 5vw, 5rem);
+  row-gap: 2.4rem;
+  align-items: start;
 }
-.footer__inner .logo--footer { grid-area: logo; justify-self: start; }
-.footer__nav  { grid-area: nav;  justify-self: end; }
-/* Stretched rather than centred so the rule spans the full width — it gives the
-   copyright a base to sit on instead of leaving it floating under the row above,
-   which is what made the three alignments read as unresolved. */
-.footer__copy {
-  grid-area: copy; text-align: center;
-  /* --stroke-str, not --stroke: the ambient blob washes a purple gradient across
-     this part of the footer and a 10%-white rule vanishes into it. */
-  padding-top: 1.4rem; border-top: 1px solid var(--stroke-str);
+.footer__brand   { grid-area: brand; }
+.footer__nav     { grid-area: nav; }
+.footer__connect { grid-area: connect; }
+
+.footer__tag {
+  margin-top: 1rem; max-width: 42ch;
+  font-size: .9rem; line-height: 1.7; color: var(--text-dim);
 }
-.footer__nav { display: flex; flex-wrap: wrap; gap: 1.3rem; }
+/* The same mono eyebrow the section heads carry, so these columns read as part
+   of the system rather than as generic footer furniture. */
+.footer__label {
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--text-mute); font-weight: 500;
+  margin-bottom: .3rem;
+}
+.footer__col { display: grid; justify-items: start; gap: .7rem; }
+
 .footer__nav a { font-size: .93rem; color: var(--text-dim); position: relative; transition: color .3s; }
 .footer__nav a::after { content: ""; position: absolute; left: 0; bottom: -3px; width: 0; height: 1.5px; background: var(--grad); transition: width .35s var(--ease); }
 .footer__nav a:hover { color: var(--text); }
 .footer__nav a:hover::after { width: 100%; }
-.footer__copy { font-size: .85rem; color: var(--text-mute); }
 
-/* The three parts sit on one line while they fit. Below ~840px the copyright
-   wrapped to a second row and space-between left it hard against the left edge,
-   which read as a mistake — so stack and centre instead of letting it wrap. */
-@media (max-width: 840px) {
+.footer__avail { display: flex; align-items: center; gap: .45rem; font-size: .88rem; color: var(--text-dim); }
+.footer__avail i { color: var(--ok); font-size: 1rem; animation: pulse 1.8s ease-in-out infinite; }
+.footer__mail {
+  font-size: .92rem; color: var(--text); word-break: break-all;
+  border-bottom: 1px solid var(--stroke-str); padding-bottom: 2px;
+  transition: color .3s, border-color .3s;
+}
+.footer__mail:hover { color: var(--acc); border-color: var(--acc); }
+.footer__social { display: flex; gap: .55rem; margin-top: .35rem; }
+.footer__social a {
+  display: grid; place-items: center; width: 40px; height: 40px;
+  border: 1px solid var(--stroke); border-radius: var(--r-sm);
+  color: var(--text-dim); font-size: 1.15rem;
+  transition: color .3s, border-color .3s, transform .3s var(--ease);
+}
+.footer__social a:hover { color: var(--acc); border-color: var(--acc); transform: translateY(-3px); }
+
+.footer__copy {
+  grid-area: copy; text-align: center;
+  /* --stroke-str, not --stroke: the ambient blob washes a gradient across this
+     part of the footer and a 10%-white rule vanishes into it. */
+  padding-top: 1.6rem; border-top: 1px solid var(--stroke-str);
+  font-size: .85rem; color: var(--text-mute);
+}
+
+/* Three columns need ~900px before the brand paragraph starts getting squeezed.
+   Below that the brand spans the full width with nav and connect paired under
+   it; below 560px everything stacks and centres. */
+@media (max-width: 900px) {
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "brand brand" "nav connect" "copy copy";
+    row-gap: 2rem;
+  }
+  /* WCAG 2.2 target size — 44px from here down, since a 768px iPad is a touch
+     device even though it is not phone-width. */
+  .footer__social a { width: 44px; height: 44px; }
+}
+@media (max-width: 560px) {
   .footer__inner {
     grid-template-columns: 1fr;
-    grid-template-areas: "logo" "nav" "copy";
-    text-align: center; row-gap: 1.1rem;
+    grid-template-areas: "brand" "nav" "connect" "copy";
+    justify-items: center; text-align: center; row-gap: 2.2rem;
   }
-  /* justify-self on an item always beats justify-items on the container, so the
-     start/end values set above have to be reset by name — otherwise the logo
-     stays pinned left and the nav pinned right even once they are stacked. */
-  .footer__inner .logo--footer, .footer__nav { justify-self: center; }
-  .footer__copy { justify-self: stretch; }   /* so the rule spans the column */
+  .footer__col { justify-items: center; }
+  .footer__tag { margin-inline: auto; }
+  .footer__copy { justify-self: stretch; }
+  /* Horizontal and wrapping, not a column: five stacked links ran the footer to
+     roughly 700px on a phone. flex-basis on the label keeps it on its own line. */
+  .footer__nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem 1.4rem; }
+  .footer__nav .footer__label { flex-basis: 100%; margin-bottom: .2rem; }
+  .footer__nav a { display: inline-flex; align-items: center; min-height: 44px; }
 }
 
 .to-top {
