@@ -1541,8 +1541,6 @@ body::after {
 .footer__nav a:hover { color: var(--text); }
 .footer__nav a:hover::after { width: 100%; }
 
-.footer__avail { display: flex; align-items: center; gap: .45rem; font-size: .88rem; color: var(--text-dim); }
-.footer__avail i { color: var(--ok); font-size: 1rem; animation: pulse 1.8s ease-in-out infinite; }
 .footer__mail {
   font-size: .92rem; color: var(--text); word-break: break-all;
   border-bottom: 1px solid var(--stroke-str); padding-bottom: 2px;
