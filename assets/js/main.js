@@ -546,6 +546,26 @@
     }, 1800);
   });
 
+  /* ─────────── DEEP LINKS ─────────── */
+  /* Arriving on index.html#personal (the case study's back link, a shared
+     URL) landed on the hero. html carries scroll-behavior:smooth, so the
+     browser's own fragment jump became a 6,000px glide, and it stalled part
+     way once layout settled around it. Clicks stay smooth; the jump made on
+     arrival is instant, once the page and its fonts have laid out. */
+  (() => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = id && document.getElementById(id);
+    if (!target) return;
+    const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
+    const loaded = new Promise(r => document.readyState === 'complete' ? r() : addEventListener('load', r, { once: true }));
+    Promise.all([loaded, fonts]).then(() => {
+      const root = document.documentElement;
+      root.style.scrollBehavior = 'auto';
+      target.scrollIntoView();
+      requestAnimationFrame(() => { root.style.scrollBehavior = ''; });
+    });
+  })();
+
   /* ─────────── FOOTER YEAR ─────────── */
   /* The year was hard-coded and had gone two years stale on all four pages — on
      a portfolio that reads as an abandoned site. The span carries the current
