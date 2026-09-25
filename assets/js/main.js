@@ -546,19 +546,6 @@
     }, 1800);
   });
 
-  /* ─────────── RESUME BUTTON ─────────── */
-  /* Shown only once resume.pdf actually exists, so it can never be a dead link.
-     Drop your PDF next to index.html and it appears on its own. */
-  (async () => {
-    const btn = $('#resumeBtn');
-    if (!btn) return;
-    if (location.protocol === 'file:') { btn.hidden = false; return; }  // can't probe over file://
-    try {
-      const res = await fetch('resume.pdf', { method: 'HEAD' });
-      if (res.ok) btn.hidden = false;
-    } catch { /* leave it hidden */ }
-  })();
-
   /* ─────────── FOOTER YEAR ─────────── */
   /* The year was hard-coded and had gone two years stale on all four pages — on
      a portfolio that reads as an abandoned site. The span carries the current
