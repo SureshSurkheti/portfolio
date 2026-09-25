@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    /* Synchronous and inline on purpose: this must run before the first paint.
+       A deferred script would let a dark-mode visitor see a flash of white.
+       An explicit choice in localStorage always wins; otherwise the site
+       follows the device's own colour-scheme setting, light or dark. */
+    try {
+      var t = localStorage.getItem('theme');
+      document.documentElement.setAttribute('data-theme',
+        t === 'dark' || t === 'light' ? t
+          : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    } catch (e) { /* private mode — the markup default stands */ }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Case study: a free JLPT practice site with 207 timed, auto-marked papers, a twelve-language interface and no backend — built as a static site from a Python build.">
+  <meta name="author" content="Suresh Surkheti">
+  <meta name="theme-color" content="#05060a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#eceff6" media="(prefers-color-scheme: light)">
+  
+  <title>Nihongo Mock — JLPT Practice Case Study · Suresh Surkheti</title>
+
+  <!-- Real icon files, not a data: URI — Google's favicon crawler and most link
+       previews cannot fetch data URIs, which left the site showing a generic globe. -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+
+  <!-- Link previews (LinkedIn, WhatsApp, X, Slack). These must be absolute URLs;
+       crawlers will not resolve a relative og:image. -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sureshsurkheti.com/case-nihongo">
+  <meta property="og:title" content="Nihongo Mock — JLPT Practice Case Study">
+  <meta property="og:description" content="How a free JLPT practice site serves 207 exam-format papers in twelve languages with no backend — architecture and the decisions behind it.">
+  <meta property="og:image" content="https://sureshsurkheti.com/assets/img/suresh-social.jpg">
+  <meta property="og:site_name" content="Suresh Surkheti">
+  <meta property="og:image:width" content="960">
+  <meta property="og:image:height" content="504">
+  <meta property="og:image:alt" content="Suresh Surkheti — Software Engineer in Oita, Japan">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nihongo Mock — JLPT Practice Case Study">
+  <meta name="twitter:description" content="How a free JLPT practice site serves 207 exam-format papers in twelve languages with no backend — architecture and the decisions behind it.">
+  <meta name="twitter:image" content="https://sureshsurkheti.com/assets/img/suresh-social.jpg">
+  <meta name="twitter:image:alt" content="Suresh Surkheti — Software Engineer in Oita, Japan">
+
+  <link rel="canonical" href="https://sureshsurkheti.com/case-nihongo">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&family=Fraunces:ital,wght@1,600&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/boxicons-subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/boxicons-subset.css?v=20260925">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260925">
+  <noscript>
+    <style>
+      /* Never hide content behind JS: show everything if scripts are off. */
+      .preloader { display: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .particles { display: none; }
+    </style>
+  </noscript>
+</head>
+<body class="page-projects">
+
+<a href="#case" class="skip-link">Skip to content</a>
+
+<!-- ══════════ AMBIENT BACKGROUND ══════════ -->
+<div class="bg-fx" aria-hidden="true">
+  <div class="blob blob--1"></div>
+  <div class="blob blob--2"></div>
+  <div class="blob blob--3"></div>
+  <div class="grid-lines"></div>
+  <div class="noise"></div>
+</div>
+
+<div class="scroll-progress" aria-hidden="true"><i id="scrollBar"></i></div>
+
+<header class="header" id="header">
+  <a href="index.html" class="logo" aria-label="Home">
+    <span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span>
+    <span class="logo__text">Suresh<em>.</em></span>
+  </a>
+
+  <nav class="navbar" id="navbar" aria-label="Main navigation">
+    <a href="index.html" style="--i:1"><span>Home</span></a>
+    <a href="index.html#about" style="--i:2"><span>About</span></a>
+    <a href="index.html#services" style="--i:3"><span>Services</span></a>
+    <a href="index.html#skills" style="--i:4"><span>Skills</span></a>
+    <a href="index.html#work" style="--i:5"><span>Work</span></a>
+    <a href="index.html#personal" style="--i:6"><span>Personal</span></a>
+    <a href="index.html#journey" style="--i:7"><span>Journey</span></a>
+    <a href="index.html#contact" style="--i:8"><span>Contact</span></a>
+  </nav>
+
+  <div class="header__actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle colour theme">
+      <i class="bx bx-moon"></i><i class="bx bx-sun"></i>
+    </button>
+    <a href="index.html#contact" class="btn btn--sm btn--ghost header__cta">Let’s Talk</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbar">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="case">
+
+<section class="section case">
+  <div class="case__head reveal">
+    <a class="case__back" href="index.html#personal"><i class="bx bx-left-arrow-alt"></i>Personal projects</a>
+    <span class="eyebrow">Case study</span>
+    <h1 class="section__title">Free JLPT practice, <span class="gradient-text">in the real format</span></h1>
+    <p class="section__sub">
+      A study site for Japanese learners living in Japan — 207 timed, automatically marked
+      papers from N5 to N1, laid out the way the exam is, with an interface in twelve languages.
+    </p>
+  </div>
+
+  <dl class="case__meta reveal">
+    <div><dt>Role</dt><dd>Solo — design, engineering, content tooling</dd></div>
+    <div><dt>Type</dt><dd>Personal product</dd></div>
+    <div><dt>Surface</dt><dd>Exam player · study lists · guides</dd></div>
+    <div><dt>Status</dt><dd>Live at <a href="https://nihongomock.com" target="_blank" rel="noopener noreferrer">nihongomock.com</a></dd></div>
+  </dl>
+
+  <div class="case__body">
+    <section class="case__block reveal">
+      <h2>The problem</h2>
+      <p>
+        The JLPT is not a set of loose questions. It is a timed paper with a fixed shape —
+        問題 groups in a set order, reading passages that several questions share, and
+        listening sections played once. Practice that doesn't look like that paper trains the
+        knowledge but not the sitting.
+      </p>
+      <p>
+        The site is written for learners who are already living in Japan, many of them from
+        Nepal, Vietnam and China. A study tool that only speaks English or Japanese reaches
+        few of them, so the interface had to be in their languages from the start.
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>What it does</h2>
+      <p>
+        Each paper opens as <strong>one continuous page</strong>, like the printed booklet:
+        questions grouped under their 問題 instruction, reading passages pinned beside the
+        questions that use them, one audio player per listening section, and a question map
+        for moving around. Submitting marks the same page in place and gives an estimated
+        scaled score with a section breakdown.
+      </p>
+      <p>
+        Every paper carries furigana on a toggle, a meaning for every word in it, and a
+        script for every listening question — 199 of the 207 can be sat end to end, sound
+        and all. There is no account and no backend: progress and answers in progress stay
+        in the reader's own browser.
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Architecture</h2>
+      <p>
+        There is no server, so the build is the backend. Python tools turn three kinds of
+        source — archived papers, item banks of original questions, and open dictionary data
+        — into a fully static site: more than 3,000 pages across twelve language trees, each
+        tied to the others with <code>hreflang</code>, plus the JSON the exam player reads.
+        Vercel serves the result as files. The only things fetched at runtime are the
+        listening recordings and a few exam diagrams.
+      </p>
+      <div class="arch-scroll">
+      <svg class="arch" viewBox="0 0 880 520" role="img"
+           aria-label="Architecture: archived sittings, item banks of original questions and JMdict dictionary data feed a Python build that runs locally. The build writes a static site of more than 3,000 pages in twelve language trees plus exam data, which Vercel serves with no backend. In the browser the exam player and translation engine run on that output, keep progress in localStorage, and stream listening audio from Google Drive and exam diagrams from web.archive.org.">
+        <defs>
+          <marker id="ahn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" class="arch__head"/>
+          </marker>
+        </defs>
+
+        <rect class="arch__box" x="30" y="18" width="240" height="60" rx="8"/>
+        <text class="arch__t" x="150" y="43">Archived sittings</text>
+        <text class="arch__s" x="150" y="62">89 papers · parsed from source</text>
+
+        <rect class="arch__box" x="320" y="18" width="240" height="60" rx="8"/>
+        <text class="arch__t" x="440" y="43">Item banks</text>
+        <text class="arch__s" x="440" y="62">118 original papers · dealt by rule</text>
+
+        <rect class="arch__box" x="610" y="18" width="240" height="60" rx="8"/>
+        <text class="arch__t" x="730" y="43">JMdict + JLPT lists</text>
+        <text class="arch__s" x="730" y="62">word meanings · readings</text>
+
+        <path class="arch__line" d="M150 78 L150 100 L400 100 L400 154" marker-end="url(#ahn)"/>
+        <path class="arch__line" d="M440 78 L440 154" marker-end="url(#ahn)"/>
+        <path class="arch__line" d="M730 78 L730 100 L480 100 L480 154" marker-end="url(#ahn)"/>
+
+        <rect class="arch__vpc" x="30" y="122" width="820" height="148" rx="12"/>
+        <text class="arch__vpclabel" x="48" y="144">Build · Python · runs locally, no server</text>
+        <rect class="arch__box arch__box--accent" x="250" y="158" width="380" height="92" rx="8"/>
+        <text class="arch__t" x="440" y="186">Static generator</text>
+        <text class="arch__s" x="440" y="206">papers · glossaries · furigana</text>
+        <text class="arch__s" x="440" y="224">12 language trees · hreflang · sitemap</text>
+
+        <path class="arch__line" d="M440 250 L440 300" marker-end="url(#ahn)"/>
+        <text class="arch__tag" x="500" y="282">deploy</text>
+
+        <rect class="arch__box" x="250" y="304" width="380" height="60" rx="8"/>
+        <text class="arch__t" x="440" y="329">Vercel</text>
+        <text class="arch__s" x="440" y="348">3,000+ static pages · no backend</text>
+
+        <path class="arch__line" d="M440 364 L440 412" marker-end="url(#ahn)"/>
+
+        <rect class="arch__box arch__box--accent" x="250" y="416" width="380" height="76" rx="8"/>
+        <text class="arch__t" x="440" y="443">Browser</text>
+        <text class="arch__s" x="440" y="462">exam player · 12-language interface</text>
+        <text class="arch__s" x="440" y="479">progress kept in localStorage</text>
+
+        <rect class="arch__box" x="30" y="422" width="170" height="64" rx="8"/>
+        <text class="arch__t" x="115" y="448">web.archive.org</text>
+        <text class="arch__s" x="115" y="467">exam diagrams</text>
+
+        <rect class="arch__box" x="680" y="422" width="170" height="64" rx="8"/>
+        <text class="arch__t" x="765" y="448">Google Drive</text>
+        <text class="arch__s" x="765" y="467">listening audio</text>
+
+        <path class="arch__line arch__line--dash" d="M244 454 L206 454" marker-end="url(#ahn)"/>
+        <path class="arch__line arch__line--dash" d="M636 454 L674 454" marker-end="url(#ahn)"/>
+      </svg>
+      </div>
+      <p class="case__caption">
+        Dashed lines are the only runtime requests; everything else is a file written at build time.
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Decisions that shaped it</h2>
+      <ul class="case__list">
+        <li><strong>Never invent inside a real paper.</strong> Seven archived sittings lost
+          their listening booklets. Writing questions to fill them would put invented
+          material inside a paper labelled as a real exam, so the gaps stay — each of those
+          papers names the sitting that has the booklet it is missing — and 118 original
+          papers were written instead, where every listening question has a script the
+          device can speak.</li>
+        <li><strong>Papers are dealt, not typed.</strong> Original questions live in item
+          banks, and an assembler deals them into papers of the published shape — 67
+          questions at N5 up to 107 at N1. It shuffles the choices (the first hand-written
+          paper had all 21 answers in position one), refuses to repeat a question anywhere
+          in the library, and records the deal so that adding to a bank never disturbs a
+          paper that already exists.</li>
+        <li><strong>The papers are not for search engines.</strong> The archived questions
+          are not the site's to republish, so papers are kept out of search results and
+          anyone holding rights can have material removed within 72 hours. What search
+          engines read is written separately: a page per level and nine guides that answer
+          what learners actually type.</li>
+        <li><strong>Twelve languages, without pretending.</strong> The interface switches
+          language in place with no reload, and every language has its own URL tree. Where
+          a guide has no translation the build skips that language rather than serving
+          English under a Nepali address, and the level pages stay English-only on purpose —
+          a machine translation would not be the better answer they exist to be.</li>
+        <li><strong>Numbers that cannot drift.</strong> The counts on the home page — papers
+          per level, which have listening, which have meanings — are generated from the
+          data at build time rather than written by hand.</li>
+      </ul>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Outcome</h2>
+      <div class="stats case__stats">
+        <div class="stat"><div class="stat__num">207</div><p>Timed papers, N5 to N1</p></div>
+        <div class="stat"><div class="stat__num">20,346</div><p>Questions, auto-marked</p></div>
+        <div class="stat"><div class="stat__num">12</div><p>Interface languages</p></div>
+        <div class="stat"><div class="stat__num">0</div><p>Sign-ups or backend</p></div>
+      </div>
+      <p>
+        The site is live and free, with nothing to sign up for. Alongside the papers it
+        carries 9,638 vocabulary entries, 2,211 kanji with stroke order and 280 grammar
+        points, all levelled from N5 to N1 — and 1,753 words with meanings in Nepali.
+      </p>
+    </section>
+
+    <section class="case__block reveal">
+      <h2>Stack</h2>
+      <div class="case__stack">
+        <div><h3>Front end</h3><p>HTML · CSS · vanilla JavaScript · service worker — no framework</p></div>
+        <div><h3>Build</h3><p>Python — static generator, exam parser, item-bank assembler, JMdict glossary</p></div>
+        <div><h3>Hosting</h3><p>Vercel · IndexNow</p></div>
+        <div><h3>Data</h3><p>JSON exam files · localStorage for progress</p></div>
+      </div>
+    </section>
+
+    <div class="case__cta reveal">
+      <a href="https://nihongomock.com" class="btn btn--primary" target="_blank" rel="noopener noreferrer"><span>Open nihongomock.com</span><i class="bx bx-link-external"></i></a>
+      <a href="https://github.com/SureshSurkheti/jlpt-practice" class="btn btn--outline" target="_blank" rel="noopener noreferrer"><span>View the source</span><i class="bx bxl-github"></i></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <a href="index.html" class="logo logo--footer"><span class="logo__mark"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32.19 48.5Q27.83 48.5 24.86 47.13Q21.89 45.76 20.37 43.39Q18.86 41.02 18.86 37.94H26.55Q26.55 39.05 27.17 39.97Q27.79 40.89 29.03 41.4Q30.27 41.92 32.19 41.92Q33.86 41.92 35.03 41.49Q36.21 41.06 36.83 40.29Q37.45 39.52 37.45 38.45Q37.45 37.09 36.3 36.34Q35.14 35.59 32.41 35.38L30.4 35.21Q25.57 34.78 22.7 32.17Q19.84 29.56 19.84 25.25Q19.84 22.17 21.27 19.99Q22.7 17.81 25.31 16.65Q27.92 15.5 31.47 15.5Q35.31 15.5 37.98 16.78Q40.66 18.06 42.07 20.39Q43.48 22.72 43.48 25.8H35.78Q35.78 24.78 35.27 23.92Q34.76 23.07 33.8 22.57Q32.83 22.08 31.47 22.08Q30.18 22.08 29.31 22.49Q28.43 22.9 27.98 23.62Q27.53 24.35 27.53 25.25Q27.53 26.44 28.35 27.3Q29.16 28.15 31.17 28.32L33.18 28.49Q36.68 28.79 39.37 30.01Q42.07 31.23 43.61 33.33Q45.14 35.42 45.14 38.45Q45.14 41.49 43.58 43.76Q42.02 46.02 39.14 47.26Q36.25 48.5 32.19 48.5Z"/></svg></span><span class="logo__text">Suresh<em>.</em></span></a>
+      <p class="footer__tag">Software engineer in Oita, Japan, building web platforms for Japanese municipalities and enterprise clients.</p>
+    </div>
+
+    <nav class="footer__col footer__nav" aria-label="Footer">
+      <p class="footer__label">Navigate</p>
+      <a href="index.html#about">About</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#personal">Personal</a>
+      <a href="index.html#journey">Journey</a>
+      <a href="https://blog.sureshsurkheti.com" target="_blank" rel="noopener noreferrer">Blog</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <div class="footer__col footer__connect" role="group" aria-label="Contact and social links">
+      <p class="footer__label">Connect</p>
+      <a class="footer__mail" href="mailto:surkhetisuresh123@gmail.com">surkhetisuresh123@gmail.com</a>
+      <div class="footer__social">
+        <a href="https://github.com/SureshSurkheti" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="bx bxl-github" aria-hidden="true"></i></a>
+        <a href="https://www.linkedin.com/in/sureshsurkheti" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="bx bxl-linkedin" aria-hidden="true"></i></a>
+        <a href="https://www.instagram.com/sureshsurkheti30" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bx bxl-instagram" aria-hidden="true"></i></a>
+      </div>
+    </div>
+
+    <p class="footer__copy">© <span class="footer__year">2026</span> Suresh Surkheti</p>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="bx bx-chevron-up"></i></button>
+
+<script src="assets/js/main.js?v=20260925" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://sureshsurkheti.com/case-nihongo#article",
+      "headline": "Nihongo Mock — JLPT Practice Case Study",
+      "description": "How a free JLPT practice site serves 207 exam-format papers in twelve languages with no backend — architecture and the decisions behind it.",
+      "url": "https://sureshsurkheti.com/case-nihongo",
+      "datePublished": "2026-09-25",
+      "dateModified": "2026-09-25",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://sureshsurkheti.com/#person"
+      },
+      "publisher": {
+        "@id": "https://sureshsurkheti.com/#person"
+      },
+      "isPartOf": {
+        "@id": "https://sureshsurkheti.com/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://sureshsurkheti.com/case-nihongo#webpage"
+      },
+      "image": "https://sureshsurkheti.com/assets/img/suresh-social.jpg",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Japanese-Language Proficiency Test"
+        },
+        {
+          "@type": "Thing",
+          "name": "Static site generation"
+        },
+        {
+          "@type": "Thing",
+          "name": "Internationalization"
+        }
+      ],
+      "keywords": "JLPT, Japanese learning, static site, Python, vanilla JavaScript, i18n, hreflang, no backend"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://sureshsurkheti.com/case-nihongo#webpage",
+      "url": "https://sureshsurkheti.com/case-nihongo",
+      "name": "Nihongo Mock — JLPT Practice Case Study · Suresh Surkheti",
+      "isPartOf": {
+        "@id": "https://sureshsurkheti.com/#website"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sureshsurkheti.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Personal",
+          "item": "https://sureshsurkheti.com/#personal"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Nihongo Mock",
+          "item": "https://sureshsurkheti.com/case-nihongo"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

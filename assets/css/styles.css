@@ -963,7 +963,21 @@ body::after {
 @media (max-width: 620px) {
   /* Side by side they only covered 304px of a 368px row, which left the pair
      looking left-aligned under full-width text. Sharing the row squares them up. */
-  .about__actions .btn { flex: 1 1 0; justify-content: center; }
+  .about__actions .btn { flex: 1 1 0; justify-content: center; padding-inline: 1.1rem; }
+  /* A label that wraps inside a button reads as broken — "See Projects" did,
+     beside a one-line "My Journey". nowrap makes each label's full width the
+     button's minimum, so the pair shares the row while both fit and otherwise
+     the second wraps beneath and both go full width, with no mid-label break. */
+  .about__actions .btn span { white-space: nowrap; }
+  /* Stated outright because .btn has overflow:hidden, and a flex item that
+     clips its overflow has an automatic minimum width of zero — without this
+     the label is cut off instead of the second button wrapping. */
+  .about__actions .btn { min-width: max-content; }
+}
+/* Below ~380px "See Projects" no longer fits in half the row, so the pair
+   would share it lopsided (156px beside 136px at 360px). Stack them instead. */
+@media (max-width: 380px) {
+  .about__actions .btn { flex-basis: 100%; }
 }
 
 .stats {
@@ -1438,6 +1452,18 @@ body::after {
 .tl-item h3 { font-size: 1.18rem; margin: .45rem 0 .2rem; }
 .tl-org { font-size: .88rem; color: var(--c3); margin-bottom: .6rem; font-weight: 500; }
 .tl-item > p:last-child { font-size: .93rem; color: var(--text-dim); }
+/* "Now" heads the timeline so the Journey ends in the present rather than in
+   April 2024. The date in its label is the promise that it gets kept current. */
+.tl-item--now { border-color: color-mix(in srgb, var(--acc-gfx) 45%, var(--stroke)); }
+.tl-item--now .tl-dot { background: var(--acc-gfx); box-shadow: 0 0 0 5px color-mix(in srgb, var(--acc-gfx) 22%, transparent); }
+.tl-now { display: grid; gap: .45rem; margin-top: .7rem; font-size: .93rem; color: var(--text-dim); }
+.tl-now strong { color: var(--text); font-weight: 600; }
+.tl-now a { color: var(--ink-accent); border-bottom: 1px solid currentColor; }
+.tl-now a:hover { opacity: .75; }
+
+/* Case-study outcome figures: the About section's .stats, spaced for an article. */
+.case__stats { margin: 1.4rem 0 1.6rem; }
+.case__meta dd a { color: var(--ink-accent); border-bottom: 1px solid currentColor; }
 
 /* ─────────────── CONTACT ─────────────── */
 .contact__grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(1.6rem, 5vw, 3.5rem); align-items: start; }
